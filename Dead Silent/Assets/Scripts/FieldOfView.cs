@@ -16,7 +16,7 @@ public class FieldOfView : MonoBehaviour
     public LayerMask tarketMask;
     public LayerMask obstructionMask;
 
-    public List<GameObject> targets;
+    [SerializeField] EnemyAI ai;
 
 
     // Start is called before the first frame update
@@ -46,12 +46,19 @@ public class FieldOfView : MonoBehaviour
 
         for(int i = 0; i < potentialTargets.Length; i++)
         {
-            if (Mathf.Abs(Vector3.Angle(transform.position, potentialTargets[i].transform.position)) <= ViewAngle)
+            Vector3 targetDir = (potentialTargets[i].transform.position - transform.position).normalized;
+            //Debug.Log($"{potentialTargets[i].name} found!");
+            //Debug.Log(Physics.Linecast(transform.position, targetDir, obstructionMask));
+
+
+            if (Vector3.Angle(transform.forward, targetDir) <= ViewAngle / 2)
             {
-                Physics.Linecast(transform.position, potentialTargets[i].transform.position, obstructionMask);
-                //Debug.Log($"{potentialTargets[i].name} found!");
-                if (!targets.Contains(potentialTargets[i].gameObject)) {
-                    targets.Add(potentialTargets[i].gameObject);
+                if(!Physics.Linecast(transform.forward, potentialTargets[i].transform.position, obstructionMask))
+                {
+                    Debug.Log(Vector3.Angle(transform.forward, targetDir));
+                    Debug.Log($"Tracking {potentialTargets[i].name}!");
+                    ai.OnEnemySighted(potentialTargets[i].gameObject);
+
                 }
             }
         }
@@ -61,7 +68,7 @@ public class FieldOfView : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            //Debug.Log("Player Entered!");
+            Debug.Log("Player Entered!");
             TargetInRange = true;
         }
     }
@@ -70,8 +77,9 @@ public class FieldOfView : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            //Debug.Log("Player Left!");
+            Debug.Log("Player Left!");
             TargetInRange = false;
         }
     }
+
 }

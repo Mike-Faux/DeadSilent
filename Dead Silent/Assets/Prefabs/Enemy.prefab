@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 5538569906658390585}
   - component: {fileID: 4747126780793284872}
   - component: {fileID: 8155283647535094082}
-  m_Layer: 0
+  - component: {fileID: 7545437075865065507}
+  m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,8 +145,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9f07fbc63f77994baaec53a75689e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 0}
-  Health: 0
+  agent: {fileID: 1916920105152662680}
+  Health: 5
 --- !u!114 &8155283647535094082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,3 +161,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ViewRadius: 25
   ViewAngle: 80
+  tarketMask:
+    serializedVersion: 2
+    m_Bits: 8
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 55
+  targets: []
+--- !u!135 &7545437075865065507
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8671040104950112037}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 25
+  m_Center: {x: 0, y: 0, z: 0}
