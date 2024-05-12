@@ -6670,6 +6670,36 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1157929963}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1161566014 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3188795972260206017, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
+  m_PrefabInstance: {fileID: 1670273972}
+  m_PrefabAsset: {fileID: 0}
+--- !u!143 &1161566015 stripped
+CharacterController:
+  m_CorrespondingSourceObject: {fileID: 2227847582455116204, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
+  m_PrefabInstance: {fileID: 1670273972}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1161566020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161566014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98423621ea9c9474781bf05f2662d335, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Controller: {fileID: 1161566015}
+  Health: 10
+  Speed: 8
+  SprintMod: 2
+  JumpMax: 1
+  JumpSpeed: 8
+  Gravity: 12
+  Weapon: {fileID: 0}
 --- !u!1001 &1163800238
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11385,7 +11415,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3188795972260206017, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1161566020}
   m_SourcePrefab: {fileID: 100100000, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
 --- !u!4 &1673619847 stripped
 Transform:
@@ -15434,7 +15467,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 1695650317}
   - {fileID: 782832672}
-  - {fileID: 2038195340}
   - {fileID: 1670273972}
   - {fileID: 709384175}
   - {fileID: 4526700197194285484}
@@ -15444,3 +15476,4 @@ SceneRoots:
   - {fileID: 1745416202}
   - {fileID: 284893361}
   - {fileID: 1181227145}
+  - {fileID: 2038195340}

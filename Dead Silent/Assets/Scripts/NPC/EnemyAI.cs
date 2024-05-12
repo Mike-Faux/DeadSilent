@@ -32,7 +32,7 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         if(Health <= 0) 
         { 
             GameManager.Instance.UpdateEnemyCount(-1);
-
+            Destroy(gameObject);
         }
 
 
@@ -225,7 +225,7 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
 
     public void SetPatrolPath((Vector3 Position, int TimeInPosition)[] path)
     {
-        Debug.Log($"{name} path set with {path.Length} points!");
+        //Debug.Log($"{name} path set with {path.Length} points!");
         patrolPath = path;
     }
 
