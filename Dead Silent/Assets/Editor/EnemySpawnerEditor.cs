@@ -30,7 +30,9 @@ public class EnemySpawnerEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        EnemySpawner spawner = (EnemySpawner)target;
+        base.OnInspectorGUI();
+
+        EnemySpawner spawner = target as EnemySpawner;
 
         if (spawner.transform.childCount == 0)
         {
@@ -43,7 +45,6 @@ public class EnemySpawnerEditor : Editor
             UpdatePatrolPath(spawner);
         }
 
-        base.OnInspectorGUI();
     }
 
     private void OnSceneGUI()
@@ -67,6 +68,7 @@ public class EnemySpawnerEditor : Editor
                 previous = spawner.transform.position;
             }
 
+
             
         
             Handles.DrawWireArc(previous, Vector3.up, Vector3.forward, 360f, 2);
@@ -89,41 +91,53 @@ public class EnemySpawnerEditor : Editor
 
     private void UpdatePatrolPath(EnemySpawner spawner)
     {
-        if(spawner.transform.childCount > spawner.PatrolPath.Count)
+        for (int i = 0; i < ((EnemySpawner) target).PatrolPath.Count; i++)
         {
-            for(int i = 0; i < spawner.transform.childCount; i++)
+            if (((EnemySpawner)target).PatrolPath[i] == null)
             {
-                Transform child = spawner.transform.GetChild(i);
+                ((EnemySpawner)target).PatrolPath.RemoveAt(i);
+            }
+        }
+
+        if (((EnemySpawner)target).transform.childCount > ((EnemySpawner)target).PatrolPath.Count)
+        {
+            for(int i = 0; i < ((EnemySpawner)target).transform.childCount; i++)
+            {
+                Transform child = ((EnemySpawner)target).transform.GetChild(i);
                 if (child.TryGetComponent(out PatrolWaypoint waypoint))
                 {
-                    if (spawner.PatrolPath.Contains(waypoint)) continue;
+                    if (((EnemySpawner)target).PatrolPath.Contains(waypoint)) continue;
                     else
                     {
-                        spawner.PatrolPath.Add(waypoint);
+                        ((EnemySpawner)target).PatrolPath.Add(waypoint);
                     }
                 }
                 else
                 {
-                    child.parent = spawner.transform.parent;
+                    child.parent = ((EnemySpawner)target).transform.parent;
                 }
             }
         }
-        else
+        else if(((EnemySpawner)target).transform.childCount > ((EnemySpawner)target).PatrolPath.Count)
         {
-            for (int i = 0; i < spawner.PatrolPath.Count; i++)
+            for (int i = 0; i < ((EnemySpawner)target).PatrolPath.Count; i++)
             {
-                if (spawner.PatrolPath[i].transform.parent == spawner.transform) 
+                if (((EnemySpawner)target).PatrolPath[i].transform.parent == ((EnemySpawner)target).transform) 
                     continue;
                 else
                 {
-                    spawner.PatrolPath[i].transform.parent = spawner.transform;
+                    ((EnemySpawner)target).PatrolPath[i].transform.parent = ((EnemySpawner)target).transform;
                 }
             }
         }
 
-        if (spawner.transform.childCount != spawner.PatrolPath.Count)
+        if (((EnemySpawner)target).transform.childCount != ((EnemySpawner)target).PatrolPath.Count)
         {
             //UpdatePatrolPath(spawner);
         }
+
+        //Debug.Log($"path count {spawner.PatrolPath.Count}");
+
+        EditorUtility.SetDirty(target);
     }
 }
