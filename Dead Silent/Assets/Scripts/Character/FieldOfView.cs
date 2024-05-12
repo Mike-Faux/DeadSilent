@@ -55,8 +55,8 @@ public class FieldOfView : MonoBehaviour
             {
                 if(!Physics.Linecast(transform.forward, potentialTargets[i].transform.position, obstructionMask))
                 {
-                    Debug.Log(Vector3.Angle(transform.forward, targetDir));
-                    Debug.Log($"Tracking {potentialTargets[i].name}!");
+                    //Debug.Log(Vector3.Angle(transform.forward, targetDir));
+                    //Debug.Log($"Tracking {potentialTargets[i].name}!");
                     ai.OnEnemySighted(potentialTargets[i].gameObject);
 
                 }
@@ -68,7 +68,7 @@ public class FieldOfView : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player Entered!");
+            //Debug.Log("Player Entered!");
             TargetInRange = true;
         }
     }
@@ -77,7 +77,7 @@ public class FieldOfView : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player Left!");
+            //Debug.Log("Player Left!");
             TargetInRange = false;
         }
     }

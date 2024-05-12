@@ -13,7 +13,14 @@ public class EnemyAIEditor : Editor
     {
         if (!Application.isPlaying)
         {
+            
+
             EnemyAI enemyAI = target as EnemyAI;
+
+            if (enemyAI.PatrolPath.Length == 0)
+            {
+                return;
+            }
 
             Vector3 previous = enemyAI.transform.position;
             Vector3 current = Vector3.zero;

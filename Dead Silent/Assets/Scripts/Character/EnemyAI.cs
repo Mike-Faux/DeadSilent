@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour, IDamageable
+public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
 {
     [SerializeField] NavMeshAgent agent;
     [SerializeField] int Health;
+    [SerializeField] int EngageDistance;
+    [SerializeField] AIType type;
 
     public PatrolWaypoint[] PatrolPath;
     [SerializeField] Status currentStatus;
 
     int currentPatrolPoint;
-    Vector3 target;
+    Vector3 targetPos;
+
+    GameObject target;
+    [SerializeField] FireArm weapon;
 
 
 
@@ -42,6 +47,8 @@ public class EnemyAI : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
+        if (currentStatus != Status.Engaging) agent.isStopped = false;
+
         if(agent.remainingDistance <= 1f)
         {
             switch(currentStatus)
@@ -57,21 +64,50 @@ public class EnemyAI : MonoBehaviour, IDamageable
                     break;
                 case Status.Loitering:
                     break;
+                case Status.Engaging:
+                    Engage();
+                    break;
             }
         }
     }
 
+    public void Engage()
+    {
+        if(Vector3.Distance(target.transform.position, transform.position) > EngageDistance || target == null)
+        {
+            currentStatus = Status.Tracking;
+        }
+        else if (Physics.Raycast(transform.position, (target.transform.position - transform.position).normalized))
+        {
+            currentStatus = Status.Engaging;
+            agent.isStopped = true;
+            if(weapon != null)
+            {
+                Aim();
+                weapon.Attack();
+            }
+        }
+    }
+
+    public void Aim()
+    {
+        transform.LookAt(target.transform.position, Vector3.up);
+    }
 
     public void Track()
     {
-        //Debug.Log("Tracking");
-        if (target != GameManager.Instance.LastKnownPosition)
+        if(target != null && Vector3.Distance(target.transform.position, transform.position) < EngageDistance)
         {
-            target = GameManager.Instance.LastKnownPosition;
-            agent.destination = target;
+            currentStatus = Status.Engaging;
+            Engage();
+        }else if (targetPos != GameManager.Instance.LastKnownPosition)
+        {
+            targetPos = GameManager.Instance.LastKnownPosition;
+            agent.destination = targetPos;
         }
         else
         {
+            target = null;
             currentStatus = Status.Investigating;
         }
     }
@@ -79,21 +115,22 @@ public class EnemyAI : MonoBehaviour, IDamageable
     public void Investigate()
     {
         //Debug.Log("Investigating");
-        if(target == GameManager.Instance.LastKnownPosition)
+        if(targetPos == GameManager.Instance.LastKnownPosition)
         {
             currentStatus = Status.Loitering;
             StartCoroutine(Loiter(10, currentPatrolPoint));
         }
         else
         {
-            target = GameManager.Instance.LastKnownPosition;
-            agent.destination = target;
+            targetPos = GameManager.Instance.LastKnownPosition;
+            agent.destination = targetPos;
             currentStatus = Status.Tracking;
         }
     }
 
     public void Patrol()
     {
+        if (PatrolPath.Length == 0) return;
         int seconds = PatrolPath[currentPatrolPoint].TimeInPosition;
 
         currentPatrolPoint++;
@@ -120,10 +157,23 @@ public class EnemyAI : MonoBehaviour, IDamageable
 
     public void OnEnemySighted(GameObject target)
     {
-        currentStatus = Status.Tracking;
+        this.target = target;
         GameManager.Instance.LastKnownPosition = target.transform.position;
-        agent.destination = target.transform.position;
-        this.target = target.transform.position;
+        this.targetPos = target.transform.position;
+
+        
+        currentStatus = Status.Engaging;
+        agent.SetDestination(target.transform.position);
+        Engage();
+    }
+
+    public void Distract(GameObject distraction)
+    {
+        if (currentStatus == Status.Tracking) return;
+
+        targetPos = distraction.transform.position;
+        currentStatus = Status.Investigating;
+        agent.SetDestination(targetPos);
     }
 
     enum Status
@@ -131,6 +181,13 @@ public class EnemyAI : MonoBehaviour, IDamageable
         Patroling,
         Investigating,
         Tracking,
-        Loitering
+        Loitering,
+        Engaging
+    }
+
+    enum AIType
+    {
+        Grunt,
+        Officer
     }
 }
