@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject loseMenu;
 
     public Image playerHP;
-    
+    public Player playerScript;
 
     public bool pause;
     int enemyCount;
