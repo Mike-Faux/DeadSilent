@@ -299,6 +299,7 @@ MonoBehaviour:
     m_Bits: 119
   currentStatus: 0
   weapon: {fileID: 1712907260197424821}
+  DamagedFlashMaterial: {fileID: 2100000, guid: bd0740a28985f52429a4721fcb93090a, type: 2}
 --- !u!114 &8155283647535094082
 MonoBehaviour:
   m_ObjectHideFlags: 0
