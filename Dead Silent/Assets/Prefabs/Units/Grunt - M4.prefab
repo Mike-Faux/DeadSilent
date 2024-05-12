@@ -101,7 +101,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5000001
   m_Height: 2
@@ -132,7 +132,7 @@ Transform:
   m_GameObject: {fileID: 4405476026280522474}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.47, y: 0, z: 0.271}
+  m_LocalPosition: {x: 0.47, y: 0, z: 0.34044996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -288,8 +288,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 1916920105152662680}
   Health: 5
-  EngageDistance: 10
-  PatrolPath: []
+  EngageDistance: 20
+  type: 0
+  alertDistance: 0
+  toAlert:
+    serializedVersion: 2
+    m_Bits: 64
+  blockingFiring:
+    serializedVersion: 2
+    m_Bits: 119
   currentStatus: 0
   weapon: {fileID: 1712907260197424821}
 --- !u!114 &8155283647535094082

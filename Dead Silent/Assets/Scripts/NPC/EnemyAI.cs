@@ -10,6 +10,10 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
     [SerializeField] int EngageDistance;
     [SerializeField] AIType type;
 
+    [SerializeField] float alertDistance;
+    [SerializeField] LayerMask toAlert;
+    [SerializeField] LayerMask blockingFiring;
+
     (Vector3 Position, int TimeInPosition)[] patrolPath;
     [SerializeField] Status currentStatus;
 
@@ -48,8 +52,12 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
     void Update()
     {
         if (currentStatus != Status.Engaging) agent.isStopped = false;
+        if (currentStatus == Status.Engaging && agent.remainingDistance > 1f)
+        {
+            Engage();
+        }
 
-        if(agent.remainingDistance <= 1f)
+        if(Vector3.Distance(agent.destination, transform.position) < 2f)
         {
             switch(currentStatus)
             {
@@ -73,11 +81,34 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
 
     public void Engage()
     {
-        if(Vector3.Distance(target.transform.position, transform.position) > EngageDistance || target == null)
+        //Officer Alerting Nearby Units
+        if (type == AIType.Officer && GameManager.Instance.LastKnownPosition != null)
         {
+            Collider[] nearby = Physics.OverlapSphere(transform.position, alertDistance, toAlert);
+            for (int i = 0; i < nearby.Length; i++)
+            {
+                if (nearby[i].TryGetComponent(out EnemyAI ai))
+                {
+                    ai.Alert();
+                    //Debug.Log("ALERT!");
+                }
+            }
+        }
+
+        float disToTarget = Vector3.Distance(target.transform.position, transform.position);
+        Vector3 dirToTarget = target.transform.position - transform.position;
+        dirToTarget.Normalize();
+
+
+        //Debug.Log($"{name} Engaging target {disToTarget} away");
+
+        //Check for engage Distance and target
+        if (disToTarget > EngageDistance || target == null)
+        {
+            agent.isStopped = false;
             currentStatus = Status.Tracking;
         }
-        else if (Physics.Raycast(transform.position, (target.transform.position - transform.position).normalized))
+        else if (!Physics.Raycast(transform.position + transform.forward, dirToTarget, disToTarget, blockingFiring, QueryTriggerInteraction.Ignore))
         {
             currentStatus = Status.Engaging;
             agent.isStopped = true;
@@ -86,6 +117,12 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
                 Aim();
                 weapon.Attack();
             }
+        }
+        else
+        {
+            currentStatus = Status.Tracking;
+            agent.SetDestination(target.transform.position);
+            agent.isStopped = false;
         }
     }
 
@@ -103,7 +140,7 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         }else if (targetPos != GameManager.Instance.LastKnownPosition)
         {
             targetPos = GameManager.Instance.LastKnownPosition;
-            agent.destination = targetPos;
+            agent.SetDestination(targetPos);
         }
         else
         {
@@ -123,13 +160,14 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         else
         {
             targetPos = GameManager.Instance.LastKnownPosition;
-            agent.destination = targetPos;
+            agent.SetDestination(targetPos);
             currentStatus = Status.Tracking;
         }
     }
 
     public void Patrol()
     {
+        if (patrolPath == null) return;
         if (patrolPath.Length == 0) return;
         int seconds = patrolPath[currentPatrolPoint].TimeInPosition;
 
@@ -176,8 +214,18 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         agent.SetDestination(targetPos);
     }
 
+    public void Alert()
+    {
+        if (currentStatus == Status.Engaging) return;
+
+        targetPos = GameManager.Instance.LastKnownPosition;
+        agent.SetDestination(targetPos);
+        currentStatus = Status.Tracking;
+    }
+
     public void SetPatrolPath((Vector3 Position, int TimeInPosition)[] path)
     {
+        Debug.Log($"{name} path set with {path.Length} points!");
         patrolPath = path;
     }
 
