@@ -10,7 +10,7 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
     [SerializeField] int EngageDistance;
     [SerializeField] AIType type;
 
-    public PatrolWaypoint[] PatrolPath;
+    (Vector3 Position, int TimeInPosition)[] patrolPath;
     [SerializeField] Status currentStatus;
 
     int currentPatrolPoint;
@@ -130,16 +130,16 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
 
     public void Patrol()
     {
-        if (PatrolPath.Length == 0) return;
-        int seconds = PatrolPath[currentPatrolPoint].TimeInPosition;
+        if (patrolPath.Length == 0) return;
+        int seconds = patrolPath[currentPatrolPoint].TimeInPosition;
 
         currentPatrolPoint++;
 
-        if(currentPatrolPoint < 0 || currentPatrolPoint >= PatrolPath.Length)
+        if(currentPatrolPoint < 0 || currentPatrolPoint >= patrolPath.Length)
         {
             currentPatrolPoint = 0;
 
-            if(PatrolPath.Length == 0) return; 
+            if(patrolPath.Length == 0) return; 
         }
 
         currentStatus = Status.Loitering;
@@ -151,7 +151,7 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         yield return new WaitForSeconds(seconds);
         if (currentStatus != Status.Loitering) yield break;
 
-        agent.SetDestination(PatrolPath[nextPatrolPoint].transform.position);
+        agent.SetDestination(patrolPath[nextPatrolPoint].Position);
         currentStatus = Status.Patroling;
     }
 
@@ -174,6 +174,11 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         targetPos = distraction.transform.position;
         currentStatus = Status.Investigating;
         agent.SetDestination(targetPos);
+    }
+
+    public void SetPatrolPath((Vector3 Position, int TimeInPosition)[] path)
+    {
+        patrolPath = path;
     }
 
     enum Status
