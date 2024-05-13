@@ -85,7 +85,7 @@ public class Player : MonoBehaviour, IDamageable
         if (Health <= 0)
         {
             // trigger loss
-            //GameManager.Instance.YouLose();
+            GameManager.Instance.lostState();
         }
     }
 
