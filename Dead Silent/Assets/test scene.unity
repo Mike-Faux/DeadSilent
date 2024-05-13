@@ -2871,7 +2871,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1e191a04c2089f4d9a3140700c74001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
+  Player: {fileID: 777243156}
   LastKnownPosition: {x: 0, y: 0, z: 0}
   pauseMenu: {fileID: 300808169}
   activeMenu: {fileID: 0}
