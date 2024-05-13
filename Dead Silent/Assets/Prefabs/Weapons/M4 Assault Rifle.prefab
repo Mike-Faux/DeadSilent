@@ -581,7 +581,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FirePos: {fileID: 1662545299622288658}
   Damage: 1
-  BulletSpeed: 25
+  BulletSpeed: 70
   FireRate: 0.3
   Bullet: {fileID: 4971964780661652405, guid: 95f272568e3a6f14092a9f611968e812, type: 3}
 --- !u!1 &7002633757822394912

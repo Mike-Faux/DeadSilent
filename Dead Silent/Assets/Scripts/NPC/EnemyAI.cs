@@ -211,11 +211,38 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         if(min < 0) min = 0;
         float max = seconds + LoiterVariation;
 
-        yield return new WaitForSeconds(Random.Range(min,max));
+        float split = Random.Range(min, max) / 3;
+        if(split < 1f) split = 1f;
+
+        yield return new WaitForSeconds(split);
+        if (currentStatus != Status.Loitering) yield break;
+
+        StartCoroutine(SmoothRotate(Quaternion.LookRotation(-transform.right, transform.up),30));
+
+        yield return new WaitForSeconds(split);
+        if (currentStatus != Status.Loitering) yield break;
+
+        StartCoroutine(SmoothRotate(Quaternion.LookRotation(-transform.forward, transform.up),30));
+
+        yield return new WaitForSeconds(split);
         if (currentStatus != Status.Loitering) yield break;
 
         agent.SetDestination(patrolPath[nextPatrolPoint].Position);
         currentStatus = Status.Patroling;
+    }
+
+    IEnumerator SmoothRotate(Quaternion targetRotation,int segments)
+    {
+        float interval = 1f / segments;
+
+        transform.Rotate(new Vector3(0, 0, 0));
+
+        for (int i = 0; i < segments; i++)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, i * interval + interval);
+            yield return new WaitForSeconds(interval);
+            if (currentStatus != Status.Loitering) break;
+        }
     }
 
     public void OnEnemySighted(GameObject target)
