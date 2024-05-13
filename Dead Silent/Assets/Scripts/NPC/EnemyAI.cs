@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
 {
+
     [SerializeField] NavMeshAgent agent;
     [SerializeField] int Health;
     [SerializeField] int EngageDistance;
@@ -24,21 +25,40 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
     [SerializeField] FireArm weapon;
 
 
+    MeshRenderer mr;
+    [SerializeField] Material DamagedFlashMaterial;
+
+    float LoiterVariation = 1.5f;
+
+
 
     public void TakeDamage(int amount)
     {
         Health -= amount;
+        StartCoroutine(Flash(.1f));
 
         if(Health <= 0) 
         { 
             GameManager.Instance.UpdateEnemyCount(-1);
-
+            Destroy(gameObject);
         }
 
-
-
+        GameManager.Instance.LastKnownPosition = GameManager.Instance.Player.transform.position;
         currentStatus = Status.Tracking;
-        Track();
+        target = GameManager.Instance.Player;
+        targetPos = target.transform.position;
+        agent.SetDestination(targetPos);
+    }
+
+    IEnumerator Flash(float time)
+    {
+        Material temp = mr.material;
+
+        mr.material = DamagedFlashMaterial;
+
+        yield return new WaitForSeconds(time);
+
+        mr.material = temp;
     }
 
 
@@ -46,6 +66,7 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
     void Start()
     {
         GameManager.Instance.UpdateEnemyCount(1);
+        mr = GetComponent<MeshRenderer>();
     }
 
     // Update is called once per frame
@@ -186,7 +207,11 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
 
     IEnumerator Loiter(int seconds, int nextPatrolPoint)
     {
-        yield return new WaitForSeconds(seconds);
+        float min = seconds - LoiterVariation;
+        if(min < 0) min = 0;
+        float max = seconds + LoiterVariation;
+
+        yield return new WaitForSeconds(Random.Range(min,max));
         if (currentStatus != Status.Loitering) yield break;
 
         agent.SetDestination(patrolPath[nextPatrolPoint].Position);
@@ -225,7 +250,7 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
 
     public void SetPatrolPath((Vector3 Position, int TimeInPosition)[] path)
     {
-        Debug.Log($"{name} path set with {path.Length} points!");
+        //Debug.Log($"{name} path set with {path.Length} points!");
         patrolPath = path;
     }
 
