@@ -92,6 +92,6 @@ public class Player : MonoBehaviour, IDamageable
     void UpdatePlayerUI()
     {
         // update health bar
-        //GameManager.Instance.PlayerHPBar.fillAmount = (float)Health / MaxHealth;
+        GameManager.Instance.PlayerHPBar.fillAmount = (float)Health / MaxHealth;
     }
 }

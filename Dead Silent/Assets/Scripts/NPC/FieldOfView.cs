@@ -49,23 +49,19 @@ public class FieldOfView : MonoBehaviour
             Vector3 targetDir = (potentialTargets[i].transform.position - transform.position).normalized;
 
 
-            Debug.Log($"{potentialTargets[i].name} found!");
+            //Debug.Log($"{potentialTargets[i].name} found!");
             //Debug.Log(Physics.Linecast(transform.position, potentialTargets[i].transform.position, out RaycastHit hit, obstructionMask, QueryTriggerInteraction.Ignore));
             //Debug.Log(hit.collider.transform.name);
 
             if (Vector3.Angle(transform.forward, targetDir) <= ViewAngle / 2)
             {
-                Debug.Log($"{potentialTargets[i].name} is in Front!");
-                if (!Physics.Linecast(transform.forward, potentialTargets[i].transform.position, out RaycastHit hit, obstructionMask, QueryTriggerInteraction.Ignore))
+                //Debug.Log($"{potentialTargets[i].name} is in Front!");
+                if (!Physics.Linecast(transform.position, potentialTargets[i].transform.position, out RaycastHit hit, obstructionMask, QueryTriggerInteraction.Ignore))
                 {
                     //Debug.Log(Vector3.Angle(transform.forward, targetDir));
-                    Debug.Log($"Tracking {potentialTargets[i].name}!");
+                    //Debug.Log($"Tracking {potentialTargets[i].name}!");
                     ai.OnEnemySighted(potentialTargets[i].gameObject);
 
-                }
-                else
-                {
-                    Debug.Log(hit.collider.transform.name);
                 }
             }
         }
