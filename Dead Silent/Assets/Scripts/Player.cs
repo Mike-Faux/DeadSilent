@@ -5,7 +5,9 @@ using UnityEngine;
 public class Player : MonoBehaviour, IDamageable
 {
     [SerializeField] CharacterController Controller;
-    
+   
+    [SerializeField] private float interactionDistance;
+
     [SerializeField] int Health;
 
     [SerializeField] float Speed;
@@ -14,16 +16,20 @@ public class Player : MonoBehaviour, IDamageable
 
     [SerializeField] float CrouchHeightMod;
     [SerializeField] int JumpMax;
-    [SerializeField] float JumpSpeed;
-    [SerializeField] float Gravity;
+    [SerializeField] int JumpSpeed;
+    [SerializeField] int Gravity;
+    
+    [SerializeField] LayerMask InteractionMask;
+
+    [SerializeField] GameObject intIcon;
 
     [SerializeField] FireArm Weapon;
 
     Vector3 MoveDir;
     Vector3 PlayerVel;
 
-    
 
+    IInteractable interact;
     int JumpCount;
 
     private int MaxHealth;
@@ -44,6 +50,13 @@ public class Player : MonoBehaviour, IDamageable
         {
             Weapon.Attack();
         }
+
+        CheckInteraction();
+        if (Input.GetButton("Fire2") && interact != null)
+        {
+            interact.Interact();
+        }
+
     }
 
     void Movement()
@@ -122,4 +135,25 @@ public class Player : MonoBehaviour, IDamageable
         // update health bar
         GameManager.Instance.PlayerHPBar.fillAmount = (float)Health / MaxHealth;
     }
+
+    void CheckInteraction()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+        if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance, InteractionMask))
+        {
+         
+
+           if (hit.collider.TryGetComponent(out IInteractable interactable))
+            {
+                interact = interactable;
+            }
+            else
+            {
+                interact = null;
+            }
+                
+                
+        }
+    }
+
 }
