@@ -20,6 +20,8 @@ public class Player : MonoBehaviour, IDamageable
     Vector3 MoveDir;
     Vector3 PlayerVel;
 
+    
+
     int JumpCount;
 
     private int MaxHealth;
@@ -81,17 +83,24 @@ public class Player : MonoBehaviour, IDamageable
     {
         Health -= amount;
         UpdatePlayerUI();
+        StartCoroutine(flashDamage());
 
         if (Health <= 0)
         {
             // trigger loss
-            //GameManager.Instance.YouLose();
+            GameManager.Instance.lostState();
         }
+    }
+    IEnumerator flashDamage()
+    {
+        GameManager.Instance.playerDFlash.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        GameManager.Instance.playerDFlash.SetActive(false);
     }
 
     void UpdatePlayerUI()
     {
         // update health bar
-        //GameManager.Instance.PlayerHPBar.fillAmount = (float)Health / MaxHealth;
+        GameManager.Instance.PlayerHPBar.fillAmount = (float)Health / MaxHealth;
     }
 }
