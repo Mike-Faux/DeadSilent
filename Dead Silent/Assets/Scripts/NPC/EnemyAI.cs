@@ -149,7 +149,7 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
 
     public void Aim()
     {
-        transform.LookAt(target.transform.position, Vector3.up);
+        transform.LookAt(target.transform.position - (transform.right / 2), Vector3.up);
     }
 
     public void Track()

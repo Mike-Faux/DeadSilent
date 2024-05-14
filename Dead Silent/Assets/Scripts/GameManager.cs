@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,15 +15,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject activeMenu;
     [SerializeField] GameObject winMenu;
     [SerializeField] GameObject loseMenu;
+    [SerializeField] TMP_Text enemycountText;
 
-    public Image playerHP;
-    public Player playerScript;
+    public Image PlayerHPBar;
 
     public bool pause;
     int enemyCount;
 
     private void Awake()
     {
+        Player = GameObject.FindWithTag("Player");
         Instance = this;
     }
 
@@ -53,6 +55,7 @@ public class GameManager : MonoBehaviour
     public void UpdateEnemyCount(int amount)
     {
         enemyCount += amount;
+        enemycountText.text = enemyCount.ToString("F0");
 
         if(enemyCount <= 0)
         {
@@ -62,23 +65,25 @@ public class GameManager : MonoBehaviour
         }
 
     }
+
     public void pauseState()
     {
-        pause = !pause;
+        pause = true;
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
     }
+
     public void resumeState()
     {
-        pause = !pause;
+        pause = false;
         Time.timeScale = 1;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         activeMenu.SetActive(pause);
         activeMenu = null;
-        
     }
+
     public void lostState()
     {
         pauseState();
