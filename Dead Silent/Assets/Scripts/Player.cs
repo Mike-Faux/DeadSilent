@@ -54,7 +54,7 @@ public class Player : MonoBehaviour, IDamageable
 
         MoveDir = (Input.GetAxis("Horizontal") * transform.right) + (Input.GetAxis("Vertical") * transform.forward);
         Controller.Move(MoveDir * Speed * Time.deltaTime);
-
+        
         Sprint();
 
         if (Input.GetButtonDown("Jump") && JumpCount < JumpMax)
