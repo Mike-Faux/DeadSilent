@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Camera : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
     [SerializeField] int Sensitivity;
     [SerializeField] int LockVertMin, LockVertMax;
@@ -17,6 +17,8 @@ public class Camera : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    
+    
     // Update is called once per frame
     void Update()
     {

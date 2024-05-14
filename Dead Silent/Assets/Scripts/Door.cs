@@ -2,44 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Door : MonoBehaviour
+public class Door : MonoBehaviour, IInteractable
 {
-    public GameObject door;
+    
     [SerializeField] float openRot, speed;
-    [SerializeField] GameObject intIcon;
     public bool opening;
 
-    void OnTriggerStay(Collider other)
+   
+
+    void Update()
     {
-        Debug.Log("OnTriggerStay called");
-        if (other.CompareTag("MainCamera"))
-        {
-            intIcon.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                Debug.Log("E key pressed");
-                intIcon.SetActive(false);
-                opening = true;
-                OpenRot();
-                
-            }
-        }
-    }
-    void Update ()
-    {
-        OpenRot();
+       
+
+    
     }
     void OpenRot()
     {
-        Vector3 currentRot = door.transform.localEulerAngles;
-        if (opening)
-        {
+        Quaternion targetRot = Quaternion.Euler(0f, 90f, 0f);
 
-            if (currentRot.y < openRot)
-            {
-                door.transform.localEulerAngles = Vector3.Lerp(currentRot, new Vector3(currentRot.x, openRot, currentRot.z), speed * Time.deltaTime);
-            }
+       transform.parent.localRotation = Quaternion.Lerp(transform.parent.localRotation,targetRot, speed * Time.deltaTime);
+    }
 
-        }
+    public void Interact()
+    {
+        Debug.Log("interact");
+        OpenRot();
     }
 }
