@@ -8,12 +8,14 @@ public class Player : MonoBehaviour, IDamageable
     
     [SerializeField] int Health;
 
-    [SerializeField] int Speed;
-    [SerializeField] int SprintMod;
+    [SerializeField] float Speed;
+    [SerializeField] float SprintMod;
+    [SerializeField] float CrouchMod;
 
+    [SerializeField] float CrouchHeightMod;
     [SerializeField] int JumpMax;
-    [SerializeField] int JumpSpeed;
-    [SerializeField] int Gravity;
+    [SerializeField] float JumpSpeed;
+    [SerializeField] float Gravity;
 
     [SerializeField] FireArm Weapon;
 
@@ -56,6 +58,7 @@ public class Player : MonoBehaviour, IDamageable
         Controller.Move(MoveDir * Speed * Time.deltaTime);
         
         Sprint();
+        Crouch();
 
         if (Input.GetButtonDown("Jump") && JumpCount < JumpMax)
         {
@@ -76,6 +79,22 @@ public class Player : MonoBehaviour, IDamageable
         else if (Input.GetButtonUp("Sprint"))
         {
             Speed /= SprintMod;
+        }
+    }
+
+    void Crouch()
+    {
+        if (Input.GetButtonDown("Crouch"))
+        {
+            Speed *= CrouchMod;
+            Controller.transform.localScale = 
+                new Vector3(transform.localScale.x, transform.localScale.y * CrouchHeightMod, transform.localScale.z);
+        }
+        else if (Input.GetButtonUp("Crouch"))
+        {
+            Speed /= CrouchMod;
+            Controller.transform.localScale =
+                new Vector3(transform.localScale.x, transform.localScale.y / CrouchHeightMod, transform.localScale.z);
         }
     }
 
