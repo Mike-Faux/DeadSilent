@@ -28,6 +28,8 @@ public class Player : MonoBehaviour, IDamageable
     Vector3 MoveDir;
     Vector3 PlayerVel;
 
+    bool IsCrouch;
+    bool IsSprint;
 
     IInteractable interact;
     int JumpCount;
@@ -87,11 +89,15 @@ public class Player : MonoBehaviour, IDamageable
     {
         if (Input.GetButtonDown("Sprint"))
         {
-            Speed *= SprintMod;
+            if (IsCrouch)
+            {
+                UnCrouch();
+            }
+            DoSprint();
         }
-        else if (Input.GetButtonUp("Sprint"))
+        else if (Input.GetButtonUp("Sprint") && !IsCrouch)
         {
-            Speed /= SprintMod;
+            UnSprint();
         }
     }
 
@@ -99,16 +105,44 @@ public class Player : MonoBehaviour, IDamageable
     {
         if (Input.GetButtonDown("Crouch"))
         {
-            Speed *= CrouchMod;
-            Controller.transform.localScale = 
-                new Vector3(transform.localScale.x, transform.localScale.y * CrouchHeightMod, transform.localScale.z);
+            if (IsSprint)
+            {
+                UnSprint();
+            }
+            DoCrouch();
         }
-        else if (Input.GetButtonUp("Crouch"))
+        else if (Input.GetButtonUp("Crouch") && !IsSprint)
         {
-            Speed /= CrouchMod;
-            Controller.transform.localScale =
-                new Vector3(transform.localScale.x, transform.localScale.y / CrouchHeightMod, transform.localScale.z);
+            UnCrouch();
         }
+    }
+
+    void DoCrouch()
+    {
+        IsCrouch = true;
+        Speed *= CrouchMod;
+        Controller.transform.localScale =
+            new Vector3(transform.localScale.x, transform.localScale.y * CrouchHeightMod, transform.localScale.z);
+    }
+
+    void UnCrouch()
+    {
+        IsCrouch = false;
+        Speed /= CrouchMod;
+        Controller.transform.localScale =
+            new Vector3(transform.localScale.x, transform.localScale.y / CrouchHeightMod, transform.localScale.z);
+    }
+
+    void DoSprint()
+    {
+        Speed *= SprintMod;
+        IsSprint = true;
+    }
+
+    void UnSprint()
+    {
+        IsSprint = false;
+        Speed /= SprintMod;
     }
 
     public void TakeDamage(int amount)
