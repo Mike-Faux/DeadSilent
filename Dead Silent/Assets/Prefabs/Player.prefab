@@ -184,6 +184,8 @@ MonoBehaviour:
   Health: 10
   Speed: 8
   SprintMod: 2
+  CrouchMod: 0.5
+  CrouchHeightMod: 0.6
   JumpMax: 1
   JumpSpeed: 8
   Gravity: 12
