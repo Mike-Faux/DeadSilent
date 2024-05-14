@@ -18,11 +18,14 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
     (Vector3 Position, int TimeInPosition)[] patrolPath;
     [SerializeField] Status currentStatus;
 
+    float BaseSpeed;
+
     int currentPatrolPoint;
     Vector3 targetPos;
 
     GameObject target;
-    [SerializeField] FireArm weapon;
+    [SerializeField] Weapon weapon;
+    [SerializeField] GameObject weaponSlot;
 
 
     MeshRenderer mr;
@@ -67,6 +70,9 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
     {
         GameManager.Instance.UpdateEnemyCount(1);
         mr = GetComponent<MeshRenderer>();
+        BaseSpeed = agent.speed;
+
+        weapon = weaponSlot.GetComponentInChildren<Weapon>();
     }
 
     // Update is called once per frame
@@ -102,6 +108,7 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
 
     public void Engage()
     {
+        agent.speed = BaseSpeed * 1.5f;
         //Officer Alerting Nearby Units
         if (type == AIType.Officer && GameManager.Instance.LastKnownPosition != null)
         {
@@ -154,7 +161,8 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
 
     public void Track()
     {
-        if(target != null && Vector3.Distance(target.transform.position, transform.position) < EngageDistance)
+        agent.speed = BaseSpeed * 1.5f;
+        if (target != null && Vector3.Distance(target.transform.position, transform.position) < EngageDistance)
         {
             currentStatus = Status.Engaging;
             Engage();
@@ -172,8 +180,9 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
 
     public void Investigate()
     {
+        agent.speed = BaseSpeed * .8f;
         //Debug.Log("Investigating");
-        if(targetPos == GameManager.Instance.LastKnownPosition)
+        if (targetPos == GameManager.Instance.LastKnownPosition)
         {
             currentStatus = Status.Loitering;
             StartCoroutine(Loiter(10, currentPatrolPoint));
@@ -188,6 +197,7 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
 
     public void Patrol()
     {
+        agent.speed = BaseSpeed;
         if (patrolPath == null) return;
         if (patrolPath.Length == 0) return;
         int seconds = patrolPath[currentPatrolPoint].TimeInPosition;

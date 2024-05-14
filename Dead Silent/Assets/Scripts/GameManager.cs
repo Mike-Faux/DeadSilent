@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text enemycountText;
 
     public Image PlayerHPBar;
+    public GameObject playerDFlash;
 
     public bool pause;
     int enemyCount;

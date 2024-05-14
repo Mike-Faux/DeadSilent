@@ -863,7 +863,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 119
   currentStatus: 0
-  weapon: {fileID: 1382341214233727053}
+  weaponSlot: {fileID: 4405476026280522474}
   DamagedFlashMaterial: {fileID: 2100000, guid: bd0740a28985f52429a4721fcb93090a, type: 2}
 --- !u!114 &8155283647535094082
 MonoBehaviour:
@@ -1074,14 +1074,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8780580259879206463, guid: d8388a3e4845c9242a4649fab83e3fc4, type: 3}
   m_PrefabInstance: {fileID: 8206117668515578121}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1382341214233727053 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7119888129781469508, guid: d8388a3e4845c9242a4649fab83e3fc4, type: 3}
-  m_PrefabInstance: {fileID: 8206117668515578121}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90489a337904a014f94af94e3babec0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
