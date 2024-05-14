@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 551771364105821746}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.13599968, y: -0.778, z: 0}
+  m_LocalPosition: {x: 0.13599968, y: -0.778, z: 0.331}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -184,6 +184,8 @@ MonoBehaviour:
   Health: 10
   Speed: 8
   SprintMod: 2
+  CrouchMod: 0.5
+  CrouchHeightMod: 0.6
   JumpMax: 1
   JumpSpeed: 8
   Gravity: 12
@@ -296,7 +298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Sensitivity: 250
   LockVertMin: -90
-  LockVertMax: 90
+  LockVertMax: 45
   InvertY: 0
 --- !u!1001 &7340320162018620091
 PrefabInstance:
