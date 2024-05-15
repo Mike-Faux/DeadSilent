@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public Vector3 LastKnownPosition;
 
     [SerializeField] GameObject pauseMenu;
+    [SerializeField] GameObject InventoryMenu;
     [SerializeField] GameObject activeMenu;
     [SerializeField] GameObject winMenu;
     [SerializeField] GameObject loseMenu;
@@ -23,8 +24,9 @@ public class GameManager : MonoBehaviour
     public GameObject playerDFlash;
 
     public bool pause;
+    public bool inventory;
     int enemyCount;
-    int ItemCount; 
+    int ItemCount;
 
     [SerializeField] bool IgnoreLoss = false;
 
@@ -33,13 +35,15 @@ public class GameManager : MonoBehaviour
         Player = GameObject.FindWithTag("Player");
         Instance = this;
 
+        //finds the GameManager EnemyManager component and assign it to enemyManager
         enemyManager = GetComponent<EnemyManager>();
+        InventoryMenu.SetActive(false);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -47,20 +51,54 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetButtonDown("Cancel"))
         {
-            if(activeMenu == null)
-            {
-                pauseState();
-                activeMenu = pauseMenu;
-                activeMenu.SetActive(pause);
-            }
-            else if(activeMenu == pauseMenu)
-            {
-                resumeState();
-            }
+             
+            TogglePauseMenu();
+        }
+
+        if (Input.GetButtonDown("Inventory"))
+        {
+             
+            ToggleInventoryMenu();
         }
     }
 
-     public void IncrementItemCount(int amount)
+    void TogglePauseMenu()
+    {
+        if (activeMenu == null)
+        {
+             
+            pauseState();
+            activeMenu = pauseMenu;
+            activeMenu.SetActive(pause);
+        }
+        else if (activeMenu == pauseMenu)
+        {
+             
+            resumeState();
+        }
+    }
+
+    void ToggleInventoryMenu()
+    {
+        if (activeMenu == null)
+        {
+            
+            inventoryState();
+            activeMenu = InventoryMenu;
+            activeMenu.SetActive(inventory);
+        }
+        else if (activeMenu == InventoryMenu)
+        {
+             
+            resumeState();
+        }
+    }
+
+
+
+
+
+    public void IncrementItemCount(int amount)
      {
          ItemCount += amount;
          ItemcountText.text += ItemCount.ToString("F0");
@@ -81,17 +119,32 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void inventoryState()
+    {
+        if (!pause)
+        {
+            inventory = true;
+            Time.timeScale = 0;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.Confined;
+        }
+    }
+
     public void pauseState()
     {
-        pause = true;
-        Time.timeScale = 0;
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined;
+        if (!inventory)
+        {
+            pause = true;
+            Time.timeScale = 0;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.Confined;
+        }
     }
 
     public void resumeState()
     {
         pause = false;
+        inventory = false;
         Time.timeScale = 1;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
