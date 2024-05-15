@@ -22,16 +22,7 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] LayerMask InteractionMask;
 
     [SerializeField] GameObject intIcon;
-
-<<<<<<< HEAD
     [SerializeField] IWeapon Weapon;
-
-    List<IWeapon> WeaponsList;
-
-    int WeaponI;
-=======
-    [SerializeField] FireArm Weapon;
->>>>>>> parent of 71dc0f9 (Beginning Weapon Swap, Item Interface)
 
     Vector3 MoveDir;
     Vector3 PlayerVel;
@@ -48,14 +39,6 @@ public class Player : MonoBehaviour, IDamageable
     void Start()
     {
         MaxHealth = Health;
-<<<<<<< HEAD
-
-        WeaponsList = new List<IWeapon>();
-        WeaponsList.Add(Weapon);
-        WeaponI = 0;
-
-=======
->>>>>>> parent of 71dc0f9 (Beginning Weapon Swap, Item Interface)
         UpdatePlayerUI();
     }
 
@@ -190,13 +173,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, interactionDistance, InteractionMask))
         {
-<<<<<<< HEAD
-            if (hit.collider.TryGetComponent(out IInteractable interactable))
-=======
-         
-
            if (hit.collider.TryGetComponent(out IInteractable interactable))
->>>>>>> parent of 71dc0f9 (Beginning Weapon Swap, Item Interface)
             {
                 interact = interactable;
             }
