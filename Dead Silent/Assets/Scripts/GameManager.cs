@@ -51,13 +51,13 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetButtonDown("Cancel"))
         {
-            // Toggle pause menu
+             
             TogglePauseMenu();
         }
 
         if (Input.GetButtonDown("Inventory"))
         {
-            // Toggle inventory menu
+             
             ToggleInventoryMenu();
         }
     }
@@ -66,14 +66,14 @@ public class GameManager : MonoBehaviour
     {
         if (activeMenu == null)
         {
-            // Activate pause menu
+             
             pauseState();
             activeMenu = pauseMenu;
             activeMenu.SetActive(pause);
         }
         else if (activeMenu == pauseMenu)
         {
-            // Deactivate pause menu
+             
             resumeState();
         }
     }
@@ -82,14 +82,14 @@ public class GameManager : MonoBehaviour
     {
         if (activeMenu == null)
         {
-            // Activate inventory menu
+            
             inventoryState();
             activeMenu = InventoryMenu;
             activeMenu.SetActive(inventory);
         }
         else if (activeMenu == InventoryMenu)
         {
-            // Deactivate inventory menu
+             
             resumeState();
         }
     }
