@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeWeapon : MonoBehaviour, Weapon
+public class MeleeWeapon : MonoBehaviour, IWeapon
 {
 
     [SerializeField] Transform SwingPos;

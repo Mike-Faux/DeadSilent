@@ -24,7 +24,7 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
     Vector3 targetPos;
 
     GameObject target;
-    [SerializeField] Weapon weapon;
+    [SerializeField] IWeapon weapon;
     [SerializeField] GameObject weaponSlot;
 
     [SerializeField] GameObject StatusIndicator;
@@ -48,7 +48,7 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         StatusIndicatorMR = StatusIndicator.GetComponent<MeshRenderer>();
         BaseSpeed = agent.speed;
 
-        weapon = weaponSlot.GetComponentInChildren<Weapon>();
+        weapon = weaponSlot.GetComponentInChildren<IWeapon>();
     }
 
     // Update is called once per frame

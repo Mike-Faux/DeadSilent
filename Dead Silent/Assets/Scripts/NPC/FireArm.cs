@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireArm : MonoBehaviour, Weapon
+public class FireArm : MonoBehaviour, IWeapon
 {
 
     [SerializeField] Transform FirePos;

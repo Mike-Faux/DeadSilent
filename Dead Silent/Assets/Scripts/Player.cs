@@ -23,9 +23,9 @@ public class Player : MonoBehaviour, IDamageable
 
     [SerializeField] GameObject intIcon;
 
-    [SerializeField] Weapon Weapon;
+    [SerializeField] IWeapon Weapon;
 
-    List<Weapon> WeaponsList;
+    List<IWeapon> WeaponsList;
 
     int WeaponI;
 
@@ -45,7 +45,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         MaxHealth = Health;
 
-        WeaponsList = new List<Weapon>();
+        WeaponsList = new List<IWeapon>();
         WeaponsList.Add(Weapon);
         WeaponI = 0;
 
@@ -217,11 +217,8 @@ public class Player : MonoBehaviour, IDamageable
 
     void CheckInteraction()
     {
-        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
-        if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance, InteractionMask))
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, interactionDistance, InteractionMask))
         {
-         
-
             if (hit.collider.TryGetComponent(out IInteractable interactable))
             {
                 interact = interactable;
@@ -230,8 +227,6 @@ public class Player : MonoBehaviour, IDamageable
             {
                 interact = null;
             }
-                
-                
         }
     }
 
