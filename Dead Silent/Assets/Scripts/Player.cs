@@ -23,7 +23,11 @@ public class Player : MonoBehaviour, IDamageable
 
     [SerializeField] GameObject intIcon;
 
-    [SerializeField] FireArm Weapon;
+    [SerializeField] Weapon Weapon;
+
+    List<Weapon> WeaponsList;
+
+    int WeaponI;
 
     Vector3 MoveDir;
     Vector3 PlayerVel;
@@ -40,6 +44,11 @@ public class Player : MonoBehaviour, IDamageable
     void Start()
     {
         MaxHealth = Health;
+
+        WeaponsList = new List<Weapon>();
+        WeaponsList.Add(Weapon);
+        WeaponI = 0;
+
         UpdatePlayerUI();
     }
 
@@ -48,9 +57,9 @@ public class Player : MonoBehaviour, IDamageable
     {
         Movement();
 
-        if (Input.GetButton("Fire1") && Weapon != null)
+        if (Input.GetButton("Fire1") && WeaponsList[WeaponI] != null)
         {
-            Weapon.Attack();
+            WeaponsList[WeaponI].Attack();
         }
 
         CheckInteraction();
@@ -58,7 +67,43 @@ public class Player : MonoBehaviour, IDamageable
         {
             interact.Interact();
         }
+    }
 
+    void SwapWeapon()
+    {
+        // if previous weapon input
+        if (Input.GetButtonDown("pWeapon"))
+        {
+            if (WeaponI == 0)
+            {
+                WeaponI = WeaponsList.Count - 1;
+            }
+            else
+            {
+                WeaponI--;
+            }
+        }
+        // if next weapon input
+        else if (Input.GetButtonDown("nWeapon"))
+        {
+            if (WeaponI == WeaponsList.Count - 1)
+            {
+                WeaponI = 0;
+            }
+            else if (WeaponI < WeaponsList.Count - 1)
+            {
+                WeaponI++;
+            }
+        }
+        // if swap is prompted by lack of ammo
+        else
+        {
+            WeaponsList.RemoveAt(WeaponI);
+            if (WeaponI >= WeaponsList.Count)
+            {
+                WeaponI = 0;
+            }
+        }
     }
 
     void Movement()
@@ -177,7 +222,7 @@ public class Player : MonoBehaviour, IDamageable
         {
          
 
-           if (hit.collider.TryGetComponent(out IInteractable interactable))
+            if (hit.collider.TryGetComponent(out IInteractable interactable))
             {
                 interact = interactable;
             }
