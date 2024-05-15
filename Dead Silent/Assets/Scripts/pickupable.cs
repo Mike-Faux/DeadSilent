@@ -5,6 +5,15 @@ using UnityEngine;
 public class Pickupable : MonoBehaviour, IInteractable
 {
     public string itemName;
+    private GameManager gameManager;
+
+
+    private void Start()
+    {
+        // Find the GameManager in the scene
+        gameManager = FindObjectOfType<GameManager>();
+    }
+
 
     // Called when another collider enters the trigger collider
     private void OnTriggerEnter(Collider other)
@@ -21,7 +30,11 @@ public class Pickupable : MonoBehaviour, IInteractable
     public void Interact()
     {
         Debug.Log("Picked up: " + itemName);
+
+        // Update GameManager's item count
+        gameManager.IncrementItemCount(1);
+
+        // Destroy the object after updating item count
         Destroy(gameObject); // Destroy the object when picked up
-        // You can add additional logic here, such as adding the item to the player's inventory
     }
 }

@@ -17,12 +17,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject winMenu;
     [SerializeField] GameObject loseMenu;
     [SerializeField] TMP_Text enemycountText;
+    [SerializeField] TMP_Text ItemcountText;
 
     public Image PlayerHPBar;
     public GameObject playerDFlash;
 
     public bool pause;
     int enemyCount;
+    int ItemCount; 
 
     [SerializeField] bool IgnoreLoss = false;
 
@@ -54,6 +56,13 @@ public class GameManager : MonoBehaviour
                 resumeState();
             }
         }
+    }
+
+    public void IncrementItemCount(int amount)
+    {
+        ItemCount += amount;
+        ItemcountText.text += ItemCount.ToString("F0");
+         
     }
 
     public void UpdateEnemyCount(int amount)
