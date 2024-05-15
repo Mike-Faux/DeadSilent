@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
     {
         Player = GameObject.FindWithTag("Player");
         Instance = this;
+
+        enemyManager = GetComponent<EnemyManager>();
     }
 
     // Start is called before the first frame update
@@ -58,12 +60,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void IncrementItemCount(int amount)
-    {
-        ItemCount += amount;
-        ItemcountText.text += ItemCount.ToString("F0");
+     public void IncrementItemCount(int amount)
+     {
+         ItemCount += amount;
+         ItemcountText.text += ItemCount.ToString("F0");
          
-    }
+     }
 
     public void UpdateEnemyCount(int amount)
     {
