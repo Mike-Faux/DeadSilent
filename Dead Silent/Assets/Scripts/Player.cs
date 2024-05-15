@@ -23,11 +23,15 @@ public class Player : MonoBehaviour, IDamageable
 
     [SerializeField] GameObject intIcon;
 
+<<<<<<< HEAD
     [SerializeField] IWeapon Weapon;
 
     List<IWeapon> WeaponsList;
 
     int WeaponI;
+=======
+    [SerializeField] FireArm Weapon;
+>>>>>>> parent of 71dc0f9 (Beginning Weapon Swap, Item Interface)
 
     Vector3 MoveDir;
     Vector3 PlayerVel;
@@ -44,11 +48,14 @@ public class Player : MonoBehaviour, IDamageable
     void Start()
     {
         MaxHealth = Health;
+<<<<<<< HEAD
 
         WeaponsList = new List<IWeapon>();
         WeaponsList.Add(Weapon);
         WeaponI = 0;
 
+=======
+>>>>>>> parent of 71dc0f9 (Beginning Weapon Swap, Item Interface)
         UpdatePlayerUI();
     }
 
@@ -57,9 +64,9 @@ public class Player : MonoBehaviour, IDamageable
     {
         Movement();
 
-        if (Input.GetButton("Fire1") && WeaponsList[WeaponI] != null)
+        if (Input.GetButton("Fire1") && Weapon != null)
         {
-            WeaponsList[WeaponI].Attack();
+            Weapon.Attack();
         }
 
         CheckInteraction();
@@ -67,43 +74,7 @@ public class Player : MonoBehaviour, IDamageable
         {
             interact.Interact();
         }
-    }
 
-    void SwapWeapon()
-    {
-        // if previous weapon input
-        if (Input.GetButtonDown("pWeapon"))
-        {
-            if (WeaponI == 0)
-            {
-                WeaponI = WeaponsList.Count - 1;
-            }
-            else
-            {
-                WeaponI--;
-            }
-        }
-        // if next weapon input
-        else if (Input.GetButtonDown("nWeapon"))
-        {
-            if (WeaponI == WeaponsList.Count - 1)
-            {
-                WeaponI = 0;
-            }
-            else if (WeaponI < WeaponsList.Count - 1)
-            {
-                WeaponI++;
-            }
-        }
-        // if swap is prompted by lack of ammo
-        else
-        {
-            WeaponsList.RemoveAt(WeaponI);
-            if (WeaponI >= WeaponsList.Count)
-            {
-                WeaponI = 0;
-            }
-        }
     }
 
     void Movement()
@@ -219,7 +190,13 @@ public class Player : MonoBehaviour, IDamageable
     {
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, interactionDistance, InteractionMask))
         {
+<<<<<<< HEAD
             if (hit.collider.TryGetComponent(out IInteractable interactable))
+=======
+         
+
+           if (hit.collider.TryGetComponent(out IInteractable interactable))
+>>>>>>> parent of 71dc0f9 (Beginning Weapon Swap, Item Interface)
             {
                 interact = interactable;
             }
