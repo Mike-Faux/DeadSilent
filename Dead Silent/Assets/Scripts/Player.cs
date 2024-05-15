@@ -5,7 +5,9 @@ using UnityEngine;
 public class Player : MonoBehaviour, IDamageable
 {
     [SerializeField] CharacterController Controller;
-    
+   
+    [SerializeField] private float interactionDistance;
+
     [SerializeField] int Health;
 
     [SerializeField] float Speed;
@@ -14,16 +16,26 @@ public class Player : MonoBehaviour, IDamageable
 
     [SerializeField] float CrouchHeightMod;
     [SerializeField] int JumpMax;
-    [SerializeField] float JumpSpeed;
-    [SerializeField] float Gravity;
+    [SerializeField] int JumpSpeed;
+    [SerializeField] int Gravity;
+    
+    [SerializeField] LayerMask InteractionMask;
 
-    [SerializeField] FireArm Weapon;
+    [SerializeField] GameObject intIcon;
+
+    [SerializeField] Weapon Weapon;
+
+    List<Weapon> WeaponsList;
+
+    int WeaponI;
 
     Vector3 MoveDir;
     Vector3 PlayerVel;
 
-    
+    bool IsCrouch;
+    bool IsSprint;
 
+    IInteractable interact;
     int JumpCount;
 
     private int MaxHealth;
@@ -32,6 +44,11 @@ public class Player : MonoBehaviour, IDamageable
     void Start()
     {
         MaxHealth = Health;
+
+        WeaponsList = new List<Weapon>();
+        WeaponsList.Add(Weapon);
+        WeaponI = 0;
+
         UpdatePlayerUI();
     }
 
@@ -40,9 +57,52 @@ public class Player : MonoBehaviour, IDamageable
     {
         Movement();
 
-        if (Input.GetButton("Fire1") && Weapon != null)
+        if (Input.GetButton("Fire1") && WeaponsList[WeaponI] != null)
         {
-            Weapon.Attack();
+            WeaponsList[WeaponI].Attack();
+        }
+
+        CheckInteraction();
+        if (Input.GetButton("Fire2") && interact != null)
+        {
+            interact.Interact();
+        }
+    }
+
+    void SwapWeapon()
+    {
+        // if previous weapon input
+        if (Input.GetButtonDown("pWeapon"))
+        {
+            if (WeaponI == 0)
+            {
+                WeaponI = WeaponsList.Count - 1;
+            }
+            else
+            {
+                WeaponI--;
+            }
+        }
+        // if next weapon input
+        else if (Input.GetButtonDown("nWeapon"))
+        {
+            if (WeaponI == WeaponsList.Count - 1)
+            {
+                WeaponI = 0;
+            }
+            else if (WeaponI < WeaponsList.Count - 1)
+            {
+                WeaponI++;
+            }
+        }
+        // if swap is prompted by lack of ammo
+        else
+        {
+            WeaponsList.RemoveAt(WeaponI);
+            if (WeaponI >= WeaponsList.Count)
+            {
+                WeaponI = 0;
+            }
         }
     }
 
@@ -74,11 +134,15 @@ public class Player : MonoBehaviour, IDamageable
     {
         if (Input.GetButtonDown("Sprint"))
         {
-            Speed *= SprintMod;
+            if (IsCrouch)
+            {
+                UnCrouch();
+            }
+            DoSprint();
         }
-        else if (Input.GetButtonUp("Sprint"))
+        else if (Input.GetButtonUp("Sprint") && !IsCrouch)
         {
-            Speed /= SprintMod;
+            UnSprint();
         }
     }
 
@@ -86,16 +150,44 @@ public class Player : MonoBehaviour, IDamageable
     {
         if (Input.GetButtonDown("Crouch"))
         {
-            Speed *= CrouchMod;
-            Controller.transform.localScale = 
-                new Vector3(transform.localScale.x, transform.localScale.y * CrouchHeightMod, transform.localScale.z);
+            if (IsSprint)
+            {
+                UnSprint();
+            }
+            DoCrouch();
         }
-        else if (Input.GetButtonUp("Crouch"))
+        else if (Input.GetButtonUp("Crouch") && !IsSprint)
         {
-            Speed /= CrouchMod;
-            Controller.transform.localScale =
-                new Vector3(transform.localScale.x, transform.localScale.y / CrouchHeightMod, transform.localScale.z);
+            UnCrouch();
         }
+    }
+
+    void DoCrouch()
+    {
+        IsCrouch = true;
+        Speed *= CrouchMod;
+        Controller.transform.localScale =
+            new Vector3(transform.localScale.x, transform.localScale.y * CrouchHeightMod, transform.localScale.z);
+    }
+
+    void UnCrouch()
+    {
+        IsCrouch = false;
+        Speed /= CrouchMod;
+        Controller.transform.localScale =
+            new Vector3(transform.localScale.x, transform.localScale.y / CrouchHeightMod, transform.localScale.z);
+    }
+
+    void DoSprint()
+    {
+        Speed *= SprintMod;
+        IsSprint = true;
+    }
+
+    void UnSprint()
+    {
+        IsSprint = false;
+        Speed /= SprintMod;
     }
 
     public void TakeDamage(int amount)
@@ -122,4 +214,25 @@ public class Player : MonoBehaviour, IDamageable
         // update health bar
         GameManager.Instance.PlayerHPBar.fillAmount = (float)Health / MaxHealth;
     }
+
+    void CheckInteraction()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+        if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance, InteractionMask))
+        {
+         
+
+            if (hit.collider.TryGetComponent(out IInteractable interactable))
+            {
+                interact = interactable;
+            }
+            else
+            {
+                interact = null;
+            }
+                
+                
+        }
+    }
+
 }
