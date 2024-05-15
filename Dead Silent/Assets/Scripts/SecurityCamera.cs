@@ -1,17 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
+using static UnityEditor.FilePathAttribute;
 
 public class SecurityCamera : MonoBehaviour
 {
-    [SerializeField] float rotateSpeed;
+    [SerializeField] float rotateTime;
     [SerializeField] float pauseTime;
     [SerializeField] float rotationAngle;
 
     [SerializeField] Transform cam;
 
-    int segments = 30;
-    int rotationTarget;
+    int segments = 80;
+    float rotationTarget;
     bool isRotating;
     bool isPaused;
 
@@ -20,7 +22,7 @@ public class SecurityCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rotationTarget = 1;
+        rotationTarget = 1f;
     }
 
     // Update is called once per frame
@@ -34,26 +36,44 @@ public class SecurityCamera : MonoBehaviour
 
     public void Rotate()
     {
-        StartCoroutine(SmoothRotate(Quaternion.AngleAxis(rotationAngle * rotationTarget, Vector3.forward)));
-        rotationTarget *= -1;
+        float currRot = cam.localRotation.eulerAngles.y;
+
+        if (currRot != 0)
+        {
+            StartCoroutine(SmoothRotate(0f));
+            return;
+        }
+
+        StartCoroutine(SmoothRotate(rotationAngle * rotationTarget));
+        rotationTarget *= -1f;
     }
 
-    IEnumerator SmoothRotate(Quaternion targetRotation)
+    IEnumerator SmoothRotate(float angle)
     {
         isRotating = true;
-        float interval = rotateSpeed / segments;
 
-        //cam.Rotate(new Vector3(0, 0, 0));
+        float interval = rotateTime / segments;
+        float waitTime = interval * rotateTime;
+
+        float localRot = cam.localRotation.eulerAngles.y;
+        if (localRot > 90) localRot -= 360;
+        if (localRot < -90) localRot += 360;
+
+        float rotation = (angle - localRot) / segments;
+
+        //Debug.Log($"{rotation} {angle} {cam.localRotation.eulerAngles.y} {angle - (cam.localRotation.eulerAngles.y)}");
 
         for (int i = 0; i < segments; i++)
         {
-            cam.rotation = Quaternion.Slerp(cam.rotation, targetRotation, i * interval + interval);
+            cam.Rotate(new Vector3 (0, rotation, 0), Space.Self);
             yield return new WaitForSeconds(interval);
         }
 
-        isRotating = false;
+        cam.localRotation = Quaternion.Euler(0, angle, 0);
 
-        StartCoroutine(Watch(pauseTime));
+        isRotating = false;
+        if (angle != 0) StartCoroutine(Watch(pauseTime));
+
     }
 
     IEnumerator Watch(float seconds)

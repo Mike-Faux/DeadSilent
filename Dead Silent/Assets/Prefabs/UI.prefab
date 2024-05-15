@@ -389,7 +389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1e191a04c2089f4d9a3140700c74001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyManager: {fileID: 4050658943684849247}
+  enemyManager: {fileID: 4050658943684849247}
   Player: {fileID: 0}
   LastKnownPosition: {x: 0, y: 0, z: 0}
   pauseMenu: {fileID: 1782760095065680477}
@@ -397,9 +397,11 @@ MonoBehaviour:
   winMenu: {fileID: 3599391264321201963}
   loseMenu: {fileID: 1259258262353890878}
   enemycountText: {fileID: 1004225508183980318}
+  ItemcountText: {fileID: 0}
   PlayerHPBar: {fileID: 5424314180962300542}
   playerDFlash: {fileID: 6488893844987263408}
   pause: 0
+  IgnoreLoss: 0
 --- !u!114 &8347402728032428917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -429,6 +431,7 @@ MonoBehaviour:
   Investigate_Status_Material: {fileID: 2100000, guid: b63c6c9b284052a44b632992db12d79c, type: 2}
   Track_Status_Material: {fileID: 2100000, guid: 96b5148c43a2a514cbe76e9ecb9f785e, type: 2}
   Engage_Status_Material: {fileID: 2100000, guid: 75ca9c6eec9411140929eb4429a98558, type: 2}
+  DamagedFlashMaterial: {fileID: 2100000, guid: bd0740a28985f52429a4721fcb93090a, type: 2}
 --- !u!1 &612601331015937326
 GameObject:
   m_ObjectHideFlags: 0

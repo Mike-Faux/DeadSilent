@@ -35,37 +35,13 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
     float LoiterVariation = 1.5f;
 
 
-
-
-
     // Start is called before the first frame update
     void Start()
     {
-        mr = GetComponent<MeshRenderer>();
-        if (mr != null)
-        {
-            Debug.Log("MeshRenderer (mr) successfully initialized.");
-        }
-        else
-        {
-            Debug.LogError("MeshRenderer (mr) is null after GetComponent<MeshRenderer>()!");
-        }
-
-        if (GameManager.Instance == null)
-        {
-            Debug.LogError("GameManager.Instance is null!");
-            return;
-        }
-
-        if (GameManager.Instance.enemyManager == null)
-        {
-            Debug.LogError("GameManager.Instance.enemyManager is null!");
-            return;
-        }
-
         GameManager.Instance.enemyManager.ReportIn(this);
         GameManager.Instance.UpdateEnemyCount(1);
 
+        mr = gameObject.GetComponent<MeshRenderer>();
         
         StatusIndicatorMR = StatusIndicator.GetComponent<MeshRenderer>();
         BaseSpeed = agent.speed;
@@ -132,11 +108,6 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
 
     IEnumerator Flash(float time)
     {
-        if (mr == null)
-        {
-            Debug.LogError("MeshRenderer (mr) is null in Flash coroutine!");
-            yield break;
-        }
         Material temp = mr.material;
 
         mr.material = GameManager.Instance.enemyManager.DamagedFlashMaterial;
@@ -291,8 +262,6 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
     {
         float interval = 1f / segments;
 
-        transform.Rotate(new Vector3(0, 0, 0));
-
         for (int i = 0; i < segments; i++)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, i * interval + interval);
@@ -340,15 +309,7 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
     public void SetStatus(Status status)
     {
         currentStatus = status;
-        if (GameManager.Instance != null && GameManager.Instance.enemyManager != null)
-        {
-            Material statusMaterial = GameManager.Instance.enemyManager.GetStatusMaterial(status);
-            if (statusMaterial != null)
-            {
-                StatusIndicatorMR.material = statusMaterial;
-            }
-            
-        }
+        StatusIndicatorMR.material = GameManager.Instance.enemyManager.GetStatusMaterial(status);
     }
 
     public enum Status
