@@ -50,8 +50,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SwingPos: {fileID: 6723014508374737379}
-  Damage: 2
-  SwingRate: 0.4
+  Damage: 4
+  SwingRate: 0.3
   SwingRadius: 1
 --- !u!1 &3120081537271223881
 GameObject:

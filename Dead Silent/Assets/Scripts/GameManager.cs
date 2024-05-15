@@ -7,6 +7,7 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public EnemyManager enemyManager;
 
     public GameObject Player;
     public Vector3 LastKnownPosition;
@@ -22,6 +23,8 @@ public class GameManager : MonoBehaviour
 
     public bool pause;
     int enemyCount;
+
+    [SerializeField] bool IgnoreLoss = false;
 
     private void Awake()
     {
@@ -87,6 +90,8 @@ public class GameManager : MonoBehaviour
 
     public void lostState()
     {
+        if (IgnoreLoss) return;
+
         pauseState();
         activeMenu = loseMenu;
         activeMenu.SetActive(pause);

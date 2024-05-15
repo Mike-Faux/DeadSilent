@@ -581,9 +581,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FirePos: {fileID: 1662545299622288658}
   Damage: 1
-  BulletSpeed: 85
-  FireRate: 0.3
+  BulletSpeed: 180
+  FireRate: 0.12
+  Ammo: 30
+  Ammo_Capacity: 30
+  ReloadTime: 3
   Bullet: {fileID: 4971964780661652405, guid: 95f272568e3a6f14092a9f611968e812, type: 3}
+  Silenced: 0
 --- !u!1 &7002633757822394912
 GameObject:
   m_ObjectHideFlags: 0
