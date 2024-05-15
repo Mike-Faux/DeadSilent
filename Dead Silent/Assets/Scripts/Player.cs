@@ -22,6 +22,7 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] LayerMask InteractionMask;
 
     [SerializeField] GameObject intIcon;
+    [SerializeField] GameObject weaponSlot;
     [SerializeField] IWeapon Weapon;
 
     Vector3 MoveDir;
@@ -40,6 +41,8 @@ public class Player : MonoBehaviour, IDamageable
     {
         MaxHealth = Health;
         UpdatePlayerUI();
+
+        Weapon = weaponSlot.GetComponentInChildren<IWeapon>();
     }
 
     // Update is called once per frame
