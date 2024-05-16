@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
 
     public Image PlayerHPBar;
     public GameObject playerDFlash;
+    public ItemSlot[] items;
 
     public bool pause;
     public bool inventory;
@@ -35,7 +36,7 @@ public class GameManager : MonoBehaviour
         Player = GameObject.FindWithTag("Player");
         Instance = this;
 
-        //finds the GameManager EnemyManager component and assign it to enemyManager
+        
         enemyManager = GetComponent<EnemyManager>();
         InventoryMenu.SetActive(false);
     }
@@ -107,7 +108,16 @@ public class GameManager : MonoBehaviour
 
     public void AddItem(string itemName, int itemAmount)
     {
-        Debug.Log("itemName = " + itemName + ", quantity = " + itemAmount);
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i].isFull == false)
+            {
+                items[i].AddItem(itemName, itemAmount);
+                Debug.Log("itemName = " + itemName + ", quantity = " + itemAmount);
+                return;
+            }
+            
+        }
     }
 
     public void UpdateEnemyCount(int amount)

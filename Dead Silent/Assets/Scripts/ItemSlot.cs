@@ -1,19 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour
     
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public string itemName;
+    public int itemAmount;
+    public bool isFull;
 
-    // Update is called once per frame
-    void Update()
+
+
+    [SerializeField]
+    private TMP_Text quantityText;
+
+    [SerializeField]
+    private Image itemImage;
+
+    // Start is called before the first frame update
+    public void AddItem(string itemName, int itemAmount)
     {
+        this.itemName = itemName;
+        this.itemAmount = itemAmount;
+        isFull = true;
+        quantityText.text = itemAmount.ToString();
+        quantityText.enabled = true;
         
     }
 }
