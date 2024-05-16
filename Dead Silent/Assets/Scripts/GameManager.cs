@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
         {
             if (items[i].isFull == false)
             {
-                items[i].AddItem(itemName, itemAmount);
+                items [i].AddItem(itemName, itemAmount);
                 Debug.Log("itemName = " + itemName + ", quantity = " + itemAmount);
                 return;
             }
