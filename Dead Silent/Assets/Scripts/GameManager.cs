@@ -39,6 +39,11 @@ public class GameManager : MonoBehaviour
         
         enemyManager = GetComponent<EnemyManager>();
         InventoryMenu.SetActive(false);
+
+        if(ItemcountText == null)
+        {
+            ItemcountText = GetComponentInChildren<TMP_Text>();
+        }
     }
 
     // Start is called before the first frame update
@@ -142,6 +147,15 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
+        }
+    }
+    public void DeselectAllSlots()
+    {
+        for(int i = 0;i <items.Length;i++)
+        {
+            
+            items [i].selectedShader.SetActive(false);
+            items [i].thisItemSelected = false;
         }
     }
 
