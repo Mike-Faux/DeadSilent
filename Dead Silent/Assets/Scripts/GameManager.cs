@@ -105,6 +105,11 @@ public class GameManager : MonoBehaviour
          
      }
 
+    public void AddItem(string itemName, int itemAmount)
+    {
+        Debug.Log("itemName = " + itemName + ", quantity = " + itemAmount);
+    }
+
     public void UpdateEnemyCount(int amount)
     {
         enemyCount += amount;
