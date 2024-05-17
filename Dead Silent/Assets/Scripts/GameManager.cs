@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
 
     public Image PlayerHPBar;
     public GameObject playerDFlash;
+    public ItemSlot[] items;
 
     public bool pause;
     public bool inventory;
@@ -35,9 +36,14 @@ public class GameManager : MonoBehaviour
         Player = GameObject.FindWithTag("Player");
         Instance = this;
 
-        //finds the GameManager EnemyManager component and assign it to enemyManager
+        
         enemyManager = GetComponent<EnemyManager>();
         InventoryMenu.SetActive(false);
+
+        if(ItemcountText == null)
+        {
+            ItemcountText = GetComponentInChildren<TMP_Text>();
+        }
     }
 
     // Start is called before the first frame update
@@ -105,6 +111,20 @@ public class GameManager : MonoBehaviour
          
      }
 
+    public void AddItem(string itemName, int itemAmount)
+    {
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i].isFull == false)
+            {
+                items [i].AddItem(itemName, itemAmount);
+                Debug.Log("itemName = " + itemName + ", quantity = " + itemAmount);
+                return;
+            }
+            
+        }
+    }
+
     public void UpdateEnemyCount(int amount)
     {
         enemyCount += amount;
@@ -127,6 +147,15 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
+        }
+    }
+    public void DeselectAllSlots()
+    {
+        for(int i = 0;i <items.Length;i++)
+        {
+            
+            items [i].selectedShader.SetActive(false);
+            items [i].thisItemSelected = false;
         }
     }
 

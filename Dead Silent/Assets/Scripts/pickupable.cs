@@ -4,14 +4,24 @@ using UnityEngine;
 
 public class Pickupable : MonoBehaviour, IInteractable
 {
-    public string itemName;
+    [SerializeField]
+    private string itemName;
+
+    [SerializeField]
+     private int ItemAmount;
+
+    
+
     private GameManager gameManager;
 
 
     private void Start()
     {
-        // Find the GameManager in the scene
         gameManager = FindObjectOfType<GameManager>();
+        if (gameManager == null)
+        {
+            Debug.LogError("GameManager not found in the scene.");
+        }
     }
 
 
@@ -22,19 +32,16 @@ public class Pickupable : MonoBehaviour, IInteractable
         if (other.CompareTag("Player"))
         {
             // Trigger the pickup action
-            Interact();
+            gameManager.AddItem( itemName, ItemAmount);
+            Debug.Log("Picked up: " + itemName);
+            gameManager.IncrementItemCount(1);
+            Destroy(gameObject);
         }
     }
 
     // Pickup action logic
     public void Interact()
     {
-        Debug.Log("Picked up: " + itemName);
-
-        // Update GameManager's item count
-        gameManager.IncrementItemCount(1);
-
-        // Destroy the object after updating item count
-        Destroy(gameObject); // Destroy the object when picked up
+       
     }
 }
