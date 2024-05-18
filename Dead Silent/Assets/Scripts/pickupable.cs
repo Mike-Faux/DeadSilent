@@ -10,7 +10,11 @@ public class Pickupable : MonoBehaviour, IInteractable
     [SerializeField]
      private int ItemAmount;
 
-    
+    [SerializeField]
+    private string itemDescription;
+
+
+
 
     private GameManager gameManager;
 
@@ -32,7 +36,7 @@ public class Pickupable : MonoBehaviour, IInteractable
         if (other.CompareTag("Player"))
         {
             // Trigger the pickup action
-            gameManager.AddItem( itemName, ItemAmount);
+            gameManager.AddItem( itemName, ItemAmount, itemDescription);
             Debug.Log("Picked up: " + itemName);
             gameManager.IncrementItemCount(1);
             Destroy(gameObject);

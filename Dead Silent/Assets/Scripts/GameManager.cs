@@ -40,7 +40,8 @@ public class GameManager : MonoBehaviour
 
         resumeState();
 
-        //InventoryMenu.SetActive(false);
+        InventoryMenu.SetActive(false);
+        ItemcountText = GetComponentInChildren<TMP_Text>();
     }
 
     // Start is called before the first frame update
@@ -106,13 +107,13 @@ public class GameManager : MonoBehaviour
          
      }
 
-    public void AddItem(string itemName, int itemAmount)
+    public void AddItem(string itemName, int itemAmount,string itemDescription)
     {
         for (int i = 0; i < items.Length; i++)
         {
             if (items[i].isFull == false)
             {
-                items [i].AddItem(itemName, itemAmount);
+                items [i].AddItem(itemName, itemAmount,itemDescription);
                 Debug.Log("itemName = " + itemName + ", quantity = " + itemAmount);
                 return;
             }
@@ -146,11 +147,13 @@ public class GameManager : MonoBehaviour
     }
     public void DeselectAllSlots()
     {
-        for(int i = 0;i <items.Length;i++)
+        for (int i = 0; i < items.Length; i++)
         {
-            
-            items [i].selectedShader.SetActive(false);
-            items [i].thisItemSelected = false;
+
+            items[i].selectedShader.SetActive(false);
+            items[i].thisItemSelected = false;
+            items[i].ItemDescriptionNameText.text = items[i].itemName;
+            items[i].ItemDescriptionText.text = items[i].itemDescription;
         }
     }
 

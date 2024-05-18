@@ -11,6 +11,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     public string itemName;
     public int itemAmount;
     public bool isFull;
+    public string itemDescription;
 
 
 
@@ -19,6 +20,9 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
 
     [SerializeField]
     private Image itemImage;
+
+    public TMP_Text ItemDescriptionNameText;
+    public TMP_Text ItemDescriptionText;
 
     public GameObject selectedShader;
     public bool thisItemSelected;
@@ -41,11 +45,14 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
 
 
     // Start is called before the first frame update
-    public void AddItem(string itemName, int itemAmount)
+    public void AddItem(string itemName, int itemAmount, string itemDescription)
     {
         this.itemName = itemName;
         this.itemAmount = itemAmount;
+        this.itemDescription = itemDescription;
+
         isFull = true;
+
         quantityText.text = itemAmount.ToString();
         quantityText.enabled = true;
 
@@ -63,15 +70,11 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     }
     public void OnLeftClick()
     {
-        if (gameManager != null)
-        {
-            gameManager.DeselectAllSlots();
-        }
-        if (selectedShader != null)
-        {
-            selectedShader.SetActive(true);
-        }
+        gameManager.DeselectAllSlots();
+        selectedShader.SetActive(true);
         thisItemSelected = true;
+        ItemDescriptionNameText.text = itemName;
+        ItemDescriptionText.text = itemDescription;
     }
     public void OnRightClick()
     {
