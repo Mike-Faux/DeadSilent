@@ -12,22 +12,48 @@ public class SecurityCamera : MonoBehaviour
 
     [SerializeField] Transform cam;
 
+    [SerializeField] float RereportDelay = 10;
+
     readonly int segments = 80;
     float rotationTarget;
     bool isRotating;
     bool isPaused;
 
+    bool isDestroyed = false;
+    bool isWatched;
+    bool isReported;
 
+    public void OnPlayerDetected(GameObject player)
+    {
+        if(isWatched && !isReported)
+        {
+            GameManager.Instance.enemyManager.SC_ReportSighting(this, player);
+            StartCoroutine(Report(RereportDelay));
+        }
+    }
+
+    public void OnDestruction()
+    {
+        Debug.Log("Security Camera Destroyed!");
+        GameManager.Instance.enemyManager.SC_ReportDestruction(this);
+        cam.gameObject.SetActive(false);
+        isDestroyed = true;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
+        isWatched = true;
+
         rotationTarget = 1f;
+        GameManager.Instance.enemyManager.SC_ReportIn(this);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(isDestroyed) return;
+
         if(!isRotating && !isPaused)
         {
             Rotate();
@@ -46,6 +72,13 @@ public class SecurityCamera : MonoBehaviour
 
         StartCoroutine(SmoothRotate(rotationAngle * rotationTarget));
         rotationTarget *= -1f;
+    }
+
+    IEnumerator Report(float time)
+    {
+        isReported = true;
+        yield return new WaitForSeconds(time);
+        isReported = false;
     }
 
     IEnumerator SmoothRotate(float angle)
