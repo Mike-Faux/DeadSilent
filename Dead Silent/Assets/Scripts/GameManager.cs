@@ -36,14 +36,11 @@ public class GameManager : MonoBehaviour
         Player = GameObject.FindWithTag("Player");
         Instance = this;
 
-        
         enemyManager = GetComponent<EnemyManager>();
-        InventoryMenu.SetActive(false);
 
-        if(ItemcountText == null)
-        {
-            ItemcountText = GetComponentInChildren<TMP_Text>();
-        }
+        resumeState();
+
+        //InventoryMenu.SetActive(false);
     }
 
     // Start is called before the first frame update
@@ -72,14 +69,12 @@ public class GameManager : MonoBehaviour
     {
         if (activeMenu == null)
         {
-             
             pauseState();
             activeMenu = pauseMenu;
             activeMenu.SetActive(pause);
         }
         else if (activeMenu == pauseMenu)
         {
-             
             resumeState();
         }
     }
@@ -146,7 +141,7 @@ public class GameManager : MonoBehaviour
             inventory = true;
             Time.timeScale = 0;
             Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.lockState = CursorLockMode.None;
         }
     }
     public void DeselectAllSlots()
@@ -166,7 +161,7 @@ public class GameManager : MonoBehaviour
             pause = true;
             Time.timeScale = 0;
             Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 
@@ -177,8 +172,12 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        activeMenu.SetActive(pause);
-        activeMenu = null;
+
+        if(activeMenu != null)
+        {
+            activeMenu.SetActive(pause);
+            activeMenu = null;
+        }
     }
 
     public void lostState()

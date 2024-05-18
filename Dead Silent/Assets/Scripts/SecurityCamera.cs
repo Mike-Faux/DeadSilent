@@ -12,7 +12,7 @@ public class SecurityCamera : MonoBehaviour
 
     [SerializeField] Transform cam;
 
-    int segments = 80;
+    readonly int segments = 80;
     float rotationTarget;
     bool isRotating;
     bool isPaused;
@@ -53,7 +53,6 @@ public class SecurityCamera : MonoBehaviour
         isRotating = true;
 
         float interval = rotateTime / segments;
-        float waitTime = interval * rotateTime;
 
         float localRot = cam.localRotation.eulerAngles.y;
         if (localRot > 90) localRot -= 360;
@@ -71,8 +70,8 @@ public class SecurityCamera : MonoBehaviour
 
         cam.localRotation = Quaternion.Euler(0, angle, 0);
 
-        isRotating = false;
         if (angle != 0) StartCoroutine(Watch(pauseTime));
+        isRotating = false;
 
     }
 

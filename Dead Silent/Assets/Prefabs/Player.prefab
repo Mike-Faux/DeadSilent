@@ -189,7 +189,7 @@ MonoBehaviour:
   CrouchHeightMod: 0.6
   JumpMax: 1
   JumpSpeed: 8
-  Gravity: 12
+  Gravity: 25
   InteractionMask:
     serializedVersion: 2
     m_Bits: 128
