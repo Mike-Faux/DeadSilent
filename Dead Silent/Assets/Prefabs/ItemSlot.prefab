@@ -340,8 +340,11 @@ MonoBehaviour:
   itemName: 
   itemAmount: 0
   isFull: 0
+  itemDescription: 
   quantityText: {fileID: 6286154034869095768}
   itemImage: {fileID: 7961598874453369409}
+  ItemDescriptionNameText: {fileID: 0}
+  ItemDescriptionText: {fileID: 0}
   selectedShader: {fileID: 1106831898668221247}
   thisItemSelected: 0
 --- !u!222 &6842772534057949817

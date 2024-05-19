@@ -16,7 +16,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
 
 
     [SerializeField]
-    private TMP_Text quantityText;
+     private TMP_Text quantityText;
 
     [SerializeField]
     private Image itemImage;
@@ -48,14 +48,25 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     public void AddItem(string itemName, int itemAmount, string itemDescription)
     {
         this.itemName = itemName;
-        this.itemAmount = itemAmount;
+        this.itemAmount += itemAmount;
         this.itemDescription = itemDescription;
 
-        isFull = true;
 
+        isFull = false;
+          
+        
         quantityText.text = itemAmount.ToString();
         quantityText.enabled = true;
+        
 
+        UpdateUI();
+
+    }
+
+    public void UpdateUI()
+    {
+       
+        // Update itemImage.sprite or other UI elements as needed
     }
     public void OnPointerClick(PointerEventData eventData)
     {

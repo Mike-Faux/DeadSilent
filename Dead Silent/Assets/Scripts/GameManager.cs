@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject winMenu;
     [SerializeField] GameObject loseMenu;
     [SerializeField] TMP_Text enemycountText;
-    [SerializeField] TMP_Text ItemcountText;
+    [SerializeField] TMP_Text itemcountText;
 
     public Image PlayerHPBar;
     public GameObject playerDFlash;
@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     public bool pause;
     public bool inventory;
     int enemyCount;
-    int ItemCount;
+    int itemCount;
 
     [SerializeField] bool IgnoreLoss = false;
 
@@ -38,10 +38,13 @@ public class GameManager : MonoBehaviour
 
         enemyManager = GetComponent<EnemyManager>();
 
-        resumeState();
-
         InventoryMenu.SetActive(false);
-        ItemcountText = GetComponentInChildren<TMP_Text>();
+        GameObject Inventory = GameObject.Find("Inventory");
+
+            resumeState();
+
+        
+        
     }
 
     // Start is called before the first frame update
@@ -101,25 +104,47 @@ public class GameManager : MonoBehaviour
 
 
     public void IncrementItemCount(int amount)
-     {
-         ItemCount += amount;
-         ItemcountText.text += ItemCount.ToString("F0");
-         
-     }
+    {
+        itemCount += amount;
 
-    public void AddItem(string itemName, int itemAmount,string itemDescription)
+        if (itemcountText != null)
+        {
+            itemcountText.text = itemCount.ToString("F0");
+            Debug.Log("Updated item count text to: " + itemcountText.text);
+        }
+        else
+        {
+            Debug.LogError("ItemCountText is null when trying to update item count.");
+        }
+    }
+
+    public void AddItem(string itemName, int itemAmount, string itemDescription)
     {
         for (int i = 0; i < items.Length; i++)
         {
-            if (items[i].isFull == false)
+            if (!items[i].isFull && items[i].itemName == itemName )
             {
-                items [i].AddItem(itemName, itemAmount,itemDescription);
-                Debug.Log("itemName = " + itemName + ", quantity = " + itemAmount);
+                items[i].itemAmount += itemAmount;
+                
+                Debug.Log("Stacked itemName = " + itemName + ", quantity = " + itemAmount);
+                items[i].isFull = true;
+                
                 return;
             }
-            
         }
-    }
+            for (int i = 0; i < items.Length; i++)
+            {
+                if (!items[i].isFull )
+                {
+                    items[i].AddItem(itemName, itemAmount, itemDescription);
+                    Debug.Log("Added new itemName = " + itemName + ", quantity = " + itemAmount);
+                    return;
+                }
+            }
+
+
+        }
+    
 
     public void UpdateEnemyCount(int amount)
     {

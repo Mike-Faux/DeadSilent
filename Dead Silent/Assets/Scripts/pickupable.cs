@@ -36,9 +36,9 @@ public class Pickupable : MonoBehaviour, IInteractable
         if (other.CompareTag("Player"))
         {
             // Trigger the pickup action
-            gameManager.AddItem( itemName, ItemAmount, itemDescription);
+            GameManager.Instance.AddItem(itemName, ItemAmount, itemDescription);
             Debug.Log("Picked up: " + itemName);
-            gameManager.IncrementItemCount(1);
+            GameManager.Instance.IncrementItemCount(ItemAmount);
             Destroy(gameObject);
         }
     }
