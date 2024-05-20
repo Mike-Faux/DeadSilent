@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
         enemyManager = GetComponent<EnemyManager>();
 
         InventoryMenu.SetActive(false);
-        GameObject Inventory = GameObject.Find("Inventory");
+       
 
             resumeState();
 
@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        GameObject Inventory = GameObject.Find("Inventory");
     }
 
     // Update is called once per frame
@@ -118,33 +118,35 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void AddItem(string itemName, int itemAmount, string itemDescription)
+    public int AddItem(string itemName, int itemAmount, string itemDescription)
     {
-        for (int i = 0; i < items.Length; i++)
+        // Check for existing slots with the same item and not full
+        foreach (var itemSlot in items)
         {
-            if (!items[i].isFull && items[i].itemName == itemName )
+            if (itemSlot.itemName == itemName && !itemSlot.isFull)
             {
-                items[i].itemAmount += itemAmount;
-                
-                Debug.Log("Stacked itemName = " + itemName + ", quantity = " + itemAmount);
-                items[i].isFull = true;
-                
-                return;
-            }
-        }
-            for (int i = 0; i < items.Length; i++)
-            {
-                if (!items[i].isFull )
+                itemAmount = itemSlot.AddItem(itemName, itemAmount, itemDescription);
+                if (itemAmount == 0)
                 {
-                    items[i].AddItem(itemName, itemAmount, itemDescription);
-                    Debug.Log("Added new itemName = " + itemName + ", quantity = " + itemAmount);
-                    return;
+                    return 0;
                 }
             }
-
-
         }
-    
+
+        // If there are leftover items, check for an empty slot
+        foreach (var itemSlot in items)
+        {
+            if (string.IsNullOrEmpty(itemSlot.itemName))
+            {
+                itemAmount = itemSlot.AddItem(itemName, itemAmount, itemDescription);
+                return itemAmount;
+            }
+        }
+
+        // Return the amount that couldn't be added
+        return itemAmount;
+    }
+
 
     public void UpdateEnemyCount(int amount)
     {

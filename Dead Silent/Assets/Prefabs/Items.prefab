@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: key
+  ItemAmount: 1
+  itemDescription: Unlocks level 1 clearance doors
 --- !u!33 &1795232423259456191
 MeshFilter:
   m_ObjectHideFlags: 0
