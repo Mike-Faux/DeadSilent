@@ -51,6 +51,9 @@ public class GameManager : MonoBehaviour
                 Debug.LogError("AmmoCountText component not found.");
             }
         }
+
+
+
         resumeState();
 
         
