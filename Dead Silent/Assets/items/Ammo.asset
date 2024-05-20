@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60909b166e4ba5e488a9f2e5a1c7288a, type: 3}
   m_Name: Ammo
   m_EditorClassIdentifier: 
-  itemName: KEY
+  itemName: Ammo
   statToChange: 3
   attributesToChange: 0
   amountToChangeStatAttribute: 0
