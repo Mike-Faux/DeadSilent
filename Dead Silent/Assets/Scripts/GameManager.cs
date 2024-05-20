@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public Image PlayerHPBar;
     public GameObject playerDFlash;
     public ItemSlot[] items;
+    public ItemSO[] itemSOs;
 
     public bool pause;
     public bool inventory;
@@ -116,6 +117,21 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogError("ItemCountText is null when trying to update item count.");
         }
+    }
+
+    public bool UseItem(string itemName)
+    { 
+        for(int i = 0; i < itemSOs.Length; i++)
+        {
+            if (itemSOs[i].itemName == itemName) 
+            {
+                bool usable = itemSOs[i].UseItem();
+                return usable;
+                
+            }
+            
+        }
+        return false;
     }
 
     public int AddItem(string itemName, int itemAmount, string itemDescription)

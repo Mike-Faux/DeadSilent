@@ -41,6 +41,16 @@ public class FireArm : MonoBehaviour, IWeapon
         }
     }
 
+    public void ChangeAmmo(int amount)
+    {
+        Ammo += amount;
+
+        if (Ammo > Ammo_Capacity)
+        {
+            Ammo = Ammo_Capacity;
+        }
+    }
+
     IEnumerator Shoot(float time)
     {
         Ammo--;
