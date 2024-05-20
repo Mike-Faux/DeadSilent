@@ -24,55 +24,29 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
     Vector3 targetPos;
 
     GameObject target;
-    [SerializeField] Weapon weapon;
+    [SerializeField] IWeapon weapon;
     [SerializeField] GameObject weaponSlot;
 
+    [SerializeField] GameObject StatusIndicator;
+    MeshRenderer StatusIndicatorMR;
 
     MeshRenderer mr;
-    [SerializeField] Material DamagedFlashMaterial;
 
     float LoiterVariation = 1.5f;
-
-
-
-    public void TakeDamage(int amount)
-    {
-        Health -= amount;
-        StartCoroutine(Flash(.1f));
-
-        if(Health <= 0) 
-        { 
-            GameManager.Instance.UpdateEnemyCount(-1);
-            Destroy(gameObject);
-        }
-
-        GameManager.Instance.LastKnownPosition = GameManager.Instance.Player.transform.position;
-        currentStatus = Status.Tracking;
-        target = GameManager.Instance.Player;
-        targetPos = target.transform.position;
-        agent.SetDestination(targetPos);
-    }
-
-    IEnumerator Flash(float time)
-    {
-        Material temp = mr.material;
-
-        mr.material = DamagedFlashMaterial;
-
-        yield return new WaitForSeconds(time);
-
-        mr.material = temp;
-    }
 
 
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.Instance.enemyManager.ReportIn(this);
         GameManager.Instance.UpdateEnemyCount(1);
-        mr = GetComponent<MeshRenderer>();
+
+        mr = gameObject.GetComponent<MeshRenderer>();
+        
+        StatusIndicatorMR = StatusIndicator.GetComponent<MeshRenderer>();
         BaseSpeed = agent.speed;
 
-        weapon = weaponSlot.GetComponentInChildren<Weapon>();
+        weapon = weaponSlot.GetComponentInChildren<IWeapon>();
     }
 
     // Update is called once per frame
@@ -106,6 +80,43 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         }
     }
 
+    public void TakeDamage(int amount)
+    {
+        Health -= amount;
+        StartCoroutine(Flash(.1f));
+
+        if (Health <= 0)
+        {
+            OnDeath();
+            return;
+        }
+
+        GameManager.Instance.LastKnownPosition = GameManager.Instance.Player.transform.position;
+        SetStatus(Status.Tracking);
+        target = GameManager.Instance.Player;
+        targetPos = target.transform.position;
+        agent.SetDestination(targetPos);
+    }
+
+    public void OnDeath()
+    {
+        agent.enabled = false;
+        GameManager.Instance.enemyManager.SignOut(this);
+        GameManager.Instance.UpdateEnemyCount(-1);
+        Destroy(gameObject);
+    }
+
+    IEnumerator Flash(float time)
+    {
+        Material temp = mr.material;
+
+        mr.material = GameManager.Instance.enemyManager.DamagedFlashMaterial;
+
+        yield return new WaitForSeconds(time);
+
+        mr.material = temp;
+    }
+
     public void Engage()
     {
         agent.speed = BaseSpeed * 1.5f;
@@ -134,21 +145,27 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         if (disToTarget > EngageDistance || target == null)
         {
             agent.isStopped = false;
-            currentStatus = Status.Tracking;
+            SetStatus(Status.Tracking);
         }
         else if (!Physics.Raycast(transform.position + transform.forward, dirToTarget, disToTarget, blockingFiring, QueryTriggerInteraction.Ignore))
         {
-            currentStatus = Status.Engaging;
+            SetStatus(Status.Engaging);
             agent.isStopped = true;
             if(weapon != null)
             {
+                if(weapon.GetType()  == typeof(FireArm)) 
+                { 
+                    FireArm gun = (FireArm)weapon;
+                    if(gun.Ammo < 1) gun.Reload();
+                }
+
                 Aim();
                 weapon.Attack();
             }
         }
         else
         {
-            currentStatus = Status.Tracking;
+            SetStatus(Status.Tracking);
             agent.SetDestination(target.transform.position);
             agent.isStopped = false;
         }
@@ -164,7 +181,7 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         agent.speed = BaseSpeed * 1.5f;
         if (target != null && Vector3.Distance(target.transform.position, transform.position) < EngageDistance)
         {
-            currentStatus = Status.Engaging;
+            SetStatus(Status.Engaging);
             Engage();
         }else if (targetPos != GameManager.Instance.LastKnownPosition)
         {
@@ -173,8 +190,8 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         }
         else
         {
-            target = null;
-            currentStatus = Status.Investigating;
+            target = null; 
+            SetStatus(Status.Investigating);
         }
     }
 
@@ -184,14 +201,14 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         //Debug.Log("Investigating");
         if (targetPos == GameManager.Instance.LastKnownPosition)
         {
-            currentStatus = Status.Loitering;
+            SetStatus(Status.Loitering);
             StartCoroutine(Loiter(10, currentPatrolPoint));
         }
         else
         {
             targetPos = GameManager.Instance.LastKnownPosition;
             agent.SetDestination(targetPos);
-            currentStatus = Status.Tracking;
+            SetStatus(Status.Tracking);
         }
     }
 
@@ -211,7 +228,7 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
             if(patrolPath.Length == 0) return; 
         }
 
-        currentStatus = Status.Loitering;
+        SetStatus(Status.Loitering);
         StartCoroutine(Loiter(seconds, currentPatrolPoint));
     }
 
@@ -238,14 +255,12 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         if (currentStatus != Status.Loitering) yield break;
 
         agent.SetDestination(patrolPath[nextPatrolPoint].Position);
-        currentStatus = Status.Patroling;
+        SetStatus(Status.Patroling);
     }
 
     IEnumerator SmoothRotate(Quaternion targetRotation,int segments)
     {
         float interval = 1f / segments;
-
-        transform.Rotate(new Vector3(0, 0, 0));
 
         for (int i = 0; i < segments; i++)
         {
@@ -262,7 +277,7 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         this.targetPos = target.transform.position;
 
         
-        currentStatus = Status.Engaging;
+        SetStatus(Status.Engaging);
         agent.SetDestination(target.transform.position);
         Engage();
     }
@@ -272,7 +287,7 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         if (currentStatus == Status.Tracking) return;
 
         targetPos = distraction.transform.position;
-        currentStatus = Status.Investigating;
+        SetStatus(Status.Investigating);
         agent.SetDestination(targetPos);
     }
 
@@ -282,7 +297,7 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
 
         targetPos = GameManager.Instance.LastKnownPosition;
         agent.SetDestination(targetPos);
-        currentStatus = Status.Tracking;
+        SetStatus(Status.Tracking);
     }
 
     public void SetPatrolPath((Vector3 Position, int TimeInPosition)[] path)
@@ -291,7 +306,13 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         patrolPath = path;
     }
 
-    enum Status
+    public void SetStatus(Status status)
+    {
+        currentStatus = status;
+        StatusIndicatorMR.material = GameManager.Instance.enemyManager.GetStatusMaterial(status);
+    }
+
+    public enum Status
     {
         Patroling,
         Investigating,

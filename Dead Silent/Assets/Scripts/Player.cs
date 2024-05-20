@@ -22,8 +22,8 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] LayerMask InteractionMask;
 
     [SerializeField] GameObject intIcon;
-
-    [SerializeField] FireArm Weapon;
+    [SerializeField] GameObject weaponSlot;
+    [SerializeField] IWeapon Weapon;
 
     Vector3 MoveDir;
     Vector3 PlayerVel;
@@ -41,6 +41,8 @@ public class Player : MonoBehaviour, IDamageable
     {
         MaxHealth = Health;
         UpdatePlayerUI();
+
+        Weapon = weaponSlot.GetComponentInChildren<IWeapon>();
     }
 
     // Update is called once per frame
@@ -172,11 +174,8 @@ public class Player : MonoBehaviour, IDamageable
 
     void CheckInteraction()
     {
-        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
-        if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance, InteractionMask))
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, interactionDistance, InteractionMask))
         {
-         
-
            if (hit.collider.TryGetComponent(out IInteractable interactable))
             {
                 interact = interactable;
@@ -185,8 +184,6 @@ public class Player : MonoBehaviour, IDamageable
             {
                 interact = null;
             }
-                
-                
         }
     }
 

@@ -181,15 +181,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Controller: {fileID: 2227847582455116204}
-  Health: 10
+  interactionDistance: 0
+  Health: 25
   Speed: 8
   SprintMod: 2
   CrouchMod: 0.5
   CrouchHeightMod: 0.6
   JumpMax: 1
   JumpSpeed: 8
-  Gravity: 12
-  Weapon: {fileID: 4634011931167252919}
+  Gravity: 25
+  InteractionMask:
+    serializedVersion: 2
+    m_Bits: 128
+  intIcon: {fileID: 0}
+  weaponSlot: {fileID: 551771364105821746}
 --- !u!1 &6443311742256854753
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,14 +367,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5311881382460011149, guid: 8fa31771c875a9849b20d6de8235aa65, type: 3}
   m_PrefabInstance: {fileID: 7340320162018620091}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4634011931167252919 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2707049336052945676, guid: 8fa31771c875a9849b20d6de8235aa65, type: 3}
-  m_PrefabInstance: {fileID: 7340320162018620091}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90489a337904a014f94af94e3babec0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

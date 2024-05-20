@@ -25,7 +25,7 @@ public class Door : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        Debug.Log("interact");
+        //Debug.Log("interact");
         OpenRot();
     }
 }
