@@ -53,6 +53,7 @@ public class Player : MonoBehaviour, IDamageable
         if (Input.GetButton("Fire1") && Weapon != null)
         {
             Weapon.Attack();
+            Debug.Log("Fire1");
         }
 
         CheckInteraction();
@@ -179,12 +180,14 @@ public class Player : MonoBehaviour, IDamageable
            if (hit.collider.TryGetComponent(out IInteractable interactable))
             {
                 interact = interactable;
+                
             }
             else
             {
                 interact = null;
             }
         }
+
     }
 
 }
