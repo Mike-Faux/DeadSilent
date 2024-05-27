@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,12 +21,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text enemycountText;
     [SerializeField] TMP_Text itemcountText;
     [SerializeField] TMP_Text ammocountText;
+   
 
     public Image PlayerHPBar;
     public GameObject playerDFlash;
     public ItemSlot[] items;
     public ItemSO[] itemSOs;
-
+    
+    
     public bool pause;
     public bool inventory;
     int enemyCount;
@@ -113,10 +116,9 @@ public class GameManager : MonoBehaviour
     }
 
 
+    
 
-
-
-    public void IncrementItemCount(int amount)
+public void IncrementItemCount(int amount)
     {
         itemCount += amount;
 
