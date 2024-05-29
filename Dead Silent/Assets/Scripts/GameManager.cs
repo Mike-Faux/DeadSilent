@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public EnemyManager enemyManager;
 
     public GameObject Player;
+    public Player playerScript;
     public Vector3 LastKnownPosition;
 
     [SerializeField] GameObject pauseMenu;
@@ -21,7 +22,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text enemycountText;
     [SerializeField] TMP_Text itemcountText;
     [SerializeField] TMP_Text ammocountText;
-   
+
+    public GameObject playerSpawnPos;
+    public GameObject checkpointPopup;
 
     public Image PlayerHPBar;
     public GameObject playerDFlash;
@@ -40,9 +43,11 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Player = GameObject.FindWithTag("Player");
+        playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
         Instance = this;
 
         enemyManager = GetComponent<EnemyManager>();
+        playerScript = Player.GetComponent<Player>();
 
         InventoryMenu.SetActive(false);
 
