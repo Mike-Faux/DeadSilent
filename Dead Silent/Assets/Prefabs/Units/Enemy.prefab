@@ -646,9 +646,6 @@ PrefabInstance:
       addedObject: {fileID: 8321874321064141185}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0e1f73187acc49c49a6d7e3dc2014e4e, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4137434858214438890}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0e1f73187acc49c49a6d7e3dc2014e4e, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 554999635469114724}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0e1f73187acc49c49a6d7e3dc2014e4e, type: 3}
       insertIndex: -1
@@ -665,6 +662,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0e1f73187acc49c49a6d7e3dc2014e4e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5487019589238784027}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0e1f73187acc49c49a6d7e3dc2014e4e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5343703216141182915}
   m_SourcePrefab: {fileID: 100100000, guid: 0e1f73187acc49c49a6d7e3dc2014e4e, type: 3}
 --- !u!4 &5014879389404886523 stripped
 Transform:
@@ -697,32 +697,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4137434858214438890
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5680093083117006657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9f07fbc63f77994baaec53a75689e1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 4317178071435103717}
-  Health: 5
-  EngageDistance: 30
-  type: 0
-  alertDistance: 40
-  toAlert:
-    serializedVersion: 2
-    m_Bits: 64
-  blockingFiring:
-    serializedVersion: 2
-    m_Bits: 119
-  currentStatus: 4
-  weaponSlot: {fileID: 2199006958261165395}
-  StatusIndicator: {fileID: 5356522939026320453}
 --- !u!114 &554999635469114724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -905,6 +879,32 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5343703216141182915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5680093083117006657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9f07fbc63f77994baaec53a75689e1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 4317178071435103717}
+  Health: 5
+  EngageDistance: 30
+  type: 0
+  alertDistance: 40
+  toAlert:
+    serializedVersion: 2
+    m_Bits: 64
+  blockingFiring:
+    serializedVersion: 2
+    m_Bits: 119
+  currentStatus: 0
+  weaponSlot: {fileID: 2199006958261165395}
+  StatusIndicator: {fileID: 5356522939026320453}
 --- !u!4 &6604383216083234264 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1852576806548013000, guid: 0e1f73187acc49c49a6d7e3dc2014e4e, type: 3}

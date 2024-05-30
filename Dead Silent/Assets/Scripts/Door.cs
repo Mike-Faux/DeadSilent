@@ -39,7 +39,7 @@ public class Door : MonoBehaviour, IInteractable
     {
         if (delay) return;
 
-        Debug.Log("interact");
+        //Debug.Log("interact");
         StartCoroutine(Delay());
         if (opening)
         {

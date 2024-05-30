@@ -7,18 +7,6 @@ public class FireArm : MonoBehaviour, IWeapon
 
     public WeaponStats Stats;
     [SerializeField] Transform FirePos;
-//<<<<<<< Updated upstream
-//=======
-    [SerializeField] int Damage;
-    [SerializeField] int BulletSpeed;
-    [SerializeField] float FireRate;
-    [SerializeField] Camera playerCamera;
-
-   
-    public int Ammo_Capacity;
-    [SerializeField] float ReloadTime;
-
-//>>>>>>> Stashed changes
     [SerializeField] GameObject Bullet;
     [SerializeField] bool InfiniteAmmo = false;
     public int Ammo;
@@ -75,15 +63,9 @@ public class FireArm : MonoBehaviour, IWeapon
 
         Ammo--;
         isShooting = true;
-//<<<<<<< Updated upstream
-        Bullet bullet = Instantiate(Bullet, FirePos.transform.position, playerCamera.transform.rotation).GetComponent<Bullet>();
+        Bullet bullet = Instantiate(Bullet, FirePos.transform.position, transform.rotation).GetComponent<Bullet>();
         bullet.speed = Stats.BulletSpeed;
         bullet.damage = Stats.Damage;
-//=======
-        //Bullet bullet = Instantiate(Bullet, FirePos.transform.position, playerCamera.transform.rotation).GetComponent<Bullet>();
-       // bullet.speed = BulletSpeed;
-       // bullet.damage = Damage;
-//>>>>>>> Stashed changes
         yield return new WaitForSeconds(time);
         isShooting = false;
     }

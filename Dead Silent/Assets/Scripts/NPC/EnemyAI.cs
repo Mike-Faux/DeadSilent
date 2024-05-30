@@ -46,7 +46,11 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
 
         mr = gameObject.GetComponent<MeshRenderer>();
 
-        StatusIndicatorMR = StatusIndicator.GetComponent<MeshRenderer>();
+        if(!StatusIndicator.TryGetComponent(out StatusIndicatorMR ))
+        {
+            Debug.Log("Not Found");
+        }
+
         BaseSpeed = agent.speed;
 
         weapon = weaponSlot.GetComponentInChildren<IWeapon>();
@@ -77,7 +81,7 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         {
             if (agent.enabled)
             {
-                agent.Resume();
+                agent.isStopped = false;
             }
             Engage();
         }
@@ -157,8 +161,14 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
                 }
             }
         }
+        if(target == null)
+        {
+            Debug.Log("TargetNull");
+            return;
+        }
 
-        float disToTarget = Vector3.Distance(target.transform.position, transform.position);
+        float disToTarget = Vector3.Distance(target.transform.position, 
+            transform.position);
         Vector3 dirToTarget = target.transform.position - transform.position;
         dirToTarget.Normalize();
 
@@ -168,7 +178,9 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         //Check for engage Distance and target
         if (disToTarget > EngageDistance || target == null)
         {
+
             agent.isStopped = false;
+
             SetStatus(Status.Tracking);
         }
         else if (!Physics.Raycast(transform.position + transform.forward, dirToTarget, disToTarget, blockingFiring, QueryTriggerInteraction.Ignore))
@@ -197,7 +209,9 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
 
     public void Aim()
     {
-        transform.LookAt(target.transform.position - (transform.right / 2), Vector3.up);
+        Vector3 pos = target.transform.position;
+        pos.y = transform.position.y;
+        transform.LookAt(pos - (transform.right / 2), Vector3.up);
     }
 
     public void Track()
@@ -334,6 +348,11 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
     public void SetStatus(Status status)
     {
         currentStatus = status;
+        if(StatusIndicatorMR == null)
+        {
+            Debug.Log("What?");
+            StatusIndicator.TryGetComponent(out StatusIndicatorMR);
+        }
         StatusIndicatorMR.material = GameManager.Instance.enemyManager.GetStatusMaterial(status);
     }
 

@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c546e45f616197b4f899907bc6579e7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Spawning: {fileID: 8671040104950112037, guid: e2a06bb19de20404da3a86841e04cc67, type: 3}
+  Spawning: {fileID: 5680093083117006657, guid: cfc7cacbe58032b4180665839967cbd3, type: 3}
   PatrolPath:
   - {fileID: 5383653123984041986}
   SpawnOnFirstPoint: 0

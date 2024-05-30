@@ -219,7 +219,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, interactionDistance, InteractionMask))
         {
-            Debug.Log("Interactable found!");
+            //Debug.Log("Interactable found!");
             if (hit.collider.TryGetComponent(out IInteractable interactable))
             {
                 interact = interactable;
