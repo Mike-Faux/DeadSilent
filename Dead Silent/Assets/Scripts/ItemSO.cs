@@ -17,7 +17,7 @@ public class ItemSO : ScriptableObject
         if (statToChange == StatToChange.ammo)
         {
             FireArm m4FireArm = GameObject.Find("M4 Assault Rifle").GetComponent<FireArm>();
-            if (m4FireArm.Ammo == m4FireArm.Ammo_Capacity)
+            if (m4FireArm.Ammo == m4FireArm.Stats.Ammo_Capacity)
             {
                 return false;
             }

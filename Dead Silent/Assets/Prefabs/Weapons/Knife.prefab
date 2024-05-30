@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 110b8ae11a70c1649bbc70445ceb0dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Stats: {fileID: 11400000, guid: d01298be2869a624f95c083f538c8a6d, type: 2}
   SwingPos: {fileID: 6723014508374737379}
   Damage: 4
   SwingRate: 0.3

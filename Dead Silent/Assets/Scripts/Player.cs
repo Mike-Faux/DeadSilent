@@ -56,7 +56,7 @@ public class Player : MonoBehaviour, IDamageable
             if (Input.GetButton("Fire1") && Weapon != null)
             {
                 Weapon.Attack();
-                Debug.Log("Fire1");
+                //Debug.Log("Fire1");
             }
 
             CheckInteraction();
@@ -155,7 +155,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         Health -= amount;
         UpdatePlayerUI();
-        StartCoroutine(flashDamage());
+        StartCoroutine(FlashDamage());
 
         if (Health <= 0)
         {
@@ -163,7 +163,7 @@ public class Player : MonoBehaviour, IDamageable
             GameManager.Instance.lostState();
         }
     }
-    IEnumerator flashDamage()
+    IEnumerator FlashDamage()
     {
         GameManager.Instance.playerDFlash.SetActive(true);
         yield return new WaitForSeconds(0.1f);
@@ -181,19 +181,22 @@ public class Player : MonoBehaviour, IDamageable
         Health = MaxHealth;
         UpdatePlayerUI();
 
-        Controller.enabled = false;
-        transform.position = GameManager.Instance.playerSpawnPos.transform.position;
-        Controller.enabled = true;
+        if (GameManager.Instance.playerSpawnPos != null)
+        {
+            Controller.enabled = false;
+            transform.position = GameManager.Instance.playerSpawnPos.transform.position;
+            Controller.enabled = true;
+        }
     }
 
     void CheckInteraction()
     {
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, interactionDistance, InteractionMask))
         {
-           if (hit.collider.TryGetComponent(out IInteractable interactable))
+            Debug.Log("Interactable found!");
+            if (hit.collider.TryGetComponent(out IInteractable interactable))
             {
                 interact = interactable;
-                
             }
             else
             {
