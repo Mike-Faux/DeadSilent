@@ -973,8 +973,6 @@ MonoBehaviour:
   currentStatus: 0
   weaponSlot: {fileID: 4405476026280522474}
   StatusIndicator: {fileID: 179169943942920910}
-  StatusIndicatorMR: {fileID: 741013757421517456}
-  DamagedFlashMaterial: {fileID: 2100000, guid: bd0740a28985f52429a4721fcb93090a, type: 2}
 --- !u!114 &8155283647535094082
 MonoBehaviour:
   m_ObjectHideFlags: 0

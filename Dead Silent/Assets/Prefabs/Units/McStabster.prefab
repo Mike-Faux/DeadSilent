@@ -321,6 +321,7 @@ GameObject:
   - component: {fileID: 4747126780793284872}
   - component: {fileID: 8155283647535094082}
   - component: {fileID: 7545437075865065507}
+  - component: {fileID: 2893914548463815187}
   m_Layer: 6
   m_Name: McStabster
   m_TagString: Untagged
@@ -465,11 +466,10 @@ MonoBehaviour:
   blockingFiring:
     serializedVersion: 2
     m_Bits: 83
+  animator: {fileID: 0}
   currentStatus: 0
   weaponSlot: {fileID: 4405476026280522474}
   StatusIndicator: {fileID: 4958787561385482485}
-  StatusIndicatorMR: {fileID: 4778611268433738888}
-  DamagedFlashMaterial: {fileID: 2100000, guid: bd0740a28985f52429a4721fcb93090a, type: 2}
 --- !u!114 &8155283647535094082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -512,6 +512,27 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 25
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &2893914548463815187
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8671040104950112037}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 161e5eda158c7ac44bc017c539edc231, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &918156580178412693
 PrefabInstance:
   m_ObjectHideFlags: 0
