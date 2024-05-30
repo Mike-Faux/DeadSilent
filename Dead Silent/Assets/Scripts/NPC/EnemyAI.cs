@@ -19,6 +19,7 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
     [SerializeField] Status currentStatus;
 
     float BaseSpeed;
+    Animator animator;
 
     int currentPatrolPoint;
     Vector3 targetPos;
@@ -33,16 +34,18 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
     MeshRenderer mr;
 
     float LoiterVariation = 1.5f;
-
+    float runSpeedThreshold = 5f;
+    int isRunningHash = Animator.StringToHash("isRunning");
 
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         GameManager.Instance.enemyManager.ReportIn(this);
         GameManager.Instance.UpdateEnemyCount(1);
 
         mr = gameObject.GetComponent<MeshRenderer>();
-        
+
         StatusIndicatorMR = StatusIndicator.GetComponent<MeshRenderer>();
         BaseSpeed = agent.speed;
 
@@ -51,16 +54,37 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
 
     // Update is called once per frame
     void Update()
+
     {
+        if (agent.remainingDistance <= agent.stoppingDistance)
+        {
+            // If the agent is not moving, play the "idle" animation
+            animator.SetBool("isWalking", false);
+            animator.SetBool(isRunningHash, false);
+        }
+        else if (agent.velocity.magnitude > runSpeedThreshold)
+        {
+            // If the agent's speed is above the threshold, set "isRunning" to true
+            animator.SetBool(isRunningHash, true);
+        }
+        else 
+        {
+            // If the agent is moving, play the "walk" animation
+            animator.SetBool("isWalking", true);
+        }
         if (currentStatus != Status.Engaging) agent.isStopped = false;
         if (currentStatus == Status.Engaging && agent.remainingDistance > 1f)
         {
+            if (agent.enabled)
+            {
+                agent.Resume();
+            }
             Engage();
         }
 
-        if(Vector3.Distance(agent.destination, transform.position) < 2f)
+        if (Vector3.Distance(agent.destination, transform.position) < 2f)
         {
-            switch(currentStatus)
+            switch (currentStatus)
             {
                 default:
                     Patrol();
@@ -151,12 +175,12 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         {
             SetStatus(Status.Engaging);
             agent.isStopped = true;
-            if(weapon != null)
+            if (weapon != null)
             {
-                if(weapon.GetType()  == typeof(FireArm)) 
-                { 
+                if (weapon.GetType() == typeof(FireArm))
+                {
                     FireArm gun = (FireArm)weapon;
-                    if(gun.Ammo < 1) gun.Reload();
+                    if (gun.Ammo < 1) gun.Reload();
                 }
 
                 Aim();
@@ -183,14 +207,15 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         {
             SetStatus(Status.Engaging);
             Engage();
-        }else if (targetPos != GameManager.Instance.LastKnownPosition)
+        }
+        else if (targetPos != GameManager.Instance.LastKnownPosition)
         {
             targetPos = GameManager.Instance.LastKnownPosition;
             agent.SetDestination(targetPos);
         }
         else
         {
-            target = null; 
+            target = null;
             SetStatus(Status.Investigating);
         }
     }
@@ -221,11 +246,11 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
 
         currentPatrolPoint++;
 
-        if(currentPatrolPoint < 0 || currentPatrolPoint >= patrolPath.Length)
+        if (currentPatrolPoint < 0 || currentPatrolPoint >= patrolPath.Length)
         {
             currentPatrolPoint = 0;
 
-            if(patrolPath.Length == 0) return; 
+            if (patrolPath.Length == 0) return;
         }
 
         SetStatus(Status.Loitering);
@@ -235,21 +260,21 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
     IEnumerator Loiter(int seconds, int nextPatrolPoint)
     {
         float min = seconds - LoiterVariation;
-        if(min < 0) min = 0;
+        if (min < 0) min = 0;
         float max = seconds + LoiterVariation;
 
         float split = Random.Range(min, max) / 3;
-        if(split < 1f) split = 1f;
+        if (split < 1f) split = 1f;
 
         yield return new WaitForSeconds(split);
         if (currentStatus != Status.Loitering) yield break;
 
-        StartCoroutine(SmoothRotate(Quaternion.LookRotation(-transform.right, transform.up),30));
+        StartCoroutine(SmoothRotate(Quaternion.LookRotation(-transform.right, transform.up), 30));
 
         yield return new WaitForSeconds(split);
         if (currentStatus != Status.Loitering) yield break;
 
-        StartCoroutine(SmoothRotate(Quaternion.LookRotation(-transform.forward, transform.up),30));
+        StartCoroutine(SmoothRotate(Quaternion.LookRotation(-transform.forward, transform.up), 30));
 
         yield return new WaitForSeconds(split);
         if (currentStatus != Status.Loitering) yield break;
@@ -258,7 +283,7 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         SetStatus(Status.Patroling);
     }
 
-    IEnumerator SmoothRotate(Quaternion targetRotation,int segments)
+    IEnumerator SmoothRotate(Quaternion targetRotation, int segments)
     {
         float interval = 1f / segments;
 
@@ -276,7 +301,7 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         GameManager.Instance.LastKnownPosition = target.transform.position;
         this.targetPos = target.transform.position;
 
-        
+
         SetStatus(Status.Engaging);
         agent.SetDestination(target.transform.position);
         Engage();

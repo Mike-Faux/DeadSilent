@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c110d09e0b39fb1468ed7b76f57e4cf0, type: 2}
+  - {fileID: 2100000, guid: 96b5148c43a2a514cbe76e9ecb9f785e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -238,6 +238,7 @@ GameObject:
   - component: {fileID: 8155283647535094082}
   - component: {fileID: 5538569906658390585}
   - component: {fileID: 7545437075865065507}
+  - component: {fileID: -5539411554807830351}
   m_Layer: 6
   m_Name: Grunt - M4
   m_TagString: Untagged
@@ -358,11 +359,9 @@ MonoBehaviour:
   blockingFiring:
     serializedVersion: 2
     m_Bits: 83
-  currentStatus: 0
+  currentStatus: 4
   weaponSlot: {fileID: 4405476026280522474}
   StatusIndicator: {fileID: 193226269150858576}
-  StatusIndicatorMR: {fileID: 2538713092984597043}
-  DamagedFlashMaterial: {fileID: 2100000, guid: bd0740a28985f52429a4721fcb93090a, type: 2}
 --- !u!114 &8155283647535094082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -428,6 +427,27 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 25
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &-5539411554807830351
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8671040104950112037}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 161e5eda158c7ac44bc017c539edc231, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &3626566569907576249
 PrefabInstance:
   m_ObjectHideFlags: 0

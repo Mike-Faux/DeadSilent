@@ -67,14 +67,12 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetButtonDown("Cancel"))
         {
-             
             TogglePauseMenu();
         }
 
         if (Input.GetButtonDown("Inventory"))
         {
-             
-            //ToggleInventoryMenu();
+            ToggleInventoryMenu();
         }
     }
 
