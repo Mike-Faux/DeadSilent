@@ -49,8 +49,6 @@ public class GameManager : MonoBehaviour
         enemyManager = GetComponent<EnemyManager>();
         playerScript = Player.GetComponent<Player>();
 
-        InventoryMenu.SetActive(false);
-
         if (ammocountText == null)
         {
             ammocountText = GameObject.Find("AmmoCountText").GetComponent<TMP_Text>();
@@ -71,7 +69,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameObject Inventory = GameObject.Find("Inventory");
+
     }
 
     // Update is called once per frame
@@ -86,7 +84,7 @@ public class GameManager : MonoBehaviour
         if (Input.GetButtonDown("Inventory"))
         {
              
-            ToggleInventoryMenu();
+            //ToggleInventoryMenu();
         }
     }
 

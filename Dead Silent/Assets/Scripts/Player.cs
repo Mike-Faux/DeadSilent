@@ -40,6 +40,7 @@ public class Player : MonoBehaviour, IDamageable
     // Start is called before the first frame update
     void Start()
     {
+        MaxHealth = Health;
         SpawnPlayer();
 
         Weapon = weaponSlot.GetComponentInChildren<IWeapon>();
@@ -55,7 +56,7 @@ public class Player : MonoBehaviour, IDamageable
             if (Input.GetButton("Fire1") && Weapon != null)
             {
                 Weapon.Attack();
-                Debug.Log("Fire1");
+                //Debug.Log("Fire1");
             }
 
             CheckInteraction();
@@ -177,12 +178,15 @@ public class Player : MonoBehaviour, IDamageable
 
     public void SpawnPlayer()
     {
-        MaxHealth = Health;
+        Health = MaxHealth;
         UpdatePlayerUI();
 
-        Controller.enabled = false;
-        transform.position = GameManager.Instance.playerSpawnPos.transform.position;
-        Controller.enabled = true;
+        if (GameManager.Instance.playerSpawnPos != null)
+        {
+            Controller.enabled = false;
+            transform.position = GameManager.Instance.playerSpawnPos.transform.position;
+            Controller.enabled = true;
+        }
     }
 
     void CheckInteraction()
@@ -192,7 +196,6 @@ public class Player : MonoBehaviour, IDamageable
            if (hit.collider.TryGetComponent(out IInteractable interactable))
             {
                 interact = interactable;
-                
             }
             else
             {
