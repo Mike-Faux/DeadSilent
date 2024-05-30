@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -44,6 +45,7 @@ public class Player : MonoBehaviour, IDamageable
         SpawnPlayer();
 
         Weapon = weaponSlot.GetComponentInChildren<IWeapon>();
+        UpdateWeaponInfo();
     }
 
     // Update is called once per frame
@@ -56,6 +58,7 @@ public class Player : MonoBehaviour, IDamageable
             if (Input.GetButton("Fire1") && Weapon != null)
             {
                 Weapon.Attack();
+                UpdateWeaponInfo();
                 //Debug.Log("Fire1");
             }
 
@@ -65,6 +68,28 @@ public class Player : MonoBehaviour, IDamageable
                 interact.Interact();
             }
         }
+    }
+
+    public void UpdateWeaponInfo()
+    {
+        if (Weapon.GetType() == typeof(FireArm))
+        {
+            FireArm fireArm = (FireArm)Weapon;
+            GameManager.Instance.UpdateWeaponName(fireArm.Stats.name);
+            GameManager.Instance.UpdateAmmoCount(fireArm.Ammo, fireArm.Stats.Ammo_Capacity);
+        }
+        else if (Weapon.GetType() == typeof(MeleeWeapon))
+        {
+            MeleeWeapon meleeWeapon = (MeleeWeapon)Weapon;
+            GameManager.Instance.UpdateWeaponName(meleeWeapon.Stats.name);
+            GameManager.Instance.UpdateAmmoCount(1, 1);
+        }
+
+    }
+
+    public void EquipWeapon(IWeapon weapon)
+    {
+
     }
 
     void Movement()
@@ -174,6 +199,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         // update health bar
         GameManager.Instance.PlayerHPBar.fillAmount = (float)Health / MaxHealth;
+
     }
 
     public void SpawnPlayer()

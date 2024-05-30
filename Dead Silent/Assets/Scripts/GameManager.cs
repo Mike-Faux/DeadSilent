@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject loseMenu;
     [SerializeField] TMP_Text enemycountText;
     [SerializeField] TMP_Text itemcountText;
+
+    [SerializeField] TMP_Text WeaponNameText;
     [SerializeField] TMP_Text ammocountText;
 
     public GameObject playerSpawnPos;
@@ -28,6 +30,8 @@ public class GameManager : MonoBehaviour
 
     public Image PlayerHPBar;
     public GameObject playerDFlash;
+
+
     public ItemSlot[] items;
     public ItemSO[] itemSOs;
     
@@ -36,7 +40,8 @@ public class GameManager : MonoBehaviour
     public bool inventory;
     int enemyCount;
     int itemCount;
-    int ammoCount;
+
+
 
     [SerializeField] bool IgnoreLoss = false;
 
@@ -46,24 +51,9 @@ public class GameManager : MonoBehaviour
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
         Instance = this;
 
-        enemyManager = GetComponent<EnemyManager>();
         playerScript = Player.GetComponent<Player>();
 
-        if (ammocountText == null)
-        {
-            ammocountText = GameObject.Find("AmmoCountText").GetComponent<TMP_Text>();
-            if (ammocountText == null)
-            {
-                Debug.LogError("AmmoCountText component not found.");
-            }
-        }
-
-
-
         resumeState();
-
-        
-
     }
 
     // Start is called before the first frame update
@@ -193,6 +183,11 @@ public void IncrementItemCount(int amount)
             activeMenu.SetActive(pause);
         }
 
+    }
+
+    public void UpdateWeaponName(string name)
+    {
+        WeaponNameText.text = name;
     }
 
     public void UpdateAmmoCount(int ammoCount, int ammoMax)
