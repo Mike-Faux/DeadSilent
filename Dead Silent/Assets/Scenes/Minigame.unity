@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -319,6 +319,119 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1509810873}
   m_SourcePrefab: {fileID: 100100000, guid: 5f39ae34e4c1ba4439f016d560e3c5ae, type: 3}
+--- !u!1001 &770046530
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 130223234172788366, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: restart
+      objectReference: {fileID: 0}
+    - target: {fileID: 2996177434011510952, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2996177434011510952, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2996177434011510952, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2996177434011510952, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2996177434011510952, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2996177434011510952, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2996177434011510952, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2996177434011510952, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2996177434011510952, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2996177434011510952, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2996177434011510952, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2996177434011510952, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2996177434011510952, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2996177434011510952, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2996177434011510952, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2996177434011510952, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2996177434011510952, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2996177434011510952, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2996177434011510952, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2996177434011510952, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5575210113120236212, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: m_Name
+      value: UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 5798452304536848335, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: restartv2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9000249457191899626, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9000249457191899626, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -93.103516
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
 --- !u!1 &1278710861
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,7 +746,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e8b531f7c7ae5c44b60fb352502f33a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMinigameCompleted: 0
   previousScene: 
 --- !u!1 &1615105537 stripped
 GameObject:
@@ -678,6 +790,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1278710865}
+  - {fileID: 770046530}
   - {fileID: 190407842}
   - {fileID: 1415333156}
   - {fileID: 454056643}

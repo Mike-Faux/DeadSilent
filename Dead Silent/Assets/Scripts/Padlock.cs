@@ -20,8 +20,14 @@ public class Padlock : MonoBehaviour, IInteractable
     public void CompleteMinigame()
     {
         
-        SceneManager.LoadScene("Level_M2");
-       
+        
+        
+        GameManager.Instance.pauseState();
+        GameManager.Instance.activeMenu = GameManager.Instance.winMenu;
+        GameManager.Instance.activeMenu.SetActive(GameManager.Instance.pause);
+
+        
+
     }
 
 
@@ -40,8 +46,11 @@ public class Padlock : MonoBehaviour, IInteractable
 
             CompleteMinigame();
 
-            Destroy(gameObject);
+         
+            }
+            
+
         }
-        }
+
         
     }

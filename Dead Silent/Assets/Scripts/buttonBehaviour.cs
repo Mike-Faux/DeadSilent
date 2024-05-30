@@ -14,6 +14,11 @@ public class buttonBehaviour : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         GameManager.Instance.resumeState();
     }
+    public void restartv2()
+    {
+        SceneManager.LoadScene(2);
+        GameManager.Instance.resumeState();
+    }
     public void quit()
     {
 #if UNITY_EDITOR

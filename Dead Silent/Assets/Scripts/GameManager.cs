@@ -16,8 +16,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject InventoryMenu;
-    [SerializeField] GameObject activeMenu;
-    [SerializeField] GameObject winMenu;
+    [SerializeField] public GameObject activeMenu;
+    [SerializeField] public GameObject winMenu;
     [SerializeField] GameObject loseMenu;
     [SerializeField] TMP_Text enemycountText;
     [SerializeField] TMP_Text itemcountText;
@@ -186,7 +186,7 @@ public void IncrementItemCount(int amount)
         enemyCount += amount;
         enemycountText.text = enemyCount.ToString("F0");
 
-        if(enemyCount <= 0)
+        if(enemyCount == 0)
         {
             pauseState();
             activeMenu = winMenu;
