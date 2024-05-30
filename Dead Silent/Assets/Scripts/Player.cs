@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour, IDamageable
 {
@@ -39,8 +40,7 @@ public class Player : MonoBehaviour, IDamageable
     // Start is called before the first frame update
     void Start()
     {
-        MaxHealth = Health;
-        UpdatePlayerUI();
+        SpawnPlayer();
 
         Weapon = weaponSlot.GetComponentInChildren<IWeapon>();
     }
@@ -48,19 +48,22 @@ public class Player : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
-        Movement();
-
-        if (Input.GetButton("Fire1") && Weapon != null)
+        if(!GameManager.Instance.pause && !GameManager.Instance.inventory)
         {
-            Weapon.Attack();
-        }
+            Movement();
 
-        CheckInteraction();
-        if (Input.GetButton("Fire2") && interact != null)
-        {
-            interact.Interact();
-        }
+            if (Input.GetButton("Fire1") && Weapon != null)
+            {
+                Weapon.Attack();
+                Debug.Log("Fire1");
+            }
 
+            CheckInteraction();
+            if (Input.GetButton("Fire2") && interact != null)
+            {
+                interact.Interact();
+            }
+        }
     }
 
     void Movement()
@@ -172,6 +175,16 @@ public class Player : MonoBehaviour, IDamageable
         GameManager.Instance.PlayerHPBar.fillAmount = (float)Health / MaxHealth;
     }
 
+    public void SpawnPlayer()
+    {
+        MaxHealth = Health;
+        UpdatePlayerUI();
+
+        Controller.enabled = false;
+        transform.position = GameManager.Instance.playerSpawnPos.transform.position;
+        Controller.enabled = true;
+    }
+
     void CheckInteraction()
     {
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, interactionDistance, InteractionMask))
@@ -179,12 +192,14 @@ public class Player : MonoBehaviour, IDamageable
            if (hit.collider.TryGetComponent(out IInteractable interactable))
             {
                 interact = interactable;
+                
             }
             else
             {
                 interact = null;
             }
         }
+
     }
 
 }

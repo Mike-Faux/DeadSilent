@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class GameManager : MonoBehaviour
     public EnemyManager enemyManager;
 
     public GameObject Player;
+    public Player playerScript;
     public Vector3 LastKnownPosition;
 
     [SerializeField] GameObject pauseMenu;
@@ -19,38 +21,57 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject loseMenu;
     [SerializeField] TMP_Text enemycountText;
     [SerializeField] TMP_Text itemcountText;
+    [SerializeField] TMP_Text ammocountText;
+
+    public GameObject playerSpawnPos;
+    public GameObject checkpointPopup;
 
     public Image PlayerHPBar;
     public GameObject playerDFlash;
     public ItemSlot[] items;
-
+    public ItemSO[] itemSOs;
+    
+    
     public bool pause;
     public bool inventory;
     int enemyCount;
     int itemCount;
+    int ammoCount;
 
     [SerializeField] bool IgnoreLoss = false;
 
     private void Awake()
     {
         Player = GameObject.FindWithTag("Player");
+        playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
         Instance = this;
 
         enemyManager = GetComponent<EnemyManager>();
+        playerScript = Player.GetComponent<Player>();
 
         InventoryMenu.SetActive(false);
-        GameObject Inventory = GameObject.Find("Inventory");
 
-            resumeState();
+        if (ammocountText == null)
+        {
+            ammocountText = GameObject.Find("AmmoCountText").GetComponent<TMP_Text>();
+            if (ammocountText == null)
+            {
+                Debug.LogError("AmmoCountText component not found.");
+            }
+        }
+
+
+
+        resumeState();
 
         
-        
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-
+        GameObject Inventory = GameObject.Find("Inventory");
     }
 
     // Update is called once per frame
@@ -100,10 +121,9 @@ public class GameManager : MonoBehaviour
     }
 
 
+    
 
-
-
-    public void IncrementItemCount(int amount)
+public void IncrementItemCount(int amount)
     {
         itemCount += amount;
 
@@ -118,33 +138,50 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void AddItem(string itemName, int itemAmount, string itemDescription)
-    {
-        for (int i = 0; i < items.Length; i++)
+    public bool UseItem(string itemName)
+    { 
+        for(int i = 0; i < itemSOs.Length; i++)
         {
-            if (!items[i].isFull && items[i].itemName == itemName )
+            if (itemSOs[i].itemName == itemName) 
             {
-                items[i].itemAmount += itemAmount;
+                bool usable = itemSOs[i].UseItem();
+                return usable;
                 
-                Debug.Log("Stacked itemName = " + itemName + ", quantity = " + itemAmount);
-                items[i].isFull = true;
-                
-                return;
             }
+            
         }
-            for (int i = 0; i < items.Length; i++)
+        return false;
+    }
+
+    public int AddItem(string itemName, int itemAmount, string itemDescription)
+    {
+        // Check for existing slots with the same item and not full
+        foreach (var itemSlot in items)
+        {
+            if (itemSlot.itemName == itemName && !itemSlot.isFull)
             {
-                if (!items[i].isFull )
+                itemAmount = itemSlot.AddItem(itemName, itemAmount, itemDescription);
+                if (itemAmount == 0)
                 {
-                    items[i].AddItem(itemName, itemAmount, itemDescription);
-                    Debug.Log("Added new itemName = " + itemName + ", quantity = " + itemAmount);
-                    return;
+                    return 0;
                 }
             }
-
-
         }
-    
+
+        // If there are leftover items, check for an empty slot
+        foreach (var itemSlot in items)
+        {
+            if (string.IsNullOrEmpty(itemSlot.itemName))
+            {
+                itemAmount = itemSlot.AddItem(itemName, itemAmount, itemDescription);
+                return itemAmount;
+            }
+        }
+
+        // Return the amount that couldn't be added
+        return itemAmount;
+    }
+
 
     public void UpdateEnemyCount(int amount)
     {
@@ -158,6 +195,18 @@ public class GameManager : MonoBehaviour
             activeMenu.SetActive(pause);
         }
 
+    }
+
+    public void UpdateAmmoCount(int ammoCount)
+    {
+        if (ammocountText != null)
+        {
+            ammocountText.text = ammoCount.ToString("F0");
+        }
+        else
+        {
+            Debug.LogError("AmmoCountText is null when trying to update item count.");
+        }
     }
 
     public void inventoryState()

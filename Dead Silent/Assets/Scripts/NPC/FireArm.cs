@@ -22,6 +22,11 @@ public class FireArm : MonoBehaviour, IWeapon
     bool isShooting;
     bool isReloading;
 
+    private void Start()
+    {
+        GameManager.Instance.UpdateAmmoCount(Ammo);
+    }
+
     public void Attack()
     {
         if (Ammo <= 0 && !InfiniteAmmo) return;
@@ -41,9 +46,21 @@ public class FireArm : MonoBehaviour, IWeapon
         }
     }
 
+    public void ChangeAmmo(int amount)
+    {
+        Ammo += amount;
+
+        if (Ammo > Ammo_Capacity)
+        {
+            Ammo = Ammo_Capacity;
+        }
+        GameManager.Instance.UpdateAmmoCount(Ammo);
+    }
+
     IEnumerator Shoot(float time)
     {
         Ammo--;
+        GameManager.Instance.UpdateAmmoCount(Ammo);
         isShooting = true;
         Bullet bullet = Instantiate(Bullet, FirePos.transform.position, transform.rotation).GetComponent<Bullet>();
         bullet.speed = BulletSpeed;
@@ -57,6 +74,7 @@ public class FireArm : MonoBehaviour, IWeapon
         Ammo = 0;
         yield return new WaitForSeconds(time);
         Ammo = Ammo_Capacity;
+        GameManager.Instance.UpdateAmmoCount(Ammo);
         isReloading = false;
     }
 }

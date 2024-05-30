@@ -4,5 +4,29 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Austin's scene.unity
+    guid: 365188003d7e7c74a921bb8457021626
+  - enabled: 1
+    path: Assets/Scenes/Level_M1.unity
+    guid: 779618dee4141514ca373b31b0b14f0f
+  - enabled: 1
+    path: Assets/Scenes/Level_M2.unity
+    guid: 00f27cbdb72072e4ab2034d6ca9108e3
+  - enabled: 1
+    path: Assets/Scenes/Minigame.unity
+    guid: 3f76076ad224ff641bc91fd0daac80b7
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 215e3f523bd2ac34fbc67573bebb4e57
+  - enabled: 1
+    path: Assets/Scenes/Mike's Test Scene.unity
+    guid: 5dcda7b9c5f4bbb4bb311cf6c27f98e5
+  - enabled: 1
+    path: Assets/Scenes/Payson Level.unity
+    guid: c163442439096dc4c9931396a43d209c
+  - enabled: 1
+    path: Assets/Scenes/SampleScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}

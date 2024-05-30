@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 55.4606, y: 12.205078}
+  m_AnchoredPosition: {x: 55.4606, y: 13.111206}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6650161010784623528
@@ -316,8 +316,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8534728364415782966}
-  - {fileID: 1619461920546433639}
   - {fileID: 9199248106995053001}
+  - {fileID: 1619461920546433639}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -343,6 +343,7 @@ MonoBehaviour:
   itemDescription: 
   quantityText: {fileID: 6286154034869095768}
   itemImage: {fileID: 7961598874453369409}
+  maxNumberOfItems: 99
   ItemDescriptionNameText: {fileID: 0}
   ItemDescriptionText: {fileID: 0}
   selectedShader: {fileID: 1106831898668221247}
