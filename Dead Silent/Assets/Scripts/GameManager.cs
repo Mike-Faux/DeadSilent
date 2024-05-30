@@ -195,16 +195,9 @@ public void IncrementItemCount(int amount)
 
     }
 
-    public void UpdateAmmoCount(int ammoCount)
+    public void UpdateAmmoCount(int ammoCount, int ammoMax)
     {
-        if (ammocountText != null)
-        {
-            ammocountText.text = ammoCount.ToString("F0");
-        }
-        else
-        {
-            Debug.LogError("AmmoCountText is null when trying to update item count.");
-        }
+        ammocountText.text = $"{ammoCount:00}/{ammoMax:00}";
     }
 
     public void inventoryState()

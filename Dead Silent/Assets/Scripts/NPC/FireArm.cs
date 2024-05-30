@@ -5,26 +5,18 @@ using UnityEngine;
 public class FireArm : MonoBehaviour, IWeapon
 {
 
+    public WeaponStats Stats;
     [SerializeField] Transform FirePos;
-    [SerializeField] int Damage;
-    [SerializeField] int BulletSpeed;
-    [SerializeField] float FireRate;
-
-    public int Ammo;
-    public int Ammo_Capacity;
-    [SerializeField] float ReloadTime;
-
     [SerializeField] GameObject Bullet;
-
-    public bool Silenced;
     [SerializeField] bool InfiniteAmmo = false;
+    public int Ammo;
 
     bool isShooting;
     bool isReloading;
 
     private void Start()
     {
-        GameManager.Instance.UpdateAmmoCount(Ammo);
+        GameManager.Instance.UpdateAmmoCount(Ammo, Stats.Ammo_Capacity);
     }
 
     public void Attack()
@@ -34,7 +26,7 @@ public class FireArm : MonoBehaviour, IWeapon
 
         if(!isShooting)
         {
-            StartCoroutine(Shoot(FireRate));
+            StartCoroutine(Shoot(Stats.FireRate));
         }
     }
 
@@ -42,7 +34,7 @@ public class FireArm : MonoBehaviour, IWeapon
     {
         if(!isReloading)
         {
-            StartCoroutine(Reload(ReloadTime));
+            StartCoroutine(Reload(Stats.ReloadTime));
         }
     }
 
@@ -50,21 +42,21 @@ public class FireArm : MonoBehaviour, IWeapon
     {
         Ammo += amount;
 
-        if (Ammo > Ammo_Capacity)
+        if (Ammo > Stats.Ammo_Capacity)
         {
-            Ammo = Ammo_Capacity;
+            Ammo = Stats.Ammo_Capacity;
         }
-        GameManager.Instance.UpdateAmmoCount(Ammo);
+        GameManager.Instance.UpdateAmmoCount(Ammo, Stats.Ammo_Capacity);
     }
 
     IEnumerator Shoot(float time)
     {
         Ammo--;
-        GameManager.Instance.UpdateAmmoCount(Ammo);
+        GameManager.Instance.UpdateAmmoCount(Ammo, Stats.Ammo_Capacity);
         isShooting = true;
         Bullet bullet = Instantiate(Bullet, FirePos.transform.position, transform.rotation).GetComponent<Bullet>();
-        bullet.speed = BulletSpeed;
-        bullet.damage = Damage;
+        bullet.speed = Stats.BulletSpeed;
+        bullet.damage = Stats.Damage;
         yield return new WaitForSeconds(time);
         isShooting = false;
     }
@@ -73,8 +65,8 @@ public class FireArm : MonoBehaviour, IWeapon
         isReloading = true;
         Ammo = 0;
         yield return new WaitForSeconds(time);
-        Ammo = Ammo_Capacity;
-        GameManager.Instance.UpdateAmmoCount(Ammo);
+        Ammo = Stats.Ammo_Capacity;
+        GameManager.Instance.UpdateAmmoCount(Ammo, Stats.Ammo_Capacity);
         isReloading = false;
     }
 }

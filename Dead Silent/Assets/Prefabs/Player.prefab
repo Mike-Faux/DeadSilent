@@ -182,7 +182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Controller: {fileID: 2227847582455116204}
-  interactionDistance: 0
+  interactionDistance: 8
   Health: 25
   Speed: 8
   SprintMod: 2

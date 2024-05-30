@@ -5,6 +5,7 @@ using UnityEngine;
 public class MeleeWeapon : MonoBehaviour, IWeapon
 {
 
+    public WeaponStats Stats;
     [SerializeField] Transform SwingPos;
     [SerializeField] int Damage;
     [SerializeField] float SwingRate;
