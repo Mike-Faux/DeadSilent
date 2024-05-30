@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 2681943815202973647}
   - component: {fileID: 2227847582455116204}
   - component: {fileID: 1563642747572834671}
-  - component: {fileID: 5492210944096267338}
+  - component: {fileID: -1000466254172292707}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -139,7 +139,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.01
+  m_Radius: 0.4
   m_Height: 0
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -196,7 +196,7 @@ MonoBehaviour:
     m_Bits: 128
   intIcon: {fileID: 0}
   weaponSlot: {fileID: 551771364105821746}
---- !u!54 &5492210944096267338
+--- !u!54 &-1000466254172292707
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

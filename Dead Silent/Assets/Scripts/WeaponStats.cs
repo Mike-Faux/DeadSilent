@@ -12,4 +12,6 @@ public class WeaponStats : ScriptableObject
     public float FireRate;
     public float ReloadTime;
     public bool Silenced;
+
+    public float SoundRadius;
 }

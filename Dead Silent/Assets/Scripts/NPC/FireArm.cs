@@ -51,8 +51,17 @@ public class FireArm : MonoBehaviour, IWeapon
 
     IEnumerator Shoot(float time)
     {
+        GameManager.Instance.LastKnownPosition = GameManager.Instance.Player.transform.position;
+        Collider[] units = Physics.OverlapSphere(transform.position, Stats.SoundRadius, LayerMask.GetMask("Characters"));
+        for(int i = 0; i < units.Length; i++)
+        {
+            if (units[i].TryGetComponent(out EnemyAI ai))
+            {
+                ai.Alert();
+            }
+        }
+
         Ammo--;
-        GameManager.Instance.UpdateAmmoCount(Ammo, Stats.Ammo_Capacity);
         isShooting = true;
         Bullet bullet = Instantiate(Bullet, FirePos.transform.position, transform.rotation).GetComponent<Bullet>();
         bullet.speed = Stats.BulletSpeed;
