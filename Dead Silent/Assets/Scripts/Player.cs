@@ -40,6 +40,7 @@ public class Player : MonoBehaviour, IDamageable
     // Start is called before the first frame update
     void Start()
     {
+        MaxHealth = Health;
         SpawnPlayer();
 
         Weapon = weaponSlot.GetComponentInChildren<IWeapon>();
@@ -177,7 +178,7 @@ public class Player : MonoBehaviour, IDamageable
 
     public void SpawnPlayer()
     {
-        MaxHealth = Health;
+        Health = MaxHealth;
         UpdatePlayerUI();
 
         Controller.enabled = false;
