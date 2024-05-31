@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
 
     public float speed = 1;
     public int damage = 1;
-
+    public ParticleSystem hitEffect;
     [SerializeField] float time = 3;
 
     // Start is called before the first frame update
@@ -21,6 +21,7 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Instantiate(hitEffect, collision.contacts[0].point, Quaternion.identity);
         if(collision.gameObject.TryGetComponent(out IDamageable dmg))
         {
             dmg.TakeDamage(damage);

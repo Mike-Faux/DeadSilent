@@ -26,6 +26,10 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] GameObject intIcon;
     [SerializeField] GameObject weaponSlot;
     [SerializeField] IWeapon Weapon;
+    
+    [SerializeField] AudioSource aud;
+    [SerializeField] AudioClip[] audJump;
+    [Range(0, 1)][SerializeField] float audJumpVol;
 
     Vector3 MoveDir;
     Vector3 PlayerVel;
@@ -108,6 +112,7 @@ public class Player : MonoBehaviour, IDamageable
 
         if (Input.GetButtonDown("Jump") && JumpCount < JumpMax)
         {
+            aud.PlayOneShot(audJump[Random.Range(0, audJump.Length)], audJumpVol);
             JumpCount++;
             PlayerVel.y = JumpSpeed;
         }

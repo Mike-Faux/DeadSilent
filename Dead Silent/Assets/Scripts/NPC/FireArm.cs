@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class FireArm : MonoBehaviour, IWeapon
 {
 
     public WeaponStats Stats;
+    public ParticleSystem hitEffect;
     [SerializeField] Transform FirePos;
     [SerializeField] GameObject Bullet;
     [SerializeField] bool InfiniteAmmo = false;
@@ -23,10 +25,12 @@ public class FireArm : MonoBehaviour, IWeapon
     {
         if (Ammo <= 0 && !InfiniteAmmo) return;
         if(isReloading) return;
-
-        if(!isShooting)
+       
+        if (!isShooting)
         {
             StartCoroutine(Shoot(Stats.FireRate));
+            
+
         }
     }
 
@@ -36,6 +40,7 @@ public class FireArm : MonoBehaviour, IWeapon
         {
             StartCoroutine(Reload(Stats.ReloadTime));
         }
+
     }
 
     public void ChangeAmmo(int amount)
@@ -51,8 +56,10 @@ public class FireArm : MonoBehaviour, IWeapon
 
     IEnumerator Shoot(float time)
     {
+      
         GameManager.Instance.LastKnownPosition = GameManager.Instance.Player.transform.position;
-        Collider[] units = Physics.OverlapSphere(transform.position, Stats.SoundRadius, LayerMask.GetMask("Characters"));
+        Collider[] units = Physics.OverlapSphere(transform.position,  Stats.SoundRadius, LayerMask.GetMask("Characters"));
+        
         for(int i = 0; i < units.Length; i++)
         {
             if (units[i].TryGetComponent(out EnemyAI ai))
@@ -60,12 +67,13 @@ public class FireArm : MonoBehaviour, IWeapon
                 ai.Alert();
             }
         }
-
+        
         Ammo--;
         isShooting = true;
-        Bullet bullet = Instantiate(Bullet, FirePos.transform.position, transform.rotation).GetComponent<Bullet>();
+        Bullet bullet = Instantiate( Bullet, FirePos.transform.position, transform.rotation).GetComponent<Bullet>();
         bullet.speed = Stats.BulletSpeed;
         bullet.damage = Stats.Damage;
+        bullet.hitEffect = hitEffect;
         yield return new WaitForSeconds(time);
         isShooting = false;
     }

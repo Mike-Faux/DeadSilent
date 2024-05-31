@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 4971964780661652405}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 21.25, y: 1, z: 9}
+  m_LocalPosition: {x: 16.983547, y: 3.6071777, z: 9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -193,6 +193,7 @@ MonoBehaviour:
   rb: {fileID: 1201544715478469968}
   speed: 30
   damage: 1
+  hitEffect: {fileID: 1305779495009741383, guid: 8017517939ec00445981b86a98b40d29, type: 3}
   time: 2
 --- !u!54 &1201544715478469968
 Rigidbody:
