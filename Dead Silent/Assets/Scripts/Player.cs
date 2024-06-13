@@ -58,18 +58,20 @@ public class Player : MonoBehaviour, IDamageable
         if(!GameManager.Instance.pause && !GameManager.Instance.inventory)
         {
             Movement();
-
+            
             if (Input.GetButton("Fire1") && Weapon != null)
             {
                 Weapon.Attack();
                 UpdateWeaponInfo();
                 //Debug.Log("Fire1");
+                
             }
 
             CheckInteraction();
             if (Input.GetButton("Fire2") && interact != null)
             {
                 interact.Interact();
+
             }
         }
     }
@@ -102,6 +104,7 @@ public class Player : MonoBehaviour, IDamageable
         {
             JumpCount = 0;
             PlayerVel = Vector3.zero;
+            
         }
 
         MoveDir = (Input.GetAxis("Horizontal") * transform.right) + (Input.GetAxis("Vertical") * transform.forward);

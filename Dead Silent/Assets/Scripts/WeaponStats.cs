@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class WeaponStats : ScriptableObject
 {
+   
     public string Name;
     public int Damage;
     public int BulletSpeed;

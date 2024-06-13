@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 75ca9c6eec9411140929eb4429a98558, type: 2}
+  - {fileID: 2100000, guid: 96b5148c43a2a514cbe76e9ecb9f785e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -359,7 +359,7 @@ MonoBehaviour:
   blockingFiring:
     serializedVersion: 2
     m_Bits: 83
-  currentStatus: 4
+  currentStatus: 2
   weaponSlot: {fileID: 4405476026280522474}
   StatusIndicator: {fileID: 193226269150858576}
 --- !u!114 &8155283647535094082
