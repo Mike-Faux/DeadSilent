@@ -115,7 +115,7 @@ public class Player : MonoBehaviour, IDamageable
 
         if (Input.GetButtonDown("Jump") && JumpCount < JumpMax)
         {
-            aud.PlayOneShot(audJump[Random.Range(0, audJump.Length)], audJumpVol);
+           
             JumpCount++;
             PlayerVel.y = JumpSpeed;
         }
