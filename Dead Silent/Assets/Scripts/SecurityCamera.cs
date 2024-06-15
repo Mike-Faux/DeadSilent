@@ -23,14 +23,14 @@ public class SecurityCamera : MonoBehaviour
     bool isWatched;
     bool isReported;
 
-    public void OnPlayerDetected(GameObject player)
-    {
-        if(isWatched && !isReported)
-        {
-            GameManager.Instance.enemyManager.SC_ReportSighting(this, player);
-            StartCoroutine(Report(RereportDelay));
-        }
-    }
+    //public void OnPlayerDetected(GameObject player)
+    //{
+    //    if(isWatched && !isReported)
+    //    {
+    //        GameManager.Instance.enemyManager.SC_ReportSighting(this, player);
+    //        StartCoroutine(Report(RereportDelay));
+    //    }
+    //}
 
     public void OnDestruction()
     {

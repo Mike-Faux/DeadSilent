@@ -2,24 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Animations;
 
-public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
+public class EnemyAI : MonoBehaviour, IDamageable
 {
 
     [SerializeField] NavMeshAgent agent;
+
     [SerializeField] int Health;
     [SerializeField] int EngageDistance;
-    [SerializeField] AIType type;
+    //[SerializeField] AIType type;
 
     [SerializeField] float alertDistance;
+    [SerializeField] float ChaseDistance = 10f;
+    [SerializeField] float attackDistance = 2f;
     [SerializeField] LayerMask toAlert;
     [SerializeField] LayerMask blockingFiring;
 
     (Vector3 Position, int TimeInPosition)[] patrolPath;
-    [SerializeField] Status currentStatus;
+    //[SerializeField] Status currentStatus;
 
     float BaseSpeed;
     Animator animator;
+
 
     int currentPatrolPoint;
     Vector3 targetPos;
@@ -30,7 +35,7 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
 
     [SerializeField] GameObject StatusIndicator;
     MeshRenderer StatusIndicatorMR;
-
+    GameObject player;
     MeshRenderer mr;
 
     float LoiterVariation = 1.5f;
@@ -43,7 +48,7 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         animator = GetComponent<Animator>();
         GameManager.Instance.enemyManager.ReportIn(this);
         GameManager.Instance.UpdateEnemyCount(1);
-
+        player = GameManager.Instance.Player;
         mr = gameObject.GetComponent<MeshRenderer>();
 
         if(!StatusIndicator.TryGetComponent(out StatusIndicatorMR ))
@@ -60,52 +65,63 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
     void Update()
 
     {
-        if (agent.remainingDistance <= agent.stoppingDistance)
-        {
-            // If the agent is not moving, play the "idle" animation
-            animator.SetBool("isWalking", false);
-            animator.SetBool(isRunningHash, false);
-        }
-        else if (agent.velocity.magnitude > runSpeedThreshold)
-        {
-            // If the agent's speed is above the threshold, set "isRunning" to true
-            animator.SetBool(isRunningHash, true);
-        }
-        else 
-        {
-            // If the agent is moving, play the "walk" animation
-            animator.SetBool("isWalking", true);
-        }
-        if (currentStatus != Status.Engaging) agent.isStopped = false;
-        if (currentStatus == Status.Engaging && agent.remainingDistance > 1f)
-        {
-            if (agent.enabled)
-            {
-                agent.isStopped = false;
-            }
-            Engage();
-        }
 
-        if (Vector3.Distance(agent.destination, transform.position) < 2f)
+        if (player != null)
         {
-            switch (currentStatus)
+            float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+
+            if (distanceToPlayer <= ChaseDistance)
             {
-                default:
-                    Patrol();
-                    break;
-                case Status.Investigating:
-                    Investigate();
-                    break;
-                case Status.Tracking:
-                    Track();
-                    break;
-                case Status.Loitering:
-                    break;
-                case Status.Engaging:
-                    Engage();
-                    break;
+                agent.SetDestination(player.transform.position);
+                if(distanceToPlayer <= attackDistance)
+                {
+                    Aim();
+                    weapon.Attack();
+                }
             }
         }
+        //if (agent.remainingDistance <= agent.stoppingDistance)
+        //{
+        //    // If the agent is not moving, play the "idle" animation
+        //    animator.SetBool("isWalking", false);
+        //    animator.SetBool(isRunningHash, false);
+        //}
+        //else if (agent.velocity.magnitude > runSpeedThreshold)
+        //{
+        //    // If the agent's speed is above the threshold, set "isRunning" to true
+        //    animator.SetBool(isRunningHash, true);
+        //}
+        //else 
+        //{
+        //    // If the agent is moving, play the "walk" animation
+        //    animator.SetBool("isWalking", true);
+        //}
+        //if (target != null && Vector3.Distance(transform.position, target.transform.position) <= EngageDistance)
+        //{
+           
+        //    Engage();
+        //}
+
+        //if (Vector3.Distance(agent.destination, transform.position) < 2f)
+        //{
+        //    switch (currentStatus)
+        //    {
+        //        default:
+        //            Patrol();
+        //            break;
+        //        case Status.Investigating:
+        //            Investigate();
+        //            break;
+        //        case Status.Tracking:
+        //            Track();
+        //            break;
+        //        case Status.Loitering:
+        //            break;
+        //        case Status.Engaging:
+        //            Engage();
+        //            break;
+        //    }
+        //}
     }
 
     public void TakeDamage(int amount)
@@ -120,7 +136,7 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         }
 
         GameManager.Instance.LastKnownPosition = GameManager.Instance.Player.transform.position;
-        SetStatus(Status.Tracking);
+        //SetStatus(Status.Tracking);
         target = GameManager.Instance.Player;
         targetPos = target.transform.position;
         agent.SetDestination(targetPos);
@@ -145,229 +161,248 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         mr.material = temp;
     }
 
-    public void Engage()
-    {
-        agent.speed = BaseSpeed * 1.5f;
-        //Officer Alerting Nearby Units
-        if (type == AIType.Officer && GameManager.Instance.LastKnownPosition != null)
-        {
-            Collider[] nearby = Physics.OverlapSphere(transform.position, alertDistance, toAlert);
-            for (int i = 0; i < nearby.Length; i++)
-            {
-                if (nearby[i].TryGetComponent(out EnemyAI ai))
-                {
-                    ai.Alert();
-                    //Debug.Log("ALERT!");
-                }
-            }
-        }
-        if(target == null)
-        {
-            Debug.Log("TargetNull");
-            return;
-        }
+//    public void Engage()
 
-        float disToTarget = Vector3.Distance(target.transform.position, 
-            transform.position);
-        Vector3 dirToTarget = target.transform.position - transform.position;
-        dirToTarget.Normalize();
+//    {
+//        agent.speed = BaseSpeed * 1.5f;
+
+//        if(weapon != null)
+//        {
+//            if(weapon.GetType() == typeof(FireArm))
+//            {
+//                FireArm gun = (FireArm)weapon; ;
+//                if (gun.Ammo < 1)
+//                {
+//                    gun.Reload();
+//                }
+//            }
+//            Aim();
+//            weapon.Attack();
+//        }
+//    }
+//   // {
+//        //agent.speed = BaseSpeed * 1.5f;
+//        ////Officer Alerting Nearby Units
+//        //if (type == AIType.Officer && GameManager.Instance.LastKnownPosition != null)
+//        //{
+//        //    Collider[] nearby = Physics.OverlapSphere(transform.position, alertDistance, toAlert);
+//        //    for (int i = 0; i < nearby.Length; i++)
+//        //    {
+//        //        if (nearby[i].TryGetComponent(out EnemyAI ai))
+//        //        {
+//        //            ai.Alert();
+//        //            //Debug.Log("ALERT!");
+//        //        }
+//        //    }
+//        //}
+//        //if(target == null)
+//        //{
+//        //    Debug.Log("TargetNull");
+//        //    return;
+//        //}
+
+//        //float disToTarget = Vector3.Distance(target.transform.position, 
+//        //    transform.position);
+//        //Vector3 dirToTarget = target.transform.position - transform.position;
+//        //dirToTarget.Normalize();
 
 
-        //Debug.Log($"{name} Engaging target {disToTarget} away");
+//        //Debug.Log($"{name} Engaging target {disToTarget} away");
 
-        //Check for engage Distance and target
-        if (disToTarget > EngageDistance || target == null)
-        {
+//        //Check for engage Distance and target
+//    //    if (disToTarget > EngageDistance || target == null)
+//    //    {
 
-            agent.isStopped = false;
+//    //        agent.isStopped = false;
 
-            SetStatus(Status.Tracking);
-        }
-        else if (!Physics.Raycast(transform.position + transform.forward, dirToTarget, disToTarget, blockingFiring, QueryTriggerInteraction.Ignore))
-        {
-            SetStatus(Status.Engaging);
-            agent.isStopped = true;
-            if (weapon != null)
-            {
-                if (weapon.GetType() == typeof(FireArm))
-                {
-                    FireArm gun = (FireArm)weapon;
-                    if (gun.Ammo < 1) gun.Reload();
-                }
+//    //        SetStatus(Status.Tracking);
+//    //    }
+//    //    else if (!Physics.Raycast(transform.position + transform.forward, dirToTarget, disToTarget, blockingFiring, QueryTriggerInteraction.Ignore))
+//    //    {
+//    //        SetStatus(Status.Engaging);
+//    //        agent.isStopped = true;
+//    //        if (weapon != null)
+//    //        {
+//    //            if (weapon.GetType() == typeof(FireArm))
+//    //            {
+//    //                FireArm gun = (FireArm)weapon;
+//    //                if (gun.Ammo < 1) gun.Reload();
+//    //            }
 
-                Aim();
-                weapon.Attack();
-            }
-        }
-        else
-        {
-            SetStatus(Status.Tracking);
-            agent.SetDestination(target.transform.position);
-            agent.isStopped = false;
-        }
-    }
+//    //            Aim();
+//    //            weapon.Attack();
+//    //        }
+//    //    }
+//    //    else
+//    //    {
+//    //        SetStatus(Status.Tracking);
+//    //        agent.SetDestination(target.transform.position);
+//    //        agent.isStopped = false;
+//    //    }
+//    //}
 
     public void Aim()
     {
-        Vector3 pos = target.transform.position;
-        pos.y = transform.position.y;
+       Vector3 pos = target.transform.position;
+       pos.y = transform.position.y;
         transform.LookAt(pos - (transform.right / 2), Vector3.up);
-    }
+  }
 
-    public void Track()
-    {
-        agent.speed = BaseSpeed * 1.5f;
-        if (target != null && Vector3.Distance(target.transform.position, transform.position) < EngageDistance)
-        {
-            SetStatus(Status.Engaging);
-            Engage();
-        }
-        else if (targetPos != GameManager.Instance.LastKnownPosition)
-        {
-            targetPos = GameManager.Instance.LastKnownPosition;
-            agent.SetDestination(targetPos);
-        }
-        else
-        {
-            target = null;
-            SetStatus(Status.Investigating);
-        }
-    }
+//    public void Track()
+//    {
+//        agent.speed = BaseSpeed * 1.5f;
+//        if (target != null && Vector3.Distance(target.transform.position, transform.position) < EngageDistance)
+//        {
+//            SetStatus(Status.Engaging);
+//            Engage();
+//        }
+//        else if (targetPos != GameManager.Instance.LastKnownPosition)
+//        {
+//            targetPos = GameManager.Instance.LastKnownPosition;
+//            agent.SetDestination(targetPos);
+//        }
+//        else
+//        {
+//            target = null;
+//            SetStatus(Status.Investigating);
+//        }
+//    }
 
-    public void Investigate()
-    {
-        agent.speed = BaseSpeed * .8f;
-        //Debug.Log("Investigating");
-        if (targetPos == GameManager.Instance.LastKnownPosition)
-        {
-            SetStatus(Status.Loitering);
-            StartCoroutine(Loiter(10, currentPatrolPoint));
-        }
-        else
-        {
-            targetPos = GameManager.Instance.LastKnownPosition;
-            agent.SetDestination(targetPos);
-            SetStatus(Status.Tracking);
-        }
-    }
+//    //public void Investigate()
+//    //{
+//    //    agent.speed = BaseSpeed * .8f;
+//    //    //Debug.Log("Investigating");
+//    //    if (targetPos == GameManager.Instance.LastKnownPosition)
+//    //    {
+//    //        SetStatus(Status.Loitering);
+//    //        StartCoroutine(Loiter(10, currentPatrolPoint));
+//    //    }
+//    //    else
+//    //    {
+//    //        targetPos = GameManager.Instance.LastKnownPosition;
+//    //        agent.SetDestination(targetPos);
+//    //        SetStatus(Status.Tracking);
+//    //    }
+//    //}
 
-    public void Patrol()
-    {
-        agent.speed = BaseSpeed;
-        if (patrolPath == null) return;
-        if (patrolPath.Length == 0) return;
-        int seconds = patrolPath[currentPatrolPoint].TimeInPosition;
+//    //public void Patrol()
+//    //{
+//    //    agent.speed = BaseSpeed;
+//    //    if (patrolPath == null) return;
+//    //    if (patrolPath.Length == 0) return;
+//    //    int seconds = patrolPath[currentPatrolPoint].TimeInPosition;
 
-        currentPatrolPoint++;
+//    //    currentPatrolPoint++;
 
-        if (currentPatrolPoint < 0 || currentPatrolPoint >= patrolPath.Length)
-        {
-            currentPatrolPoint = 0;
+//    //    if (currentPatrolPoint < 0 || currentPatrolPoint >= patrolPath.Length)
+//    //    {
+//    //        currentPatrolPoint = 0;
 
-            if (patrolPath.Length == 0) return;
-        }
+//    //        if (patrolPath.Length == 0) return;
+//    //    }
 
-        SetStatus(Status.Loitering);
-        StartCoroutine(Loiter(seconds, currentPatrolPoint));
-    }
+//    //    SetStatus(Status.Loitering);
+//    //    StartCoroutine(Loiter(seconds, currentPatrolPoint));
+//    //}
 
-    IEnumerator Loiter(int seconds, int nextPatrolPoint)
-    {
-        float min = seconds - LoiterVariation;
-        if (min < 0) min = 0;
-        float max = seconds + LoiterVariation;
+//    //IEnumerator Loiter(int seconds, int nextPatrolPoint)
+//    //{
+//    //    float min = seconds - LoiterVariation;
+//    //    if (min < 0) min = 0;
+//    //    float max = seconds + LoiterVariation;
 
-        float split = Random.Range(min, max) / 3;
-        if (split < 1f) split = 1f;
+//    //    float split = Random.Range(min, max) / 3;
+//    //    if (split < 1f) split = 1f;
 
-        yield return new WaitForSeconds(split);
-        if (currentStatus != Status.Loitering) yield break;
+//    //    yield return new WaitForSeconds(split);
+//    //    if (currentStatus != Status.Loitering) yield break;
 
-        StartCoroutine(SmoothRotate(Quaternion.LookRotation(-transform.right, transform.up), 30));
+//    //    StartCoroutine(SmoothRotate(Quaternion.LookRotation(-transform.right, transform.up), 30));
 
-        yield return new WaitForSeconds(split);
-        if (currentStatus != Status.Loitering) yield break;
+//    //    yield return new WaitForSeconds(split);
+//    //    if (currentStatus != Status.Loitering) yield break;
 
-        StartCoroutine(SmoothRotate(Quaternion.LookRotation(-transform.forward, transform.up), 30));
+//    //    StartCoroutine(SmoothRotate(Quaternion.LookRotation(-transform.forward, transform.up), 30));
 
-        yield return new WaitForSeconds(split);
-        if (currentStatus != Status.Loitering) yield break;
+//    //    yield return new WaitForSeconds(split);
+//    //    if (currentStatus != Status.Loitering) yield break;
 
-        agent.SetDestination(patrolPath[nextPatrolPoint].Position);
-        SetStatus(Status.Patroling);
-    }
+//    //    agent.SetDestination(patrolPath[nextPatrolPoint].Position);
+//    //    SetStatus(Status.Patroling);
+//    //}
 
-    IEnumerator SmoothRotate(Quaternion targetRotation, int segments)
-    {
-        float interval = 1f / segments;
+//    //IEnumerator SmoothRotate(Quaternion targetRotation, int segments)
+//    //{
+//    //    float interval = 1f / segments;
 
-        for (int i = 0; i < segments; i++)
-        {
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, i * interval + interval);
-            yield return new WaitForSeconds(interval);
-            if (currentStatus != Status.Loitering) break;
-        }
-    }
+//    //    for (int i = 0; i < segments; i++)
+//    //    {
+//    //        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, i * interval + interval);
+//    //        yield return new WaitForSeconds(interval);
+//    //        if (currentStatus != Status.Loitering) break;
+//    //    }
+//    //}
 
-    public void OnEnemySighted(GameObject target)
-    {
-        this.target = target;
-        GameManager.Instance.LastKnownPosition = target.transform.position;
-        this.targetPos = target.transform.position;
+//    public void OnEnemySighted(GameObject target)
+//    {
+//        this.target = target;
+//        //GameManager.Instance.LastKnownPosition = target.transform.position;
+//        //this.targetPos = target.transform.position;
 
 
-        SetStatus(Status.Engaging);
-        agent.SetDestination(target.transform.position);
-        Engage();
-    }
+//        SetStatus(Status.Tracking);
+//        agent.SetDestination(target.transform.position);
+//        //Engage();
+//    }
 
-    public void Distract(GameObject distraction)
-    {
-        if (currentStatus == Status.Tracking) return;
+//    //public void Distract(GameObject distraction)
+//    //{
+//    //    if (currentStatus == Status.Tracking) return;
 
-        targetPos = distraction.transform.position;
-        SetStatus(Status.Investigating);
-        agent.SetDestination(targetPos);
-    }
+//    //    targetPos = distraction.transform.position;
+//    //    SetStatus(Status.Investigating);
+//    //    agent.SetDestination(targetPos);
+//    //}
 
-    public void Alert()
-    {
-        if (currentStatus == Status.Engaging) return;
+//    //public void Alert()
+//    //{
+//    //    if (currentStatus == Status.Engaging) return;
 
-        targetPos = GameManager.Instance.LastKnownPosition;
-        agent.SetDestination(targetPos);
-        SetStatus(Status.Tracking);
-    }
+//    //    targetPos = GameManager.Instance.LastKnownPosition;
+//    //    agent.SetDestination(targetPos);
+//    //    SetStatus(Status.Tracking);
+//    //}
 
-    public void SetPatrolPath((Vector3 Position, int TimeInPosition)[] path)
-    {
-        //Debug.Log($"{name} path set with {path.Length} points!");
-        patrolPath = path;
-    }
+//    //public void SetPatrolPath((Vector3 Position, int TimeInPosition)[] path)
+//    //{
+//    //    //Debug.Log($"{name} path set with {path.Length} points!");
+//    //    patrolPath = path;
+//    //}
 
-    public void SetStatus(Status status)
-    {
-        currentStatus = status;
-        if(StatusIndicatorMR == null)
-        {
-            Debug.Log("What?");
-            StatusIndicator.TryGetComponent(out StatusIndicatorMR);
-        }
-        StatusIndicatorMR.material = GameManager.Instance.enemyManager.GetStatusMaterial(status);
-    }
+//    public void SetStatus(Status status)
+//    {
+//        currentStatus = status;
+//        if (StatusIndicatorMR == null)
+//        {
+//            Debug.Log("What?");
+//            StatusIndicator.TryGetComponent(out StatusIndicatorMR);
+//        }
+//        StatusIndicatorMR.material = GameManager.Instance.enemyManager.GetStatusMaterial(status);
+//    }
 
-    public enum Status
-    {
-        Patroling,
-        Investigating,
-        Tracking,
-        Loitering,
-        Engaging
-    }
+//    public enum Status
+//    {
+//        Patroling,
+//        Investigating,
+//        Tracking,
+//        Loitering,
+//        Engaging
+//    }
 
-    enum AIType
-    {
-        Grunt,
-        Officer
-    }
+//    enum AIType
+//    {
+//        Grunt,
+//        Officer
+//    }
+//
 }

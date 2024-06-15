@@ -60,13 +60,13 @@ public class FireArm : MonoBehaviour, IWeapon
         GameManager.Instance.LastKnownPosition = GameManager.Instance.Player.transform.position;
         Collider[] units = Physics.OverlapSphere(transform.position,  Stats.SoundRadius, LayerMask.GetMask("Characters"));
         
-        for(int i = 0; i < units.Length; i++)
-        {
-            if (units[i].TryGetComponent(out EnemyAI ai))
-            {
-                ai.Alert();
-            }
-        }
+        //for(int i = 0; i < units.Length; i++)
+        //{
+        //    if (units[i].TryGetComponent(out EnemyAI ai))
+        //    {
+        //        ai.Alert();
+        //    }
+        //}
         
         Ammo--;
         isShooting = true;

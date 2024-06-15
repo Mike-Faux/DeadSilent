@@ -31,7 +31,7 @@ public class EnemySpawner : MonoBehaviour
             path[i] = new(PatrolPath[i].transform.position, PatrolPath[i].TimeInPosition);
         }
 
-        ai.SetPatrolPath(path);
+        //ai.SetPatrolPath(path);
     }
 
     // Start is called before the first frame update
