@@ -584,7 +584,7 @@ MonoBehaviour:
   hitEffect: {fileID: 1305779495009741383, guid: 8017517939ec00445981b86a98b40d29, type: 3}
   FirePos: {fileID: 1662545299622288658}
   Bullet: {fileID: 4971964780661652405, guid: 95f272568e3a6f14092a9f611968e812, type: 3}
-  InfiniteAmmo: 0
+  InfiniteAmmo: 1
   Ammo: 30
 --- !u!1 &7002633757822394912
 GameObject:

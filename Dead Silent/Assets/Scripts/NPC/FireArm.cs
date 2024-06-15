@@ -28,7 +28,10 @@ public class FireArm : MonoBehaviour, IWeapon
        
         if (!isShooting)
         {
+            Debug.Log("shooting");
             StartCoroutine(Shoot(Stats.FireRate));
+            
+
             
 
         }
@@ -73,6 +76,7 @@ public class FireArm : MonoBehaviour, IWeapon
         Bullet bullet = Instantiate( Bullet, FirePos.transform.position, transform.rotation).GetComponent<Bullet>();
         bullet.speed = Stats.BulletSpeed;
         bullet.damage = Stats.Damage;
+        bullet.maxRange = Stats.MaxRange;
         bullet.hitEffect = hitEffect;
         yield return new WaitForSeconds(time);
         isShooting = false;

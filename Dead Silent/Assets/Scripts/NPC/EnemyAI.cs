@@ -40,6 +40,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
 
     float LoiterVariation = 1.5f;
     float runSpeedThreshold = 5f;
+    float maxRange = 100f;
     int isRunningHash = Animator.StringToHash("isRunning");
 
     // Start is called before the first frame update
@@ -50,11 +51,18 @@ public class EnemyAI : MonoBehaviour, IDamageable
         GameManager.Instance.UpdateEnemyCount(1);
         player = GameManager.Instance.Player;
         mr = gameObject.GetComponent<MeshRenderer>();
-
-        if(!StatusIndicator.TryGetComponent(out StatusIndicatorMR ))
+        if (weaponSlot != null)
         {
-            Debug.Log("Not Found");
+            weapon = weaponSlot.GetComponentInChildren<IWeapon>();
+            if (weapon != null)
+            {
+                Debug.LogError("Weapon is null!");
+            }
         }
+        //if(!StatusIndicator.TryGetComponent(out StatusIndicatorMR ))
+        //{
+        //    Debug.Log("Not Found");
+        //}
 
         BaseSpeed = agent.speed;
 
@@ -75,6 +83,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
                 agent.SetDestination(player.transform.position);
                 if(distanceToPlayer <= attackDistance)
                 {
+                    Debug.Log("Attacking Player");
                     Aim();
                     weapon.Attack();
                 }
@@ -243,9 +252,9 @@ public class EnemyAI : MonoBehaviour, IDamageable
 
     public void Aim()
     {
-       Vector3 pos = target.transform.position;
-       pos.y = transform.position.y;
-        transform.LookAt(pos - (transform.right / 2), Vector3.up);
+       Vector3 pos = player.transform.position;
+      targetPos.y = transform.position.y;
+        
   }
 
 //    public void Track()

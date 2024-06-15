@@ -17,5 +17,8 @@ MonoBehaviour:
   BulletSpeed: 180
   Ammo_Capacity: 30
   FireRate: 0.12
+  shootDist: 5108
+  MaxRange: 5555.4
   ReloadTime: 3
   Silenced: 0
+  SoundRadius: 0.18
