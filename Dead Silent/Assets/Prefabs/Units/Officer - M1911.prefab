@@ -962,15 +962,15 @@ MonoBehaviour:
   agent: {fileID: 1916920105152662680}
   Health: 10
   EngageDistance: 10
-  type: 1
   alertDistance: 40
+  chaseDistance: 0
+  attackDistance: 0
   toAlert:
     serializedVersion: 2
     m_Bits: 64
   blockingFiring:
     serializedVersion: 2
     m_Bits: 119
-  currentStatus: 0
   weaponSlot: {fileID: 4405476026280522474}
   StatusIndicator: {fileID: 179169943942920910}
 --- !u!114 &8155283647535094082
@@ -986,7 +986,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ViewRadius: 25
-  ViewAngle: 80
+  ViewAngle: 95
   tarketMask:
     serializedVersion: 2
     m_Bits: 8

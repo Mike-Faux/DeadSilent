@@ -125,7 +125,7 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.9384243
+        time: 0.18841553
         value: 0
         inSlope: 0
         outSlope: 0
@@ -191,10 +191,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1201544715478469968}
-  speed: 30
+  speed: 110.47
   damage: 1
+  maxRange: 2.9
   hitEffect: {fileID: 1305779495009741383, guid: 8017517939ec00445981b86a98b40d29, type: 3}
-  time: 2
+  time: 1.42
 --- !u!54 &1201544715478469968
 Rigidbody:
   m_ObjectHideFlags: 0

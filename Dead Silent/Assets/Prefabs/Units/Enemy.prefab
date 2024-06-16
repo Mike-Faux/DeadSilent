@@ -709,7 +709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 514efdf15f8c16a4c858943e0472608b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ViewRadius: 25
+  ViewRadius: 33.04
   ViewAngle: 80
   tarketMask:
     serializedVersion: 2
@@ -782,7 +782,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 25
+  m_Radius: 30.01
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!137 &1275988100863646993
 SkinnedMeshRenderer:
@@ -894,15 +894,15 @@ MonoBehaviour:
   agent: {fileID: 4317178071435103717}
   Health: 5
   EngageDistance: 30
-  type: 0
   alertDistance: 40
+  ChaseDistance: 53.53
+  attackDistance: 36.2
   toAlert:
     serializedVersion: 2
     m_Bits: 64
   blockingFiring:
     serializedVersion: 2
     m_Bits: 119
-  currentStatus: 0
   weaponSlot: {fileID: 2199006958261165395}
   StatusIndicator: {fileID: 5356522939026320453}
 --- !u!4 &6604383216083234264 stripped

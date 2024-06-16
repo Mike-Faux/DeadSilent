@@ -1,56 +1,56 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.SearchService;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+//using System.Collections;
+//using System.Collections.Generic;
+////using UnityEditor.SearchService;
+//using UnityEngine;
+//using UnityEngine.SceneManagement;
 
-public class Padlock : MonoBehaviour, IInteractable
-{
+//public class Padlock : MonoBehaviour, IInteractable
+//{
     
-    [SerializeField] string previousScene;
+//    [SerializeField] string previousScene;
 
-    public void StartMinigame()
-    {
+//    public void StartMinigame()
+//    {
 
-        previousScene = SceneManager.GetActiveScene().name;
+//        previousScene = SceneManager.GetActiveScene().name;
        
-        SceneManager.LoadScene("Minigame");
-    }
+//        SceneManager.LoadScene("Minigame");
+//    }
 
-    public void CompleteMinigame()
-    {
+//    public void CompleteMinigame()
+//    {
         
         
         
-        GameManager.Instance.pauseState();
-        GameManager.Instance.activeMenu = GameManager.Instance.winMenu;
-        GameManager.Instance.activeMenu.SetActive(GameManager.Instance.pause);
+//        GameManager.Instance.pauseState();
+//        GameManager.Instance.activeMenu = GameManager.Instance.winMenu;
+//        GameManager.Instance.activeMenu.SetActive(GameManager.Instance.pause);
 
         
 
-    }
+//    }
 
 
-    public void Interact()
-    {
-        Debug.Log("Minigame");
-        StartMinigame();
+//    public void Interact()
+//    {
+//        Debug.Log("Minigame");
+//        StartMinigame();
         
-    }
+//    }
 
-    void OnCollisionEnter(Collision collision)
-        {
+//    void OnCollisionEnter(Collision collision)
+//        {
            
-            if (collision.gameObject.CompareTag("Player"))
-            {
+//            if (collision.gameObject.CompareTag("Player"))
+//            {
 
-            CompleteMinigame();
+//            CompleteMinigame();
 
          
-            }
+//            }
             
 
-        }
+//        }
 
     public void Interact(Player user)
     {

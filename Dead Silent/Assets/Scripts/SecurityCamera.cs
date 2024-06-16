@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
-using static UnityEditor.FilePathAttribute;
+//using static UnityEditor.FilePathAttribute;
 
 public class SecurityCamera : MonoBehaviour
 {
@@ -23,14 +23,14 @@ public class SecurityCamera : MonoBehaviour
     bool isWatched;
     bool isReported;
 
-    public void OnPlayerDetected(GameObject player)
-    {
-        if(isWatched && !isReported)
-        {
-            GameManager.Instance.enemyManager.SC_ReportSighting(this, player);
-            StartCoroutine(Report(RereportDelay));
-        }
-    }
+    //public void OnPlayerDetected(GameObject player)
+    //{
+    //    if(isWatched && !isReported)
+    //    {
+    //        GameManager.Instance.enemyManager.SC_ReportSighting(this, player);
+    //        StartCoroutine(Report(RereportDelay));
+    //    }
+    //}
 
     public void OnDestruction()
     {

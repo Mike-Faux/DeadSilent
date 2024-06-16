@@ -30,15 +30,17 @@ public class MeleeWeapon : MonoBehaviour, IWeapon
         Collider[] colliders = Physics.OverlapSphere(SwingPos.position, SwingRadius);
         //Debug.Log(colliders.Length);
 
-        for(int i = 0; i < colliders.Length; i++)
+        for (int i = 0; i < colliders.Length; i++)
         {
-            //Debug.Log(colliders[i].name);
-            if (colliders[i].TryGetComponent(out IDamageable dmg))
+            if (colliders[i].CompareTag("Player"))
             {
-                dmg.TakeDamage(Damage);
+                //Debug.Log(colliders[i].name);
+                if (colliders[i].TryGetComponent(out IDamageable dmg))
+                {
+                    dmg.TakeDamage(Damage);
+                }
             }
         }
-
 
         yield return new WaitForSeconds(time);
         isSwinging = false;
