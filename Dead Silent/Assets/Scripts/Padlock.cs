@@ -52,5 +52,13 @@ public class Padlock : MonoBehaviour, IInteractable
 
         }
 
-        
+    public void Interact(Player user)
+    {
+        Interact();
     }
+
+    public void Interact(EnemyAI user)
+    {
+        return;
+    }
+}

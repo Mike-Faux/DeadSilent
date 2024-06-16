@@ -2,31 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pickupable : MonoBehaviour, IInteractable
+public class Pickupable : MonoBehaviour
 {
     [SerializeField]
-    private string itemName;
+    ItemStack items;
 
-    [SerializeField]
-     private int ItemAmount;
-
-    [SerializeField]
-    private string itemDescription;
-
-
-
-
-    private GameManager gameManager;
-
-
-    private void Start()
-    {
-        gameManager = FindObjectOfType<GameManager>();
-        if (gameManager == null)
-        {
-            Debug.LogError("GameManager not found in the scene.");
-        }
-    }
 
 
     // Called when another collider enters the trigger collider
@@ -36,23 +16,15 @@ public class Pickupable : MonoBehaviour, IInteractable
         if (other.CompareTag("Player"))
         {
             // Trigger the pickup action
-           int leftOverItems = gameManager.AddItem(itemName, ItemAmount, itemDescription);
+           int leftOverItems = other.GetComponent<Player>().inventory.AddItems(items);
            if(leftOverItems <= 0)
             {
-                gameManager.IncrementItemCount(ItemAmount);
                 Destroy(gameObject);
             }
             else
             {
-                gameManager.IncrementItemCount(ItemAmount - leftOverItems);
-                ItemAmount = leftOverItems;
+                items.count = leftOverItems;
             }
         }
-    }
-
-    // Pickup action logic
-    public void Interact()
-    {
-       
     }
 }

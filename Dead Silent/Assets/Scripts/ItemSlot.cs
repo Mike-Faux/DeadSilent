@@ -4,16 +4,16 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Threading;
 
 public class ItemSlot : MonoBehaviour, IPointerClickHandler
 
 {
-    public string itemName;
-    public int itemAmount;
-    public bool isFull;
-    public string itemDescription;
+    public ItemSO item;
     [SerializeField]
      private int maxNumberOfItems;
+    public int itemAmount;
+    public bool isFull;
 
 
     [SerializeField]
@@ -29,53 +29,29 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
 
     public GameObject selectedShader;
     public bool thisItemSelected;
-    private GameManager gameManager;
-
-    private void Awake()
-    {
-        gameManager = FindObjectOfType<GameManager>();
-        if (gameManager != null)
-        {
-            // GameManager component found
-            Debug.Log("GameManager component found successfully.");
-        }
-        else
-        {
-            // GameManager component not found
-            Debug.LogError("GameManager component not found in the hierarchy upwards.");
-        }
-    }
-
 
     // Start is called before the first frame update
-    public int AddItem(string itemName, int itemAmount, string itemDescription)
+    public int AddItem(ItemStack item)
     {
-        if (isFull && this.itemName != itemName)
+        if (item != null && (itemAmount >= maxNumberOfItems || item.item != this.item))
             return itemAmount;
 
-        this.itemName = itemName;
-        this.itemDescription = itemDescription;
+        if(item == null) this.item = item.item;
 
+        itemAmount += item.count;
 
-        int totalAmount = this.itemAmount + itemAmount;
-
-        if (totalAmount >= maxNumberOfItems)
+        if (itemAmount > maxNumberOfItems)
         {
-            int extraItems = totalAmount - maxNumberOfItems;
-            this.itemAmount = maxNumberOfItems;
-            isFull = true;
+            int extraItems = itemAmount - maxNumberOfItems;
+            itemAmount = maxNumberOfItems;
             UpdateUI();
             return extraItems;
         }
          else
-    {
-        this.itemAmount = totalAmount;
-        if (this.itemAmount == maxNumberOfItems)
-            isFull = true;
-
-        UpdateUI();
-        return 0;
-    }
+        {
+            UpdateUI();
+            return 0;
+        }
     }
 
     private void UpdateUI()
@@ -100,12 +76,12 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     {
         if (thisItemSelected)
         {
-            bool usable =  gameManager.UseItem(itemName);
+            bool usable =  GameManager.Instance.UseItem(item);
             if (usable)
             {
-                this.itemAmount -= 1;
-                quantityText.text = this.itemAmount.ToString();
-                if (this.itemAmount <= 0)
+                itemAmount -= 1;
+                quantityText.text = itemAmount.ToString();
+                if (itemAmount <= 0)
                 
                     EmptySlot();
                 
@@ -116,19 +92,18 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
 
         else
         {
-        gameManager.DeselectAllSlots();
+        //GameManager.Instance.DeselectAllSlots();
         selectedShader.SetActive(true);
         thisItemSelected = true;
-        ItemDescriptionNameText.text = itemName;
-        ItemDescriptionText.text = itemDescription;
+        ItemDescriptionNameText.text = item.Name;
+        ItemDescriptionText.text = item.Description;
          }
     }
 
     private void EmptySlot()
     {
         quantityText.enabled = false;
-        itemDescription = "";
-        itemName = "";
+        item = null;
         ItemDescriptionNameText.text = "";
         ItemDescriptionText.text = "";
     }

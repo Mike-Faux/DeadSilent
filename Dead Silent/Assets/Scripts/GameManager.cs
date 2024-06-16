@@ -107,28 +107,11 @@ public class GameManager : MonoBehaviour
     }
 
 
-    
-
-public void IncrementItemCount(int amount)
-    {
-        itemCount += amount;
-
-        if (itemcountText != null)
-        {
-            itemcountText.text = itemCount.ToString("F0");
-            Debug.Log("Updated item count text to: " + itemcountText.text);
-        }
-        else
-        {
-            Debug.LogError("ItemCountText is null when trying to update item count.");
-        }
-    }
-
-    public bool UseItem(string itemName)
+    public bool UseItem(ItemSO item)
     { 
         for(int i = 0; i < itemSOs.Length; i++)
         {
-            if (itemSOs[i].itemName == itemName) 
+            if (itemSOs[i] == item) 
             {
                 bool usable = itemSOs[i].UseItem();
                 return usable;
@@ -139,34 +122,6 @@ public void IncrementItemCount(int amount)
         return false;
     }
 
-    public int AddItem(string itemName, int itemAmount, string itemDescription)
-    {
-        // Check for existing slots with the same item and not full
-        foreach (var itemSlot in items)
-        {
-            if (itemSlot.itemName == itemName && !itemSlot.isFull)
-            {
-                itemAmount = itemSlot.AddItem(itemName, itemAmount, itemDescription);
-                if (itemAmount == 0)
-                {
-                    return 0;
-                }
-            }
-        }
-
-        // If there are leftover items, check for an empty slot
-        foreach (var itemSlot in items)
-        {
-            if (string.IsNullOrEmpty(itemSlot.itemName))
-            {
-                itemAmount = itemSlot.AddItem(itemName, itemAmount, itemDescription);
-                return itemAmount;
-            }
-        }
-
-        // Return the amount that couldn't be added
-        return itemAmount;
-    }
 
 
     public void UpdateEnemyCount(int amount)
@@ -201,17 +156,6 @@ public void IncrementItemCount(int amount)
             Time.timeScale = 0;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-        }
-    }
-    public void DeselectAllSlots()
-    {
-        for (int i = 0; i < items.Length; i++)
-        {
-
-            items[i].selectedShader.SetActive(false);
-            items[i].thisItemSelected = false;
-            items[i].ItemDescriptionNameText.text = items[i].itemName;
-            items[i].ItemDescriptionText.text = items[i].itemDescription;
         }
     }
 

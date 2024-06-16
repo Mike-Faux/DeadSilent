@@ -356,6 +356,12 @@ public class EnemyAI : MonoBehaviour, IDamageable, IDistractable
         StatusIndicatorMR.material = GameManager.Instance.enemyManager.GetStatusMaterial(status);
     }
 
+
+    public bool HasKey(KeySO key)
+    {
+        return false;
+    }
+
     public enum Status
     {
         Patroling,

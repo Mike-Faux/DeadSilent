@@ -7,6 +7,10 @@ public class Door : MonoBehaviour, IInteractable
 {
     
     [SerializeField] float openRot, speed;
+
+    public bool locked = false;
+    [SerializeField] KeySO key;
+
     bool opening;
     bool delay;
 
@@ -20,38 +24,34 @@ public class Door : MonoBehaviour, IInteractable
     }
 
 
-    void Update()
+    void FixedUpdate()
     {
         transform.parent.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime);
-
+    }
     
-    }
 
-    void OpenRot()
+    void ToggleDoor()
     {
-
-        Quaternion targetRot = Quaternion.Euler(0f, 40f, 0f);
-
-        transform.parent.localRotation = Quaternion.Lerp(transform.parent.localRotation,targetRot, speed * Time.deltaTime);
-    }
-
-    public void Interact()
-    {
-        if (delay) return;
-
-        //Debug.Log("interact");
         StartCoroutine(Delay());
         if (opening)
         {
-            targetRotation = Quaternion.Euler(0f, 90f, 0f);
+            Open();
         }
         else
         {
-            targetRotation = Quaternion.Euler(0f, 0f, 0f);
+            Close();
         }
 
         opening = !opening;
-        //Debug.Log("OpenRot");
+    }
+    public void Open()
+    {
+        targetRotation = Quaternion.Euler(0f, 90f, 0f);
+    }
+
+    public void Close()
+    {
+        targetRotation = Quaternion.Euler(0f, 0f, 0f);
     }
 
     IEnumerator Delay()
@@ -59,5 +59,25 @@ public class Door : MonoBehaviour, IInteractable
         delay = true;
         yield return new WaitForSeconds(.1f);
         delay = false;
+    }
+    public void Interact()
+    {
+        if (!opening && locked) return;
+        if (delay) return;
+        ToggleDoor();
+    }
+
+    public void Interact(Player user)
+    {
+        if (delay) return;
+        if (locked && !user.HasKey(key)) return;
+        ToggleDoor();
+    }
+
+    public void Interact(EnemyAI user)
+    {
+        if (delay) return;
+        if (locked && !user.HasKey(key)) return;
+        ToggleDoor();
     }
 }

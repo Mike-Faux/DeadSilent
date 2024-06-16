@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour, IDamageable
 {
     [SerializeField] CharacterController Controller;
+    public Inventory inventory;
    
     [SerializeField] private float interactionDistance;
 
@@ -70,8 +71,7 @@ public class Player : MonoBehaviour, IDamageable
             CheckInteraction();
             if (Input.GetButton("Fire2") && interact != null)
             {
-                interact.Interact();
-
+                interact.Interact(this);
             }
         }
     }
@@ -240,4 +240,14 @@ public class Player : MonoBehaviour, IDamageable
 
     }
 
+    public bool HasItem(ItemStack item)
+    {
+        return false;
+    }
+
+    public bool HasKey(KeySO key)
+    {
+        return false;
+
+    }
 }
