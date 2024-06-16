@@ -1,56 +1,56 @@
-//using System.Collections;
-//using System.Collections.Generic;
-////using UnityEditor.SearchService;
-//using UnityEngine;
-//using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
+//using UnityEditor.SearchService;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
-//public class Padlock : MonoBehaviour, IInteractable
-//{
-    
-//    [SerializeField] string previousScene;
+public class Padlock : MonoBehaviour, IInteractable
+{
 
-//    public void StartMinigame()
-//    {
+    [SerializeField] string previousScene;
 
-//        previousScene = SceneManager.GetActiveScene().name;
-       
-//        SceneManager.LoadScene("Minigame");
-//    }
+    public void StartMinigame()
+    {
 
-//    public void CompleteMinigame()
-//    {
-        
-        
-        
-//        GameManager.Instance.pauseState();
-//        GameManager.Instance.activeMenu = GameManager.Instance.winMenu;
-//        GameManager.Instance.activeMenu.SetActive(GameManager.Instance.pause);
+        previousScene = SceneManager.GetActiveScene().name;
 
-        
+        SceneManager.LoadScene("Minigame");
+    }
 
-//    }
+    public void CompleteMinigame()
+    {
 
 
-//    public void Interact()
-//    {
-//        Debug.Log("Minigame");
-//        StartMinigame();
-        
-//    }
 
-//    void OnCollisionEnter(Collision collision)
-//        {
-           
-//            if (collision.gameObject.CompareTag("Player"))
-//            {
+        GameManager.Instance.pauseState();
+        GameManager.Instance.activeMenu = GameManager.Instance.winMenu;
+        GameManager.Instance.activeMenu.SetActive(GameManager.Instance.pause);
 
-//            CompleteMinigame();
 
-         
-//            }
-            
 
-//        }
+    }
+
+
+    public void Interact()
+    {
+        Debug.Log("Minigame");
+        StartMinigame();
+
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+
+        if (collision.gameObject.CompareTag("Player"))
+        {
+
+            CompleteMinigame();
+
+
+        }
+
+
+    }
 
     public void Interact(Player user)
     {
