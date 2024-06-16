@@ -408,7 +408,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 8
+  m_Speed: 14.27
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 300
@@ -457,17 +457,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 1916920105152662680}
   Health: 8
-  EngageDistance: 3
-  type: 0
+  EngageDistance: 17
   alertDistance: 0
+  chaseDistance: 15.13
+  attackDistance: 4.08
   toAlert:
     serializedVersion: 2
     m_Bits: 64
   blockingFiring:
     serializedVersion: 2
     m_Bits: 83
-  animator: {fileID: 0}
-  currentStatus: 0
   weaponSlot: {fileID: 4405476026280522474}
   StatusIndicator: {fileID: 4958787561385482485}
 --- !u!114 &8155283647535094082

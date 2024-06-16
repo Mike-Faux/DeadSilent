@@ -14,11 +14,11 @@ public class EnemyAI : MonoBehaviour, IDamageable
     //[SerializeField] AIType type;
 
     [SerializeField] float alertDistance;
-    [SerializeField] float ChaseDistance = 10f;
-    [SerializeField] float attackDistance = 2f;
+    [SerializeField] float chaseDistance;
+    [SerializeField] float attackDistance;
     [SerializeField] LayerMask toAlert;
     [SerializeField] LayerMask blockingFiring;
-
+    [SerializeField] LayerMask Enemy;
     (Vector3 Position, int TimeInPosition)[] patrolPath;
     //[SerializeField] Status currentStatus;
 
@@ -78,7 +78,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
         {
             float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
-            if (distanceToPlayer <= ChaseDistance)
+            if (distanceToPlayer <= chaseDistance)
             {
                 agent.SetDestination(player.transform.position);
                 if(distanceToPlayer <= attackDistance)
@@ -133,6 +133,12 @@ public class EnemyAI : MonoBehaviour, IDamageable
         //}
     }
 
+   
+
+    public void Awake()
+    {
+            attackDistance = 50f;
+    }
     public void TakeDamage(int amount)
     {
         Health -= amount;
@@ -166,7 +172,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
         mr.material = GameManager.Instance.enemyManager.DamagedFlashMaterial;
 
         yield return new WaitForSeconds(time);
-
+        
         mr.material = temp;
     }
 

@@ -24,11 +24,15 @@ public class FieldOfView : MonoBehaviour
     {
         
     }
-
+   
     // Update is called once per frame
     void Update()
     {
-        //if(TargetInRange) CheckForTargets();
+        if (TargetInRange == true)
+        {
+           
+        }
+       
     }
 
     public Vector3 DirFromAngle(float angle, bool global)
@@ -71,6 +75,7 @@ public class FieldOfView : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+
             //Debug.Log("Player Entered!");
             TargetInRange = true;
         }
