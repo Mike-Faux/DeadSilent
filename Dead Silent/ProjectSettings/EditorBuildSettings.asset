@@ -29,7 +29,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Menu.unity
     guid: b1571a2784f6c944a9da49d4d54d5a66
+  - enabled: 0
+    path: Assets/SlimUI/Modern Menu 1/Scenes/Demos/Demo1.unity
+    guid: 829a86ba161cdd840842063447f41aab
+  - enabled: 1
+    path: Assets/Scenes/Bank.unity
+    guid: 741fac8941829ec41915cf354a3ea425
   m_configObjects: {}
