@@ -4,16 +4,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
-[SerializedField] private float volume = 1f;
-[SerializedField] private float sensitivity = 1f;
-[SerializedField] private float quality = 1f;
-[SerializedField] private float resolution = 1f;
-[SerializedField] private int fullscreen;
-[SerializedField] private int texture;
-[SerializedField] private bool antialiasing;
-[SerializedField] private bool vSync;
-
 {
+
+    [SerializeField] float sensitivity;
+    [SerializeField] float quality;
+    [SerializeField] float resolution;
+    [SerializeField] bool fullscreen;
+    [SerializeField] float volume;
+    [SerializeField] Screen screen;
+
+
+
     // Start is called before the first frame update
     public void Play()
         {
@@ -54,11 +55,7 @@ public class MainMenu : MonoBehaviour
     }
 
 
-    public void UpdateFullscreen(bool isFullscreen)
-    {
-        screen.fullscreen = isFullscreen;
-        Debug.Log(fullscreen);
-    }
+
 
     public void UpdateVolume(float newVolume)
     {
