@@ -35,6 +35,31 @@ public class MainMenu : MonoBehaviour
 #endif
     }
 
+    public void UpdateSensitivity(float newSensitivity)
+    {
+        sensitivity = newSensitivity;
+        Debug.Log(sensitivity);
+    }
+
+    public void UpdateQuality(float newQuality)
+    {
+        quality = newQuality;
+        Debug.Log(quality);
+    }
+
+    public void UpdateResolution(float newResolution)
+    {
+        resolution = newResolution;
+        Debug.Log(resolution);
+    }
+
+
+    public void UpdateFullscreen(bool isFullscreen)
+    {
+        screen.fullscreen = isFullscreen;
+        Debug.Log(fullscreen);
+    }
+
     public void UpdateVolume(float newVolume)
     {
         volume = newVolume;
