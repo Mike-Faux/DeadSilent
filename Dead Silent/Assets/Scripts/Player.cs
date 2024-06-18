@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
@@ -28,8 +29,10 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] GameObject weaponSlot;
     [SerializeField] IWeapon Weapon;
     
-    [SerializeField] AudioSource aud;
+    public AudioSource aud;
+    [SerializeField] AudioClip[] hurtAud;
     [SerializeField] AudioClip[] audJump;
+    [Range(0, 1)][SerializeField] float hurtAudVol;
     [Range(0, 1)][SerializeField] float audJumpVol;
 
     Vector3 MoveDir;
@@ -37,7 +40,8 @@ public class Player : MonoBehaviour, IDamageable
 
     bool IsCrouch;
     bool IsSprint;
-
+    
+   
     IInteractable interact;
     int JumpCount;
 
@@ -46,9 +50,11 @@ public class Player : MonoBehaviour, IDamageable
     // Start is called before the first frame update
     void Start()
     {
+       
+      
         MaxHealth = Health;
         SpawnPlayer();
-
+        aud = gameObject.AddComponent<AudioSource>();
         Weapon = weaponSlot.GetComponentInChildren<IWeapon>();
         UpdateWeaponInfo();
     }
@@ -118,6 +124,8 @@ public class Player : MonoBehaviour, IDamageable
         {
            
             JumpCount++;
+            
+            aud.PlayOneShot(audJump[Random.Range(0, audJump.Length)], audJumpVol);
             PlayerVel.y = JumpSpeed;
         }
 
@@ -187,9 +195,17 @@ public class Player : MonoBehaviour, IDamageable
 
     public void TakeDamage(int amount)
     {
+       
         Health -= amount;
+        aud.PlayOneShot(hurtAud[Random.Range(0, hurtAud.Length)], hurtAudVol);
         UpdatePlayerUI();
         StartCoroutine(FlashDamage());
+        
+
+
+
+
+
 
         if (Health <= 0)
         {
@@ -197,6 +213,7 @@ public class Player : MonoBehaviour, IDamageable
             GameManager.Instance.gameStats.Deaths++;
             GameManager.Instance.lostState();
         }
+       
     }
     IEnumerator FlashDamage()
     {
