@@ -1,6 +1,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -37,7 +38,7 @@ public class Player : MonoBehaviour, IDamageable
 
     Vector3 MoveDir;
     Vector3 PlayerVel;
-
+   
     bool IsCrouch;
     bool IsSprint;
     
@@ -124,11 +125,13 @@ public class Player : MonoBehaviour, IDamageable
         {
            
             JumpCount++;
-            
-            aud.PlayOneShot(audJump[Random.Range(0, audJump.Length)], audJumpVol);
             PlayerVel.y = JumpSpeed;
+           
+            if (audJump != null && audJump.Length > 0 && aud != null)
+            {
+                aud.PlayOneShot(audJump[Random.Range(0, audJump.Length)], audJumpVol);
+            }
         }
-
         PlayerVel.y -= Gravity * Time.deltaTime;
         Controller.Move(PlayerVel * Time.deltaTime);
     }
@@ -148,7 +151,7 @@ public class Player : MonoBehaviour, IDamageable
             UnSprint();
         }
     }
-
+   
     void Crouch()
     {
         if (Input.GetButtonDown("Crouch"))
@@ -258,7 +261,7 @@ public class Player : MonoBehaviour, IDamageable
         }
 
     }
-
+  
     public bool HasItem(ItemStack item)
     {
         return false;
