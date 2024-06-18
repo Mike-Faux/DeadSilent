@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetButtonDown("Cancel"))
         {
-            Debug.Log("pause menu opened");
+            
             TogglePauseMenu();
         }
 
