@@ -51,21 +51,21 @@ public class GameManager : MonoBehaviour
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
         Instance = this;
 
-        GameObject gsgo = GameObject.FindGameObjectWithTag("GameStats");
-        if(gsgo == null)
-        {
-            gsgo = new()
-            {
-                name = "GameStats",
-                tag = "GameStats"
-            };
-            gameStats = gsgo.AddComponent<GameStats>();
-            DontDestroyOnLoad(gsgo);
-        }
-        else
-        {
-            gameStats = gsgo.GetComponent<GameStats>();
-        }
+        //GameObject gsgo = GameObject.FindGameObjectWithTag("GameStats");
+        //if(gsgo == null)
+        //{
+        //    gsgo = new()
+        //    {
+        //        name = "GameStats",
+        //        tag = "GameStats"
+        //    };
+        //    gameStats = gsgo.AddComponent<GameStats>();
+        //    DontDestroyOnLoad(gsgo);
+        //}
+        //else
+        //{
+        //    gameStats = gsgo.GetComponent<GameStats>();
+        //}
 
         playerScript = Player.GetComponent<Player>();
 
@@ -83,6 +83,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetButtonDown("Cancel"))
         {
+            Debug.Log("pause menu opened");
             TogglePauseMenu();
         }
 
@@ -91,7 +92,7 @@ public class GameManager : MonoBehaviour
             ToggleInventoryMenu();
         }
     }
-
+    
     void TogglePauseMenu()
     {
         if (activeMenu == null)
@@ -145,12 +146,13 @@ public class GameManager : MonoBehaviour
         enemyCount += amount;
         enemycountText.text = enemyCount.ToString("F0");
 
-        if(enemyCount == 0)
-        {
-            pauseState();
-            activeMenu = winMenu;
-            activeMenu.SetActive(pause);
-        }
+        //if (enemyCount == 0)
+        //{
+        //    pauseState();
+        //    activeMenu = winMenu;
+        //    activeMenu.SetActive(pause);
+        //}
+        //
 
     }
 
