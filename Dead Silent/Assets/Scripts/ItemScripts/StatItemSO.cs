@@ -28,7 +28,7 @@ public class StatItemSO : ItemSO
     public int amountToChangeStatAttribute;
     public int amountToChangeStat;
 
-    public bool UseItem()
+    public new bool UseItem()
     {
         if (statToChange == StatToChange.ammo)
         {

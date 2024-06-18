@@ -11,7 +11,8 @@ public class Inventory
 
     public int AddItems(ItemStack item)
     {
-
+        if (items.Count >= size)
+            return item.count;
 
 
 

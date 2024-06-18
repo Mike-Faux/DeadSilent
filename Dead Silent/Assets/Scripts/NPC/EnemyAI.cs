@@ -11,7 +11,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
 
     [SerializeField] int Health;
     [SerializeField] int EngageDistance;
-    //[SerializeField] AIType type;
+    [SerializeField] AIType type;
 
     [SerializeField] float alertDistance;
     [SerializeField] float chaseDistance;
@@ -20,7 +20,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
     [SerializeField] LayerMask blockingFiring;
     [SerializeField] LayerMask Enemy;
     (Vector3 Position, int TimeInPosition)[] patrolPath;
-    //[SerializeField] Status currentStatus;
+    [SerializeField] Status currentStatus;
 
     float BaseSpeed;
     Animator animator;
@@ -40,7 +40,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
 
     float LoiterVariation = 1.5f;
     float runSpeedThreshold = 5f;
-    float maxRange = 100f;
+    //float maxRange = 100f;
     int isRunningHash = Animator.StringToHash("isRunning");
 
     // Start is called before the first frame update
@@ -54,15 +54,15 @@ public class EnemyAI : MonoBehaviour, IDamageable
         if (weaponSlot != null)
         {
             weapon = weaponSlot.GetComponentInChildren<IWeapon>();
-            if (weapon != null)
+            if (weapon == null)
             {
                 Debug.LogError("Weapon is null!");
             }
         }
-        //if(!StatusIndicator.TryGetComponent(out StatusIndicatorMR ))
-        //{
-        //    Debug.Log("Not Found");
-        //}
+        if (!StatusIndicator.TryGetComponent(out StatusIndicatorMR))
+        {
+            Debug.Log("Not Found");
+        }
 
         BaseSpeed = agent.speed;
 
@@ -89,51 +89,53 @@ public class EnemyAI : MonoBehaviour, IDamageable
                 }
             }
         }
-        //if (agent.remainingDistance <= agent.stoppingDistance)
-        //{
-        //    // If the agent is not moving, play the "idle" animation
-        //    animator.SetBool("isWalking", false);
-        //    animator.SetBool(isRunningHash, false);
-        //}
-        //else if (agent.velocity.magnitude > runSpeedThreshold)
-        //{
-        //    // If the agent's speed is above the threshold, set "isRunning" to true
-        //    animator.SetBool(isRunningHash, true);
-        //}
-        //else 
-        //{
-        //    // If the agent is moving, play the "walk" animation
-        //    animator.SetBool("isWalking", true);
-        //}
-        //if (target != null && Vector3.Distance(transform.position, target.transform.position) <= EngageDistance)
-        //{
-           
-        //    Engage();
-        //}
 
-        //if (Vector3.Distance(agent.destination, transform.position) < 2f)
-        //{
-        //    switch (currentStatus)
-        //    {
-        //        default:
-        //            Patrol();
-        //            break;
-        //        case Status.Investigating:
-        //            Investigate();
-        //            break;
-        //        case Status.Tracking:
-        //            Track();
-        //            break;
-        //        case Status.Loitering:
-        //            break;
-        //        case Status.Engaging:
-        //            Engage();
-        //            break;
-        //    }
-        //}
+
+        if (agent.remainingDistance <= agent.stoppingDistance)
+        {
+            // If the agent is not moving, play the "idle" animation
+            animator.SetBool("isWalking", false);
+            animator.SetBool(isRunningHash, false);
+        }
+        else if (agent.velocity.magnitude > runSpeedThreshold)
+        {
+            // If the agent's speed is above the threshold, set "isRunning" to true
+            animator.SetBool(isRunningHash, true);
+        }
+        else
+        {
+            // If the agent is moving, play the "walk" animation
+            animator.SetBool("isWalking", true);
+        }
+        if (target != null && Vector3.Distance(transform.position, target.transform.position) <= EngageDistance)
+        {
+
+            Engage();
+        }
+
+        if (Vector3.Distance(agent.destination, transform.position) < 2f)
+        {
+            switch (currentStatus)
+            {
+                default:
+                    Patrol();
+                    break;
+                case Status.Investigating:
+                    Investigate();
+                    break;
+                case Status.Tracking:
+                    Track();
+                    break;
+                case Status.Loitering:
+                    break;
+                case Status.Engaging:
+                    Engage();
+                    break;
+            }
+        }
     }
 
-   
+
 
     public void Awake()
     {
@@ -162,6 +164,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
         agent.enabled = false;
         GameManager.Instance.enemyManager.SignOut(this);
         GameManager.Instance.UpdateEnemyCount(-1);
+        GameManager.Instance.gameStats.Kills++;
         Destroy(gameObject);
     }
 
@@ -176,85 +179,68 @@ public class EnemyAI : MonoBehaviour, IDamageable
         mr.material = temp;
     }
 
-//    public void Engage()
+    public void Engage()
 
-//    {
-//        agent.speed = BaseSpeed * 1.5f;
+    {
+    agent.speed = BaseSpeed * 1.5f;
+    //Officer Alerting Nearby Units
+    if (type == AIType.Officer && GameManager.Instance.LastKnownPosition != null)
+    {
+        Collider[] nearby = Physics.OverlapSphere(transform.position, alertDistance, toAlert);
+        for (int i = 0; i < nearby.Length; i++)
+        {
+            if (nearby[i].TryGetComponent(out EnemyAI ai))
+            {
+                ai.Alert();
+                //Debug.Log("ALERT!");
+            }
+        }
+    }
+    if(target == null)
+    {
+        Debug.Log("TargetNull");
+        return;
+    }
 
-//        if(weapon != null)
-//        {
-//            if(weapon.GetType() == typeof(FireArm))
-//            {
-//                FireArm gun = (FireArm)weapon; ;
-//                if (gun.Ammo < 1)
-//                {
-//                    gun.Reload();
-//                }
-//            }
-//            Aim();
-//            weapon.Attack();
-//        }
-//    }
-//   // {
-//        //agent.speed = BaseSpeed * 1.5f;
-//        ////Officer Alerting Nearby Units
-//        //if (type == AIType.Officer && GameManager.Instance.LastKnownPosition != null)
-//        //{
-//        //    Collider[] nearby = Physics.OverlapSphere(transform.position, alertDistance, toAlert);
-//        //    for (int i = 0; i < nearby.Length; i++)
-//        //    {
-//        //        if (nearby[i].TryGetComponent(out EnemyAI ai))
-//        //        {
-//        //            ai.Alert();
-//        //            //Debug.Log("ALERT!");
-//        //        }
-//        //    }
-//        //}
-//        //if(target == null)
-//        //{
-//        //    Debug.Log("TargetNull");
-//        //    return;
-//        //}
-
-//        //float disToTarget = Vector3.Distance(target.transform.position, 
-//        //    transform.position);
-//        //Vector3 dirToTarget = target.transform.position - transform.position;
-//        //dirToTarget.Normalize();
+    float disToTarget = Vector3.Distance(target.transform.position, 
+        transform.position);
+    Vector3 dirToTarget = target.transform.position - transform.position;
+    dirToTarget.Normalize();
 
 
-//        //Debug.Log($"{name} Engaging target {disToTarget} away");
+    //Debug.Log($"{name} Engaging target {disToTarget} away");
 
-//        //Check for engage Distance and target
-//    //    if (disToTarget > EngageDistance || target == null)
-//    //    {
+    //Check for engage Distance and target
+        if (disToTarget > EngageDistance || target == null)
+        {
 
-//    //        agent.isStopped = false;
+            agent.isStopped = false;
 
-//    //        SetStatus(Status.Tracking);
-//    //    }
-//    //    else if (!Physics.Raycast(transform.position + transform.forward, dirToTarget, disToTarget, blockingFiring, QueryTriggerInteraction.Ignore))
-//    //    {
-//    //        SetStatus(Status.Engaging);
-//    //        agent.isStopped = true;
-//    //        if (weapon != null)
-//    //        {
-//    //            if (weapon.GetType() == typeof(FireArm))
-//    //            {
-//    //                FireArm gun = (FireArm)weapon;
-//    //                if (gun.Ammo < 1) gun.Reload();
-//    //            }
+            SetStatus(Status.Tracking);
+        }
+        else if (!Physics.Raycast(transform.position + transform.forward, dirToTarget, disToTarget, blockingFiring, QueryTriggerInteraction.Ignore))
+        {
+            SetStatus(Status.Engaging);
+            agent.isStopped = true;
+            if (weapon != null)
+            {
+                if (weapon.GetType() == typeof(FireArm))
+                {
+                    FireArm gun = (FireArm)weapon;
+                    if (gun.Ammo < 1) gun.Reload();
+                }
 
-//    //            Aim();
-//    //            weapon.Attack();
-//    //        }
-//    //    }
-//    //    else
-//    //    {
-//    //        SetStatus(Status.Tracking);
-//    //        agent.SetDestination(target.transform.position);
-//    //        agent.isStopped = false;
-//    //    }
-//    //}
+                Aim();
+                weapon.Attack();
+            }
+        }
+        else
+        {
+            SetStatus(Status.Tracking);
+            agent.SetDestination(target.transform.position);
+            agent.isStopped = false;
+        }
+    }
 
     public void Aim()
     {
@@ -263,147 +249,147 @@ public class EnemyAI : MonoBehaviour, IDamageable
         
   }
 
-//    public void Track()
-//    {
-//        agent.speed = BaseSpeed * 1.5f;
-//        if (target != null && Vector3.Distance(target.transform.position, transform.position) < EngageDistance)
-//        {
-//            SetStatus(Status.Engaging);
-//            Engage();
-//        }
-//        else if (targetPos != GameManager.Instance.LastKnownPosition)
-//        {
-//            targetPos = GameManager.Instance.LastKnownPosition;
-//            agent.SetDestination(targetPos);
-//        }
-//        else
-//        {
-//            target = null;
-//            SetStatus(Status.Investigating);
-//        }
-//    }
+    public void Track()
+    {
+        agent.speed = BaseSpeed * 1.5f;
+        if (target != null && Vector3.Distance(target.transform.position, transform.position) < EngageDistance)
+        {
+            SetStatus(Status.Engaging);
+            Engage();
+        }
+        else if (targetPos != GameManager.Instance.LastKnownPosition)
+        {
+            targetPos = GameManager.Instance.LastKnownPosition;
+            agent.SetDestination(targetPos);
+        }
+        else
+        {
+            target = null;
+            SetStatus(Status.Investigating);
+        }
+    }
 
-//    //public void Investigate()
-//    //{
-//    //    agent.speed = BaseSpeed * .8f;
-//    //    //Debug.Log("Investigating");
-//    //    if (targetPos == GameManager.Instance.LastKnownPosition)
-//    //    {
-//    //        SetStatus(Status.Loitering);
-//    //        StartCoroutine(Loiter(10, currentPatrolPoint));
-//    //    }
-//    //    else
-//    //    {
-//    //        targetPos = GameManager.Instance.LastKnownPosition;
-//    //        agent.SetDestination(targetPos);
-//    //        SetStatus(Status.Tracking);
-//    //    }
-//    //}
+    public void Investigate()
+    {
+        agent.speed = BaseSpeed * .8f;
+        //Debug.Log("Investigating");
+        if (targetPos == GameManager.Instance.LastKnownPosition)
+        {
+            SetStatus(Status.Loitering);
+            StartCoroutine(Loiter(10, currentPatrolPoint));
+        }
+        else
+        {
+            targetPos = GameManager.Instance.LastKnownPosition;
+            agent.SetDestination(targetPos);
+            SetStatus(Status.Tracking);
+        }
+    }
 
-//    //public void Patrol()
-//    //{
-//    //    agent.speed = BaseSpeed;
-//    //    if (patrolPath == null) return;
-//    //    if (patrolPath.Length == 0) return;
-//    //    int seconds = patrolPath[currentPatrolPoint].TimeInPosition;
+    public void Patrol()
+    {
+        agent.speed = BaseSpeed;
+        if (patrolPath == null) return;
+        if (patrolPath.Length == 0) return;
+        int seconds = patrolPath[currentPatrolPoint].TimeInPosition;
 
-//    //    currentPatrolPoint++;
+        currentPatrolPoint++;
 
-//    //    if (currentPatrolPoint < 0 || currentPatrolPoint >= patrolPath.Length)
-//    //    {
-//    //        currentPatrolPoint = 0;
+        if (currentPatrolPoint < 0 || currentPatrolPoint >= patrolPath.Length)
+        {
+            currentPatrolPoint = 0;
 
-//    //        if (patrolPath.Length == 0) return;
-//    //    }
+            if (patrolPath.Length == 0) return;
+        }
 
-//    //    SetStatus(Status.Loitering);
-//    //    StartCoroutine(Loiter(seconds, currentPatrolPoint));
-//    //}
+        SetStatus(Status.Loitering);
+        StartCoroutine(Loiter(seconds, currentPatrolPoint));
+    }
 
-//    //IEnumerator Loiter(int seconds, int nextPatrolPoint)
-//    //{
-//    //    float min = seconds - LoiterVariation;
-//    //    if (min < 0) min = 0;
-//    //    float max = seconds + LoiterVariation;
+    IEnumerator Loiter(int seconds, int nextPatrolPoint)
+    {
+        float min = seconds - LoiterVariation;
+        if (min < 0) min = 0;
+        float max = seconds + LoiterVariation;
 
-//    //    float split = Random.Range(min, max) / 3;
-//    //    if (split < 1f) split = 1f;
+        float split = Random.Range(min, max) / 3;
+        if (split < 1f) split = 1f;
 
-//    //    yield return new WaitForSeconds(split);
-//    //    if (currentStatus != Status.Loitering) yield break;
+        yield return new WaitForSeconds(split);
+        if (currentStatus != Status.Loitering) yield break;
 
-//    //    StartCoroutine(SmoothRotate(Quaternion.LookRotation(-transform.right, transform.up), 30));
+        StartCoroutine(SmoothRotate(Quaternion.LookRotation(-transform.right, transform.up), 30));
 
-//    //    yield return new WaitForSeconds(split);
-//    //    if (currentStatus != Status.Loitering) yield break;
+        yield return new WaitForSeconds(split);
+        if (currentStatus != Status.Loitering) yield break;
 
-//    //    StartCoroutine(SmoothRotate(Quaternion.LookRotation(-transform.forward, transform.up), 30));
+        StartCoroutine(SmoothRotate(Quaternion.LookRotation(-transform.forward, transform.up), 30));
 
-//    //    yield return new WaitForSeconds(split);
-//    //    if (currentStatus != Status.Loitering) yield break;
+        yield return new WaitForSeconds(split);
+        if (currentStatus != Status.Loitering) yield break;
 
-//    //    agent.SetDestination(patrolPath[nextPatrolPoint].Position);
-//    //    SetStatus(Status.Patroling);
-//    //}
+        agent.SetDestination(patrolPath[nextPatrolPoint].Position);
+        SetStatus(Status.Patroling);
+    }
 
-//    //IEnumerator SmoothRotate(Quaternion targetRotation, int segments)
-//    //{
-//    //    float interval = 1f / segments;
+    IEnumerator SmoothRotate(Quaternion targetRotation, int segments)
+    {
+        float interval = 1f / segments;
 
-//    //    for (int i = 0; i < segments; i++)
-//    //    {
-//    //        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, i * interval + interval);
-//    //        yield return new WaitForSeconds(interval);
-//    //        if (currentStatus != Status.Loitering) break;
-//    //    }
-//    //}
+        for (int i = 0; i < segments; i++)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, i * interval + interval);
+            yield return new WaitForSeconds(interval);
+            if (currentStatus != Status.Loitering) break;
+        }
+    }
 
-//    public void OnEnemySighted(GameObject target)
-//    {
-//        this.target = target;
-//        //GameManager.Instance.LastKnownPosition = target.transform.position;
-//        //this.targetPos = target.transform.position;
+    public void OnEnemySighted(GameObject target)
+    {
+        this.target = target;
+        GameManager.Instance.LastKnownPosition = target.transform.position;
+        this.targetPos = target.transform.position;
 
 
-//        SetStatus(Status.Tracking);
-//        agent.SetDestination(target.transform.position);
-//        //Engage();
-//    }
+        SetStatus(Status.Tracking);
+        agent.SetDestination(target.transform.position);
+        Engage();
+    }
 
-//    //public void Distract(GameObject distraction)
-//    //{
-//    //    if (currentStatus == Status.Tracking) return;
+    public void Distract(GameObject distraction)
+    {
+        if (currentStatus == Status.Tracking) return;
 
-//    //    targetPos = distraction.transform.position;
-//    //    SetStatus(Status.Investigating);
-//    //    agent.SetDestination(targetPos);
-//    //}
+        targetPos = distraction.transform.position;
+        SetStatus(Status.Investigating);
+        agent.SetDestination(targetPos);
+    }
 
-//    //public void Alert()
-//    //{
-//    //    if (currentStatus == Status.Engaging) return;
+    public void Alert()
+    {
+        if (currentStatus == Status.Engaging) return;
 
-//    //    targetPos = GameManager.Instance.LastKnownPosition;
-//    //    agent.SetDestination(targetPos);
-//    //    SetStatus(Status.Tracking);
-//    //}
+        targetPos = GameManager.Instance.LastKnownPosition;
+        agent.SetDestination(targetPos);
+        SetStatus(Status.Tracking);
+    }
 
-//    //public void SetPatrolPath((Vector3 Position, int TimeInPosition)[] path)
-//    //{
-//    //    //Debug.Log($"{name} path set with {path.Length} points!");
-//    //    patrolPath = path;
-//    //}
+    public void SetPatrolPath((Vector3 Position, int TimeInPosition)[] path)
+    {
+        //Debug.Log($"{name} path set with {path.Length} points!");
+        patrolPath = path;
+    }
 
-//    public void SetStatus(Status status)
-//    {
-//        currentStatus = status;
-//        if (StatusIndicatorMR == null)
-//        {
-//            Debug.Log("What?");
-//            StatusIndicator.TryGetComponent(out StatusIndicatorMR);
-//        }
-//        StatusIndicatorMR.material = GameManager.Instance.enemyManager.GetStatusMaterial(status);
-//    }
+    public void SetStatus(Status status)
+    {
+        currentStatus = status;
+        if (StatusIndicatorMR == null)
+        {
+            Debug.Log("What?");
+            StatusIndicator.TryGetComponent(out StatusIndicatorMR);
+        }
+        StatusIndicatorMR.material = GameManager.Instance.enemyManager.GetStatusMaterial(status);
+    }
 
 
     public bool HasKey(KeySO key)
@@ -420,10 +406,10 @@ public class EnemyAI : MonoBehaviour, IDamageable
         Engaging
     }
 
-//    enum AIType
-//    {
-//        Grunt,
-//        Officer
-//    }
-//
+    enum AIType
+    {
+        Grunt,
+        Officer
+    }
+
 }

@@ -15,12 +15,12 @@ public class EnemyManager : MonoBehaviour
     List<EnemyAI> Units;
     List<SecurityCamera> Cameras;
 
-    [SerializeField] int EnemySearchCount = 3;
+    //[SerializeField] int EnemySearchCount = 3;
 
     private void Awake()
     {
         Units = new List<EnemyAI>();
-        //Cameras = new List<SecurityCamera>();
+        Cameras = new List<SecurityCamera>();
     }
 
     // Start is called before the first frame update
@@ -40,10 +40,10 @@ public class EnemyManager : MonoBehaviour
         Cameras.Add(camera);
     }
 
-    //public void SC_ReportSighting(SecurityCamera sc, GameObject player)
-    //{
-    //    OnSighting(player);
-    //}
+    public void SC_ReportSighting(SecurityCamera sc, GameObject player)
+    {
+        OnSighting(player);
+    }
 
     public void SC_ReportDestruction(SecurityCamera sc)
     {
@@ -60,14 +60,14 @@ public class EnemyManager : MonoBehaviour
         Units.Remove(enemyAI);
     }
 
-    //public void OnSighting(GameObject player)
-    //{
-    //    GameManager.Instance.LastKnownPosition = player.transform.position;
-    //    foreach(EnemyAI enemyAI in Units)
-    //    {
-    //       enemyAI.OnEnemySighted(player);
-    //    }
-    //}
+    public void OnSighting(GameObject player)
+    {
+        GameManager.Instance.LastKnownPosition = player.transform.position;
+        foreach (EnemyAI enemyAI in Units)
+        {
+            enemyAI.OnEnemySighted(player);
+        }
+    }
 
     public List<EnemyAI> GetClosestEnemies(Vector3 pos, int count)
     {
@@ -104,15 +104,16 @@ public class EnemyManager : MonoBehaviour
         return target;
     }
 
-    //public Material GetStatusMaterial(EnemyAI.Status status)
-    //{
-    //    switch (status)
-    //    {
-    //        default:                            return Patrol_Status_Material;
-    //        case EnemyAI.Status.Engaging:       return Engage_Status_Material;
-    //        case EnemyAI.Status.Investigating:  return Investigate_Status_Material;
-    //        case EnemyAI.Status.Loitering:      return Idle_Status_Material;
-    //        case EnemyAI.Status.Tracking:       return Track_Status_Material;
-    //    }
-    //}}
+    public Material GetStatusMaterial(EnemyAI.Status status)
+    {
+        switch (status)
+        {
+            default: return Patrol_Status_Material;
+            case EnemyAI.Status.Engaging: return Engage_Status_Material;
+            case EnemyAI.Status.Investigating: return Investigate_Status_Material;
+            case EnemyAI.Status.Loitering: return Idle_Status_Material;
+            case EnemyAI.Status.Tracking: return Track_Status_Material;
+        }
+    }
 }
+

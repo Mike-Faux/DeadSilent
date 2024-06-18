@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public GameStats gameStats;
     public EnemyManager enemyManager;
 
     public GameObject Player;
@@ -39,7 +40,6 @@ public class GameManager : MonoBehaviour
     public bool pause;
     public bool inventory;
     int enemyCount;
-    int itemCount;
 
 
 
@@ -50,6 +50,22 @@ public class GameManager : MonoBehaviour
         Player = GameObject.FindWithTag("Player");
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
         Instance = this;
+
+        GameObject gsgo = GameObject.FindGameObjectWithTag("GameStats");
+        if(gsgo == null)
+        {
+            gsgo = new()
+            {
+                name = "GameStats",
+                tag = "GameStats"
+            };
+            gameStats = gsgo.AddComponent<GameStats>();
+            DontDestroyOnLoad(gsgo);
+        }
+        else
+        {
+            gameStats = gsgo.GetComponent<GameStats>();
+        }
 
         playerScript = Player.GetComponent<Player>();
 

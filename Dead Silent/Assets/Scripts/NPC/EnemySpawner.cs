@@ -5,6 +5,12 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public GameObject Spawning;
+    public int spawnCount;
+    public int spawnDelay;
+
+
+
+    public bool UsePatrolPoints;
     public List<PatrolWaypoint> PatrolPath;
     public bool SpawnOnFirstPoint;
 
@@ -12,26 +18,29 @@ public class EnemySpawner : MonoBehaviour
 
     private void Awake()
     {
-        if (SpawnOnFirstPoint && PatrolPath.Count > 0)
-        {
-            spawn = Instantiate(Spawning, PatrolPath[0].transform.position, transform.rotation);
-        }
-        else
-        {
-            spawn = Instantiate(Spawning, transform.position, transform.rotation);
-        }
-
         EnemyAI ai = spawn.GetComponent<EnemyAI>();
-        (Vector3 Position, int TimeInPosition)[] path = new (Vector3 Position, int TimeInPosition)[PatrolPath.Count];
 
-        //Debug.Log(PatrolPath.Count);
-
-        for (int i = 0; i < PatrolPath.Count; i++)
+        UsePatrolPoints = false;
+        if(UsePatrolPoints)
         {
-            path[i] = new(PatrolPath[i].transform.position, PatrolPath[i].TimeInPosition);
-        }
+            if (SpawnOnFirstPoint && PatrolPath.Count > 0)
+            {
+                spawn = Instantiate(Spawning, PatrolPath[0].transform.position, transform.rotation);
+            }
+            else
+            {
+                spawn = Instantiate(Spawning, transform.position, transform.rotation);
+            }
 
-        //ai.SetPatrolPath(path);
+            (Vector3 Position, int TimeInPosition)[] path = new (Vector3 Position, int TimeInPosition)[PatrolPath.Count];
+
+            for (int i = 0; i < PatrolPath.Count; i++)
+            {
+                path[i] = new(PatrolPath[i].transform.position, PatrolPath[i].TimeInPosition);
+            }
+
+            ai.SetPatrolPath(path);
+        }
     }
 
     // Start is called before the first frame update
@@ -45,4 +54,6 @@ public class EnemySpawner : MonoBehaviour
     {
         
     }
+
+
 }

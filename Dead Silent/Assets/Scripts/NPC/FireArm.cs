@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FireArm : MonoBehaviour, IWeapon
 {
-
+    
     public WeaponStats Stats;
     public ParticleSystem hitEffect;
     [SerializeField] Transform FirePos;
@@ -28,12 +28,8 @@ public class FireArm : MonoBehaviour, IWeapon
        
         if (!isShooting)
         {
-            Debug.Log("shooting");
+            //Debug.Log("shooting");
             StartCoroutine(Shoot(Stats.FireRate));
-            
-
-            
-
         }
     }
 

@@ -2,8 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IEnemy
+public class Cell : MonoBehaviour
 {
+    public Maze.Cell cell;
+
+    public Cell(Maze.Cell cell)
+    {
+        this.cell = cell;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

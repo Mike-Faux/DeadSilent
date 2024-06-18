@@ -33,7 +33,8 @@ public class Bullet : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        Instantiate(hitEffect, collision.contacts[0].point, Quaternion.identity);
+        ParticleSystem p = Instantiate(hitEffect, collision.contacts[0].point, Quaternion.identity);
+        Destroy(p.gameObject, p.main.duration + p.main.startLifetime.constant);
         if(collision.gameObject.TryGetComponent(out IDamageable dmg))
         {
             dmg.TakeDamage(damage);

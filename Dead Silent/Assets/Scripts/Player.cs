@@ -56,7 +56,8 @@ public class Player : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
-        if(!GameManager.Instance.pause && !GameManager.Instance.inventory)
+        if(!GameManager.Instance.pause && 
+            !GameManager.Instance.inventory)
         {
             Movement();
             
@@ -193,6 +194,7 @@ public class Player : MonoBehaviour, IDamageable
         if (Health <= 0)
         {
             // trigger loss
+            GameManager.Instance.gameStats.Deaths++;
             GameManager.Instance.lostState();
         }
     }
