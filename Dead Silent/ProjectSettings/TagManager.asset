@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Player Spawn Pos
+  - GameStats
   layers:
   - Default
   - TransparentFX
