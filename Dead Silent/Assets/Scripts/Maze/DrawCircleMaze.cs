@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DrawCircleMaze : MonoBehaviour
 {
@@ -31,6 +33,11 @@ public class DrawCircleMaze : MonoBehaviour
     //Still to impliment
     public Vector3 offset = Vector3.zero;
 
+    //NavMesh vars
+    NavMeshBuildSettings settings;
+    List<NavMeshBuildSource> buildSources;
+    [SerializeField] NavMeshSurface surface;
+
     public void DrawMaze(Maze maze)
     {
         this.maze = maze;
@@ -57,6 +64,13 @@ public class DrawCircleMaze : MonoBehaviour
                 cell.transform.parent = cells.transform;
             }
         }
+
+        BuildNavMesh();
+    }
+
+    private void BuildNavMesh()
+    {
+        surface.BuildNavMesh();
     }
 
     private void DrawMazePosts()
@@ -71,6 +85,11 @@ public class DrawCircleMaze : MonoBehaviour
             {
                 GameObject post = DrawMazePost(x, y);
                 post.transform.parent = posts.transform;
+
+                //NavMesh Implimentation
+                NavMeshModifier NMM = post.AddComponent<NavMeshModifier>();
+                NMM.area = NavMesh.GetAreaFromName("Not Walkable");
+                NMM.overrideArea = true;
             }
         }
     }
@@ -218,6 +237,12 @@ public class DrawCircleMaze : MonoBehaviour
         {
             GameObject wallObj = DrawCellWall(c, dir);
             wallObj.transform.parent = cell.transform;
+
+
+            //NavMesh Implimentation
+            NavMeshModifier NMM = wallObj.AddComponent<NavMeshModifier>();
+            NMM.area = NavMesh.GetAreaFromName("Not Walkable");
+            NMM.overrideArea = true;
         }
     }
 
@@ -531,6 +556,11 @@ public class DrawCircleMaze : MonoBehaviour
 
         GameObject floor = new GameObject(c.ToString() + " floor");
         floor.transform.parent = cell.transform;
+
+        //NavMesh Implimentation
+        NavMeshModifier NMM = floor.AddComponent<NavMeshModifier>();
+        NMM.area = NavMesh.GetAreaFromName("Walkable");
+        NMM.overrideArea = true;
 
         float startingAngle = degreesPerCell * c.x;
         float degreesPerPoint = degreesPerCell / (curvedWallPoints - 1);

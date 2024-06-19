@@ -35,7 +35,6 @@ public class EnemyAI : MonoBehaviour, IDamageable
 
     [SerializeField] GameObject StatusIndicator;
     MeshRenderer StatusIndicatorMR;
-    GameObject player;
     MeshRenderer mr;
 
     float LoiterVariation = 1.5f;
@@ -49,7 +48,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
         animator = GetComponent<Animator>();
         GameManager.Instance.enemyManager.ReportIn(this);
         GameManager.Instance.UpdateEnemyCount(1);
-        player = GameManager.Instance.Player;
+
         mr = gameObject.GetComponent<MeshRenderer>();
         if (weaponSlot != null)
         {
@@ -74,21 +73,21 @@ public class EnemyAI : MonoBehaviour, IDamageable
 
     {
 
-        if (player != null)
-        {
-            float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+        //if (player != null)
+        //{
+        //    float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
-            if (distanceToPlayer <= chaseDistance)
-            {
-                agent.SetDestination(player.transform.position);
-                if(distanceToPlayer <= attackDistance)
-                {
-                    Debug.Log("Attacking Player");
-                    Aim();
-                    weapon.Attack();
-                }
-            }
-        }
+        //    if (distanceToPlayer <= chaseDistance)
+        //    {
+        //        agent.SetDestination(player.transform.position);
+        //        if(distanceToPlayer <= attackDistance)
+        //        {
+        //            Debug.Log("Attacking Player");
+        //            Aim();
+        //            weapon.Attack();
+        //        }
+        //    }
+        //}
 
 
         if (agent.remainingDistance <= agent.stoppingDistance)
@@ -244,10 +243,10 @@ public class EnemyAI : MonoBehaviour, IDamageable
 
     public void Aim()
     {
-       Vector3 pos = player.transform.position;
-      targetPos.y = transform.position.y;
-        
-  }
+        Vector3 pos = target.transform.position;
+        pos.y = transform.position.y;
+        transform.LookAt(pos - (transform.right / 2), Vector3.up);
+    }
 
     public void Track()
     {
