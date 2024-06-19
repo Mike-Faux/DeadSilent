@@ -6,11 +6,11 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 
+
+[RequireComponent(typeof(MazeSettings))]
 public class DrawCircleMaze : MonoBehaviour
 {
-    public Material wallMat;
-    public Material floorMat;
-    public Material postMat;
+    public MazeSettings mazeSettings;
 
     public float baseDistance = 3f;
     public float wallHeight = 8f;
@@ -187,7 +187,7 @@ public class DrawCircleMaze : MonoBehaviour
         post.transform.SetPositionAndRotation(new Vector3(Mathf.Sin(angle * Mathf.Deg2Rad) * radius, 0, Mathf.Cos(angle * Mathf.Deg2Rad) * radius) + offset, Quaternion.Euler(0, angle, 0));
 
         MeshRenderer meshRenderer = post.AddComponent<MeshRenderer>();
-        meshRenderer.sharedMaterial = postMat;
+        meshRenderer.sharedMaterial = mazeSettings.postMat;
 
         MeshFilter meshFilter = post.AddComponent<MeshFilter>();
         MeshCollider meshCollider = post.AddComponent<MeshCollider>();
@@ -362,7 +362,7 @@ public class DrawCircleMaze : MonoBehaviour
         }
 
         MeshRenderer meshRenderer = wall.AddComponent<MeshRenderer>();
-        meshRenderer.sharedMaterial = wallMat;
+        meshRenderer.sharedMaterial = mazeSettings.wallMat;
 
         MeshFilter meshFilter = wall.AddComponent<MeshFilter>();
         MeshCollider meshCollider = wall.AddComponent<MeshCollider>();
@@ -531,7 +531,7 @@ public class DrawCircleMaze : MonoBehaviour
         }
 
         MeshRenderer meshRenderer = wall.AddComponent<MeshRenderer>();
-        meshRenderer.sharedMaterial = wallMat;
+        meshRenderer.sharedMaterial = mazeSettings.wallMat;
 
         MeshFilter meshFilter = wall.AddComponent<MeshFilter>();
         MeshCollider meshCollider = wall.AddComponent<MeshCollider>();
@@ -606,7 +606,7 @@ public class DrawCircleMaze : MonoBehaviour
 
 
         MeshRenderer meshRenderer = floor.AddComponent<MeshRenderer>();
-        meshRenderer.sharedMaterial = floorMat;
+        meshRenderer.sharedMaterial = mazeSettings.floorMat;
 
         MeshFilter meshFilter = floor.AddComponent<MeshFilter>();
         MeshCollider meshCollider = floor.AddComponent<MeshCollider>();

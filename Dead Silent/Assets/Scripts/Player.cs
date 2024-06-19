@@ -200,7 +200,7 @@ public class Player : MonoBehaviour, IDamageable
     {
        
         Health -= amount;
-        aud.PlayOneShot(hurtAud[Random.Range(0, hurtAud.Length)], hurtAudVol);
+        //aud.PlayOneShot(hurtAud[Random.Range(0, hurtAud.Length)], hurtAudVol);
         UpdatePlayerUI();
         StartCoroutine(FlashDamage());
         

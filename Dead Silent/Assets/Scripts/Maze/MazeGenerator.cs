@@ -4,6 +4,7 @@ using System.Security;
 using UnityEngine;
 
 //[ExecuteInEditMode]
+[RequireComponent(typeof(DrawCircleMaze))]
 public class MazeGenerator : MonoBehaviour
 {
     public int width = 10;
@@ -11,15 +12,13 @@ public class MazeGenerator : MonoBehaviour
 
     public bool circular = true;
 
-    
-
     private Maze maze;
 
     private Dictionary<string, Maze.Cell> cellsUnvisited;
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         RebuildMaze();
     }

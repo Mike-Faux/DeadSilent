@@ -11,7 +11,6 @@ public class BasicEnemyAI : MonoBehaviour, IDamageable
 
     [SerializeField] int Health;
     [SerializeField] int EngageDistance;
-    //[SerializeField] AIType type;
 
     [SerializeField] float alertDistance;
     [SerializeField] float chaseDistance;

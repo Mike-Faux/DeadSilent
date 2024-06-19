@@ -40,7 +40,9 @@ public class EnemyAI : MonoBehaviour, IDamageable
     float LoiterVariation = 1.5f;
     float runSpeedThreshold = 5f;
     //float maxRange = 100f;
-    int isRunningHash = Animator.StringToHash("isRunning");
+    readonly int isRunningHash = Animator.StringToHash("isRunning");
+
+    public bool AlwaysAware;
 
     // Start is called before the first frame update
     void Start()
@@ -69,27 +71,19 @@ public class EnemyAI : MonoBehaviour, IDamageable
     }
 
     // Update is called once per frame
-    void Update()
-
+    void FixedUpdate()
     {
+        //AlwaysAware Condition
+        if (AlwaysAware)
+        {
+            if (Vector3.Distance(GameManager.Instance.LastKnownPosition, GameManager.Instance.Player.transform.position) > 5)
+                GameManager.Instance.LastKnownPosition = GameManager.Instance.Player.transform.position;
+            
+            if (currentStatus == Status.Loitering || currentStatus == Status.Patroling) 
+                currentStatus = Status.Tracking;
+        }
 
-        //if (player != null)
-        //{
-        //    float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-
-        //    if (distanceToPlayer <= chaseDistance)
-        //    {
-        //        agent.SetDestination(player.transform.position);
-        //        if(distanceToPlayer <= attackDistance)
-        //        {
-        //            Debug.Log("Attacking Player");
-        //            Aim();
-        //            weapon.Attack();
-        //        }
-        //    }
-        //}
-
-
+        //Animation
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
             // If the agent is not moving, play the "idle" animation
@@ -106,12 +100,16 @@ public class EnemyAI : MonoBehaviour, IDamageable
             // If the agent is moving, play the "walk" animation
             animator.SetBool("isWalking", true);
         }
+
+        //If target is close enough, Engage
         if (target != null && Vector3.Distance(transform.position, target.transform.position) <= EngageDistance)
         {
 
             Engage();
         }
 
+
+        //Main Switch Statement
         if (Vector3.Distance(agent.destination, transform.position) < 2f)
         {
             switch (currentStatus)
@@ -134,12 +132,6 @@ public class EnemyAI : MonoBehaviour, IDamageable
         }
     }
 
-
-
-    public void Awake()
-    {
-            attackDistance = 50f;
-    }
     public void TakeDamage(int amount)
     {
         Health -= amount;
@@ -152,7 +144,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
         }
 
         GameManager.Instance.LastKnownPosition = GameManager.Instance.Player.transform.position;
-        //SetStatus(Status.Tracking);
+        SetStatus(Status.Tracking);
         target = GameManager.Instance.Player;
         targetPos = target.transform.position;
         agent.SetDestination(targetPos);
@@ -179,40 +171,40 @@ public class EnemyAI : MonoBehaviour, IDamageable
     }
 
     public void Engage()
-
     {
-    agent.speed = BaseSpeed * 1.5f;
-    //Officer Alerting Nearby Units
-    if (type == AIType.Officer && GameManager.Instance.LastKnownPosition != null)
-    {
-        Collider[] nearby = Physics.OverlapSphere(transform.position, alertDistance, toAlert);
-        for (int i = 0; i < nearby.Length; i++)
+        agent.speed = BaseSpeed * 1.5f;
+        //Officer Alerting Nearby Units
+        if (type == AIType.Officer && GameManager.Instance.LastKnownPosition != null)
         {
-            if (nearby[i].TryGetComponent(out EnemyAI ai))
+            Collider[] nearby = Physics.OverlapSphere(transform.position, alertDistance, toAlert);
+            for (int i = 0; i < nearby.Length; i++)
             {
-                ai.Alert();
-                //Debug.Log("ALERT!");
+                if (nearby[i].TryGetComponent(out EnemyAI ai))
+                {
+                    ai.Alert();
+                    //Debug.Log("ALERT!");
+                }
             }
         }
-    }
-    if(target == null)
-    {
-        Debug.Log("TargetNull");
-        return;
-    }
 
-    float disToTarget = Vector3.Distance(target.transform.position, 
-        transform.position);
-    Vector3 dirToTarget = target.transform.position - transform.position;
-    dirToTarget.Normalize();
+        //If no target, Return
+        if(target == null)
+        {
+            Debug.Log("TargetNull");
+            return;
+        }
+
+        float disToTarget = Vector3.Distance(target.transform.position, 
+            transform.position);
+        Vector3 dirToTarget = target.transform.position - transform.position;
+        dirToTarget.Normalize();
 
 
-    //Debug.Log($"{name} Engaging target {disToTarget} away");
+        //Debug.Log($"{name} Engaging target {disToTarget} away");
 
-    //Check for engage Distance and target
+        //Check for engage Distance and target
         if (disToTarget > EngageDistance || target == null)
         {
-
             agent.isStopped = false;
 
             SetStatus(Status.Tracking);
