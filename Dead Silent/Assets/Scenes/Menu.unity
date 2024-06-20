@@ -2569,6 +2569,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1093662336}
+  - component: {fileID: 1093662339}
   - component: {fileID: 1093662338}
   - component: {fileID: 1093662335}
   - component: {fileID: 1093662334}
@@ -2785,6 +2786,19 @@ MonoBehaviour:
   delayBeforeLoading: 5
   settingsPanel: {fileID: 488315865}
   mainMenuPanel: {fileID: 1148638328}
+--- !u!114 &1093662339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1093662332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 276ad83d75e4e104e8cf8c781a268719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenModeDropdown: {fileID: 1183490905}
 --- !u!1 &1143417891
 GameObject:
   m_ObjectHideFlags: 0
@@ -3003,7 +3017,7 @@ GameObject:
   - component: {fileID: 1183490906}
   - component: {fileID: 1183490905}
   m_Layer: 5
-  m_Name: Dropdown
+  m_Name: DisplayDropDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3081,15 +3095,25 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: Diplay Option
-      m_Image: {fileID: 0}
     - m_Text: Fullscreen
       m_Image: {fileID: 0}
     - m_Text: Windowed
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &1183490906
 MonoBehaviour:
@@ -3268,7 +3292,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Diplay Option
+  m_text: Fullscreen
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
