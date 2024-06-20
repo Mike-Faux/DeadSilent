@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -12,16 +13,34 @@ public class MainMenu : MonoBehaviour
     [SerializeField] bool fullscreen;
     [SerializeField] float volume;
     [SerializeField] Screen screen;
+    public GameObject LoadScreen;
+    public Image LoadingBar;
+    public float delayBeforeLoading = 3f;
 
 
-
-    // Start is called before the first frame update
-    public void Play()
+    public void LoadingScene(int sceneId)
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        
+        StartCoroutine(LoadSceneAsync(sceneId));
+        Debug.Log("IsLoading");
     }
+    IEnumerator LoadSceneAsync(int sceneId)
+    {
 
+       
+
+        LoadScreen.SetActive(true);
+
+        yield return new WaitForSeconds(delayBeforeLoading);
+
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneId);
+
+        while (!operation.isDone)
+        {
+
+
+            yield return null;
+        }
+    }
     public void Settings()
     { 
 
@@ -62,4 +81,5 @@ public class MainMenu : MonoBehaviour
         volume = newVolume;
         Debug.Log(volume);
     }
+
 }
