@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -598,8 +598,8 @@ MonoBehaviour:
   curvedWallPoints: 20
   offset: {x: 0, y: 0, z: 0}
   surface: {fileID: 1881556009}
-  StartRoom: {fileID: 0}
-  EndRoom: {fileID: 0}
+  StartRoom: {fileID: 8638516842328126909, guid: 24bd1f380a929f24c824966109085c3e, type: 3}
+  EndRoom: {fileID: 8439621576064382135, guid: 95adb9c70bde440498d4afbf9919e6fc, type: 3}
 --- !u!114 &1881556008
 MonoBehaviour:
   m_ObjectHideFlags: 0
