@@ -358,7 +358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d00daf4a552b2b479d13d1a5d14c8f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentTime: 10
+  currentTime: 120
   countdownText: {fileID: 1004225508183980318}
 --- !u!1 &343722815902383135
 GameObject:
