@@ -16,6 +16,8 @@ public class FieldOfView : MonoBehaviour
     public LayerMask tarketMask;
     public LayerMask obstructionMask;
 
+
+    [SerializeField] Transform HeadPos;
     [SerializeField] EnemyAI ai;
 
 
@@ -30,7 +32,7 @@ public class FieldOfView : MonoBehaviour
     {
         if (TargetInRange == true)
         {
-           
+            CheckForTargets();
         }
        
     }
@@ -46,21 +48,21 @@ public class FieldOfView : MonoBehaviour
 
     public void CheckForTargets()
     {
-        Collider[] potentialTargets = Physics.OverlapSphere(transform.position, ViewRadius, tarketMask);
+        Collider[] potentialTargets = Physics.OverlapSphere(HeadPos.position, ViewRadius, tarketMask);
 
         for (int i = 0; i < potentialTargets.Length; i++)
         {
-            Vector3 targetDir = (potentialTargets[i].transform.position - transform.position).normalized;
+            Vector3 targetDir = (potentialTargets[i].transform.position - HeadPos.position).normalized;
 
 
-            Debug.Log($"{potentialTargets[i].name} found!");
+            //Debug.Log($"{potentialTargets[i].name} found!");
             //Debug.Log(Physics.Linecast(transform.position, potentialTargets[i].transform.position, out RaycastHit hit, obstructionMask, QueryTriggerInteraction.Ignore));
             //Debug.Log(hit.collider.transform.name);
 
             if (Vector3.Angle(transform.forward, targetDir) <= ViewAngle / 2)
             {
-                Debug.Log($"{potentialTargets[i].name} is in Front!");
-                if (!Physics.Linecast(transform.position, potentialTargets[i].transform.position, out RaycastHit hit, obstructionMask, QueryTriggerInteraction.Ignore))
+                //Debug.Log($"{potentialTargets[i].name} is in Front!");
+                if (!Physics.Linecast(HeadPos.position, potentialTargets[i].transform.position, out RaycastHit hit, obstructionMask, QueryTriggerInteraction.Ignore))
                 {
                     //Debug.Log(Vector3.Angle(transform.forward, targetDir));
                     //Debug.Log($"Tracking {potentialTargets[i].name}!");

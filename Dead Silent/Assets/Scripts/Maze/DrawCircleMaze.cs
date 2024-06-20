@@ -246,6 +246,7 @@ public class DrawCircleMaze : MonoBehaviour
             MainObj.name = "MainObj " + cell.ToString();
             pos.y = 1;
             MainObj.transform.position = pos;
+            if (exit) MainObj.transform.LookAt(Vector3.zero);
             MainObj.transform.parent = cellObj.transform;
         }
 

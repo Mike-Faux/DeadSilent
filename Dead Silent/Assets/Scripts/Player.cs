@@ -53,7 +53,6 @@ public class Player : MonoBehaviour, IDamageable
     // Start is called before the first frame update
     void Start()
     {
-       
       
         MaxHealth = Health;
         SpawnPlayer();
@@ -65,7 +64,9 @@ public class Player : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
-        if(!GameManager.Instance.pause && 
+        if (transform.position.y < -350) TakeDamage(1);
+
+        if (!GameManager.Instance.pause && 
             !GameManager.Instance.inventory)
         {
             Movement();
