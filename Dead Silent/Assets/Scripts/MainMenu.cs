@@ -17,6 +17,14 @@ public class MainMenu : MonoBehaviour
     public Image LoadingBar;
     public float delayBeforeLoading = 3f;
 
+    [SerializeField] GameObject settingsPanel;
+    [SerializeField] GameObject mainMenuPanel;
+
+    private void Start()
+    {
+        mainMenuPanel.SetActive(true);
+        settingsPanel.SetActive(false);
+    }
 
     public void LoadingScene(int sceneId)
     {
@@ -41,10 +49,16 @@ public class MainMenu : MonoBehaviour
             yield return null;
         }
     }
-    public void Settings()
-    { 
+    public void ShowSettings()
+    {
+        settingsPanel.SetActive(true); // Show the settings canvas
+        mainMenuPanel.SetActive(false);
+    }
 
-
+    public void HideSettings()
+    {
+        settingsPanel.SetActive(false); // Hide the settings canvas
+        mainMenuPanel.SetActive(true); // Show the main menu canvas
     }
     public void Quit()
         {
