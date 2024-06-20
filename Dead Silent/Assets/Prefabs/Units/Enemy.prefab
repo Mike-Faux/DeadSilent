@@ -894,8 +894,9 @@ MonoBehaviour:
   agent: {fileID: 4317178071435103717}
   Health: 5
   EngageDistance: 30
+  type: 0
   alertDistance: 40
-  ChaseDistance: 53.53
+  chaseDistance: 0
   attackDistance: 36.2
   toAlert:
     serializedVersion: 2
@@ -903,8 +904,13 @@ MonoBehaviour:
   blockingFiring:
     serializedVersion: 2
     m_Bits: 119
+  Enemy:
+    serializedVersion: 2
+    m_Bits: 0
+  currentStatus: 0
   weaponSlot: {fileID: 2199006958261165395}
   StatusIndicator: {fileID: 5356522939026320453}
+  AlwaysAware: 1
 --- !u!4 &6604383216083234264 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1852576806548013000, guid: 0e1f73187acc49c49a6d7e3dc2014e4e, type: 3}

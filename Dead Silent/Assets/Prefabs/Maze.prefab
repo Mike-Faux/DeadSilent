@@ -56,6 +56,8 @@ MonoBehaviour:
   curvedWallPoints: 20
   offset: {x: 0, y: 0, z: 0}
   surface: {fileID: 4134362265566558831}
+  StartRoom: {fileID: 9071864808482703117, guid: d6908612d3a62be49a5bfcf3b973acda, type: 3}
+  EndRoom: {fileID: 8439621576064382135, guid: 95adb9c70bde440498d4afbf9919e6fc, type: 3}
 --- !u!114 &2625353795366067244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,6 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f156e714dcb04f49a86348a96731856, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Level: 0
   width: 30
   height: 10
   circular: 1
@@ -87,10 +90,10 @@ MonoBehaviour:
   floorMat: {fileID: 2100000, guid: 0c26b4c84ab19ad458dc8f02ac1747a7, type: 2}
   postMat: {fileID: 2100000, guid: d9118644cf18d114abae307878884709, type: 2}
   OtherSpawnables: []
-  Prefab_EnemySpawner: {fileID: 0}
-  EnemyWeight: 0
-  OtherWeight: 0
-  EmptyWeight: 0
+  Prefab_EnemySpawner: {fileID: 7819170124412325851, guid: d9b38146dbfa4a74f98c4387a063243f, type: 3}
+  EnemyWeight: 2
+  OtherWeight: 1
+  EmptyWeight: 12
 --- !u!114 &4134362265566558831
 MonoBehaviour:
   m_ObjectHideFlags: 0

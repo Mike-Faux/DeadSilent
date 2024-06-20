@@ -135,7 +135,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
     public void TakeDamage(int amount)
     {
         Health -= amount;
-        StartCoroutine(Flash(.1f));
+        //StartCoroutine(Flash(.1f));
 
         if (Health <= 0)
         {

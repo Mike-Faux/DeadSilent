@@ -8,6 +8,8 @@ public class GameStats : MonoBehaviour
     public int Deaths = 0;
     public int BulletsFired = 0;
 
+    public int Level = 1;
+
 
     // Start is called before the first frame update
     void Start()

@@ -7,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(DrawCircleMaze))]
 public class MazeGenerator : MonoBehaviour
 {
+    public int Level;
     public int width = 10;
     public int height = 10;
 
@@ -15,6 +16,7 @@ public class MazeGenerator : MonoBehaviour
     private Maze maze;
 
     private Dictionary<string, Maze.Cell> cellsUnvisited;
+
 
 
     // Start is called before the first frame update
@@ -33,6 +35,18 @@ public class MazeGenerator : MonoBehaviour
 
     public void RebuildMaze()
     {
+        GameObject go = GameObject.FindGameObjectWithTag("GameStats");
+        if (go != null)
+        {
+            GameStats stats = go.GetComponent<GameStats>();
+            Level = stats.Level;
+        }
+        else
+        {
+            Level = 1;
+            width *= Level;
+        }
+
         if (transform.childCount > 0)
         {
             while (transform.childCount > 0)
@@ -51,7 +65,7 @@ public class MazeGenerator : MonoBehaviour
     public void DrawMaze(Maze maze)
     {
         DrawCircleMaze dcm = GetComponent<DrawCircleMaze>();
-        dcm.DrawMaze(maze);
+        dcm.DrawMaze(maze, Level);
     }
 
     public void PopulateCellsAndWalls()

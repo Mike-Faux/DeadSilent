@@ -177,12 +177,14 @@ public class Maze
 
         public bool visited;
 
-        public Cell(int x, int y)
+        public Cell(int x, int y, bool generateWalls = true)
         {
             this.x = x;
             this.y = y;
-            GenerateNewWalls();
+            if(generateWalls) GenerateNewWalls();
+            else walls = new List<Direction>();
         }
+
 
         public void GenerateNewWalls()
         {

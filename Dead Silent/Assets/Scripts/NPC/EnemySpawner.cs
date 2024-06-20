@@ -5,23 +5,61 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public GameObject Spawning;
+
     public int spawnCount;
     public int spawnDelay;
-
-
 
     public bool UsePatrolPoints;
     public List<PatrolWaypoint> PatrolPath;
     public bool SpawnOnFirstPoint;
 
     GameObject spawn;
+    bool spawning;
+    bool delay;
 
-    private void Awake()
+    (Vector3 Position, int TimeInPosition)[] path;
+    EnemyAI ai;
+
+    // Start is called before the first frame update
+    void Start()
     {
-        EnemyAI ai = spawn.GetComponent<EnemyAI>();
+        spawning = false;
+        delay = false;
+
+        path = new (Vector3 Position, int TimeInPosition)[PatrolPath.Count];
+        ai = null;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (spawning && !delay)
+        {
+            StartCoroutine(SpawnDelay());
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            spawning = true;
+        }
+    }
+
+    IEnumerator SpawnDelay()
+    {
+        Spawn();
+        delay = true;
+        yield return new WaitForSeconds(spawnDelay);
+        delay = false;
+    }
+
+    void Spawn()
+    {
 
         UsePatrolPoints = false;
-        if(UsePatrolPoints)
+        if (UsePatrolPoints)
         {
             if (SpawnOnFirstPoint && PatrolPath.Count > 0)
             {
@@ -32,7 +70,8 @@ public class EnemySpawner : MonoBehaviour
                 spawn = Instantiate(Spawning, transform.position, transform.rotation);
             }
 
-            (Vector3 Position, int TimeInPosition)[] path = new (Vector3 Position, int TimeInPosition)[PatrolPath.Count];
+            ai = spawn.GetComponent<EnemyAI>();
+
 
             for (int i = 0; i < PatrolPath.Count; i++)
             {
@@ -41,19 +80,9 @@ public class EnemySpawner : MonoBehaviour
 
             ai.SetPatrolPath(path);
         }
-    }
 
-    // Start is called before the first frame update
-    void Start()
-    {
+        spawn = Instantiate(Spawning, transform.position, transform.rotation);
+        ai = spawn.GetComponent<EnemyAI>();
         Destroy(gameObject);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
 }

@@ -24,9 +24,13 @@ public class MazeSettings : MonoBehaviour
 
         int id = Random.Range(0, total);
 
-        if(id < EnemyWeight)
+
+        //return Instantiate(Prefab_EnemySpawner);
+
+        if (id < EnemyWeight)
         {
             //Spawn Enemy
+            return Instantiate(Prefab_EnemySpawner);
         }else if(id < EnemyWeight + OtherWeight)
         {
             //Spawn Other

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7333916788858184567}
   - component: {fileID: 5764360894087644135}
   - component: {fileID: -2067125416426394194}
+  - component: {fileID: 3832359465208501930}
   m_Layer: 0
   m_Name: UnitSpawner
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 7819170124412325851}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -99,7 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Spawning: {fileID: 5680093083117006657, guid: cfc7cacbe58032b4180665839967cbd3, type: 3}
-  spawnCount: 0
+  spawnCount: 1
+  spawnDelay: 5
   UsePatrolPoints: 0
   PatrolPath:
   - {fileID: 5383653123984041986}
@@ -125,6 +127,25 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 20
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &3832359465208501930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7819170124412325851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 1
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1001 &7544203376417922747
 PrefabInstance:
   m_ObjectHideFlags: 0
