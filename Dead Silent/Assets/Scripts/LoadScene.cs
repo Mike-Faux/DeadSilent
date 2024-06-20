@@ -11,22 +11,19 @@ public class LoadScene : MonoBehaviour
     public Image LoadingBar;
 
 
-    public void LoadingScene(int sceneId)
-    {
-        StartCoroutine(LoadSceneAsync(sceneId));
-    }
-    IEnumerator LoadSceneAsync(int sceneId)
+   
+   public IEnumerator LoadSceneAsync(int sceneId)
     {
 
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneId);
 
         LoadScreen.SetActive(true);
 
+        
+
         while (!operation.isDone)
         {
-            float progressValue = Mathf.Clamp01(operation.progress / 0.9f);
-
-            LoadingBar.fillAmount = progressValue;
+           
 
             yield return null;
         }
