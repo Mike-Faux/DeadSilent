@@ -10,7 +10,9 @@ public class Player : MonoBehaviour, IDamageable
 {
     [SerializeField] CharacterController Controller;
     public Inventory inventory;
-   
+
+    public CameraController cameraController;
+
     [SerializeField] private float interactionDistance;
 
     [SerializeField] int Health;

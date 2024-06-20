@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] public int Sensitivity;
+    public float sensitivity = 100f;
     [SerializeField] int LockVertMin, LockVertMax;
     [SerializeField] bool InvertY;
 
@@ -16,14 +16,17 @@ public class CameraController : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
-
-    
-    
-    // Update is called once per frame
-    void Update()
+    public void SetSensitivity(float newSensitivity)
     {
-        float mouseY = Input.GetAxis("Mouse Y") * Sensitivity * Time.deltaTime;
-        float mouseX = Input.GetAxis("Mouse X") * Sensitivity * Time.deltaTime;
+        sensitivity = newSensitivity;
+    }
+
+
+    // Update is called once per frame
+    public void Update()
+    {
+        float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
+        float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
 
         if (InvertY)
             RotX += mouseY;
