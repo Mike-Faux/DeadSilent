@@ -523,6 +523,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3503903412986918732, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: currentTime
+      value: 400
+      objectReference: {fileID: 0}
     - target: {fileID: 5575210113120236212, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
       propertyPath: m_Name
       value: UI

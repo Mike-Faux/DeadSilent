@@ -104,7 +104,6 @@ public class EnemyAI : MonoBehaviour, IDamageable
         //If target is close enough, Engage
         if (target != null && Vector3.Distance(transform.position, target.transform.position) <= EngageDistance)
         {
-
             Engage();
         }
 
@@ -172,6 +171,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
 
     public void Engage()
     {
+        //Debug.Log("Engaging");
         agent.speed = BaseSpeed * 1.5f;
         //Officer Alerting Nearby Units
         if (type == AIType.Officer && GameManager.Instance.LastKnownPosition != null)
@@ -242,6 +242,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
 
     public void Track()
     {
+        //Debug.Log("Tracking");
         agent.speed = BaseSpeed * 1.5f;
         if (target != null && Vector3.Distance(target.transform.position, transform.position) < EngageDistance)
         {
@@ -262,6 +263,11 @@ public class EnemyAI : MonoBehaviour, IDamageable
 
     public void Investigate()
     {
+        if(AlwaysAware)
+        {
+            Track();
+            return;
+        }
         agent.speed = BaseSpeed * .8f;
         //Debug.Log("Investigating");
         if (targetPos == GameManager.Instance.LastKnownPosition)
@@ -337,6 +343,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
 
     public void OnEnemySighted(GameObject target)
     {
+        //Debug.Log("Sighted");
         this.target = target;
         GameManager.Instance.LastKnownPosition = target.transform.position;
         this.targetPos = target.transform.position;

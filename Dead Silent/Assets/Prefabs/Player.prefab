@@ -199,8 +199,8 @@ MonoBehaviour:
   cameraController: {fileID: 178600332576339301}
   interactionDistance: 8
   Health: 25
-  Speed: 8
-  SprintMod: 2
+  Speed: 6
+  SprintMod: 1.5
   CrouchMod: 0.5
   CrouchHeightMod: 0.6
   JumpMax: 1
