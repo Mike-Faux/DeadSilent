@@ -196,6 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Controller: {fileID: 2227847582455116204}
+  cameraController: {fileID: 178600332576339301}
   interactionDistance: 8
   Health: 25
   Speed: 8
@@ -210,6 +211,11 @@ MonoBehaviour:
     m_Bits: 128
   intIcon: {fileID: 0}
   weaponSlot: {fileID: 551771364105821746}
+  aud: {fileID: 0}
+  hurtAud: []
+  audJump: []
+  hurtAudVol: 0
+  audJumpVol: 0
 --- !u!54 &-1000466254172292707
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -364,7 +370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 420843a55ede76b4c81188566cae47b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sensitivity: 250
+  sensitivity: 100
   LockVertMin: -90
   LockVertMax: 45
   InvertY: 0
