@@ -1276,12 +1276,6 @@ MonoBehaviour:
   resolution: 0
   fullscreen: 0
   volume: 0
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-  settingsPanel: {fileID: 0}
-=======
->>>>>>> Stashed changes
   LoadScreen: {fileID: 1809920284}
   LoadingBar: {fileID: 0}
   delayBeforeLoading: 5
@@ -1390,10 +1384,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
-<<<<<<< Updated upstream
-=======
->>>>>>> bdf170b483f49f69715c0ab5d0d5e67484ac92de
->>>>>>> Stashed changes
 --- !u!1 &1148638328
 GameObject:
   m_ObjectHideFlags: 0
@@ -1490,12 +1480,6 @@ MonoBehaviour:
   resolution: 0
   fullscreen: 0
   volume: 0
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-  settingsPanel: {fileID: 0}
-=======
->>>>>>> Stashed changes
   LoadScreen: {fileID: 0}
   LoadingBar: {fileID: 0}
   delayBeforeLoading: 5
@@ -1545,10 +1529,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1143417892}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< Updated upstream
-=======
->>>>>>> bdf170b483f49f69715c0ab5d0d5e67484ac92de
->>>>>>> Stashed changes
 --- !u!1 &1342425921
 GameObject:
   m_ObjectHideFlags: 0
@@ -1863,9 +1843,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1093662338}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: Settings
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: buttonBehaviour, Assembly-CSharp
+        m_MethodName: restart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
