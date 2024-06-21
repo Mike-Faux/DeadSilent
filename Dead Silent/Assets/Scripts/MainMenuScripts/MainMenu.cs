@@ -75,25 +75,13 @@ public class MainMenu : MonoBehaviour
         Debug.Log(sensitivity);
     }
 
-    public void UpdateQuality(float newQuality)
-    {
-        quality = newQuality;
-        Debug.Log(quality);
-    }
+  
 
-    public void UpdateResolution(float newResolution)
-    {
-        resolution = newResolution;
-        Debug.Log(resolution);
-    }
+  
 
 
 
 
-    public void UpdateVolume(float newVolume)
-    {
-        volume = newVolume;
-        Debug.Log(volume);
-    }
+  
 
 }
