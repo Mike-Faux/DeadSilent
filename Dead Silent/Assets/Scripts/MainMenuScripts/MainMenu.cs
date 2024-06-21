@@ -19,6 +19,7 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField] GameObject settingsPanel;
     [SerializeField] GameObject mainMenuPanel;
+    [SerializeField] GameObject controlPanel;
 
     private void Start()
     {
@@ -49,6 +50,18 @@ public class MainMenu : MonoBehaviour
             yield return null;
         }
     }
+    public void showControls()
+    {
+        controlPanel.SetActive(true);
+        mainMenuPanel.SetActive(false);
+        settingsPanel.SetActive(false);
+    }
+    public void hideControls()
+    {
+        controlPanel.SetActive(false);
+        mainMenuPanel.SetActive(true);
+        settingsPanel.SetActive(false);
+    }
     public void ShowSettings()
     {
         settingsPanel.SetActive(true); // Show the settings canvas
@@ -69,11 +82,7 @@ public class MainMenu : MonoBehaviour
 #endif
     }
 
-    public void UpdateSensitivity(float newSensitivity)
-    {
-        sensitivity = newSensitivity;
-        Debug.Log(sensitivity);
-    }
+  
 
   
 
