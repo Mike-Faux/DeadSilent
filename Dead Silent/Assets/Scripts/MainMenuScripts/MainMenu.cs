@@ -25,6 +25,7 @@ public class MainMenu : MonoBehaviour
     {
         mainMenuPanel.SetActive(true);
         settingsPanel.SetActive(false);
+        controlPanel.SetActive(false);
     }
 
     public void LoadingScene(int sceneId)
