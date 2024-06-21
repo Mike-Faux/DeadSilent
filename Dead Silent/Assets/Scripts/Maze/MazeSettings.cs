@@ -33,7 +33,10 @@ public class MazeSettings : MonoBehaviour
             return Instantiate(Prefab_EnemySpawner);
         }else if(id < EnemyWeight + OtherWeight)
         {
+            if (OtherSpawnables.Count == 0) return null;
             //Spawn Other
+            int selection = Random.Range(0, OtherSpawnables.Count);
+            return Instantiate(OtherSpawnables[selection]);
         }
         else
         {

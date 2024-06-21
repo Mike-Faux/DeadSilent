@@ -36,14 +36,15 @@ public class DrawCircleMaze : MonoBehaviour
     List<NavMeshBuildSource> buildSources;
 
     [SerializeField] NavMeshSurface surface;
-    [SerializeField] GameObject StartRoom;
-    [SerializeField] GameObject EndRoom;
+    [SerializeField] GameObject EndPortal;
+    [SerializeField] GameObject StartPortal;
+
 
     public void DrawMaze(Maze maze, int level)
     {
         this.maze = maze;
-        GameObject startRoom = Instantiate(StartRoom);
-        startRoom.transform.position = Vector3.zero;
+        //GameObject startRoom = Instantiate(StartRoom);
+        //startRoom.transform.position = Vector3.zero;
 
         baseDistance *= ((level + 1) / 2);
 
@@ -59,11 +60,28 @@ public class DrawCircleMaze : MonoBehaviour
         GameObject cells = new GameObject("Cells");
         cells.transform.parent = this.transform;
 
-        DrawCell(new Maze.Cell(maze.ExitCell.x, maze.ExitCell.y - 1, false));
-        DrawCell(new Maze.Cell(maze.ExitCell.x, maze.ExitCell.y - 2, false));
-        DrawCell(new Maze.Cell(maze.ExitCell.x, maze.ExitCell.y - 3, false));
+        Maze.Cell entrance = new Maze.Cell(maze.ExitCell.x, maze.ExitCell.y - 1, false);
+        entrance.walls.Add(Maze.Direction.South);
+        Maze.Cell entranceL = new Maze.Cell(maze.ExitCell.x - 1, maze.ExitCell.y - 1);
+        entranceL.walls.Remove(Maze.Direction.East);
+        Maze.Cell entranceR = new Maze.Cell(maze.ExitCell.x + 1, maze.ExitCell.y - 1);
+        entranceR.walls.Remove(Maze.Direction.West);
 
-        GameObject exit = DrawCell(new Maze.Cell(maze.EntranceCell.x, maze.EntranceCell.y + 1, false), true);
+        Maze.Cell exit = new Maze.Cell(maze.EntranceCell.x, maze.EntranceCell.y + 1);
+        exit.walls.Remove(Maze.Direction.South);
+
+        DrawCell(entrance, 2);
+        DrawCell(entranceL, -1);
+        DrawCell(entranceR, -1);
+        DrawCell(exit, 1);
+
+        DrawMazePost(entrance.x - 1, entrance.y);
+        DrawMazePost(entrance.x, entrance.y);
+        DrawMazePost(entrance.x + 1, entrance.y);
+        DrawMazePost(entrance.x + 2, entrance.y);
+
+        DrawMazePost(exit.x, exit.y);
+        DrawMazePost(exit.x + 1, exit.y);
 
 
         for (int x = 0; x < maze.GetWidth(); x++)
@@ -214,7 +232,7 @@ public class DrawCircleMaze : MonoBehaviour
         return post;
     }
 
-    private GameObject DrawCell(Maze.Cell cell, bool exit = false)
+    private GameObject DrawCell(Maze.Cell cell, int type = 0)
     {
         GameObject cellObj = new GameObject("Cell " + cell.ToString());
         //set cell pos
@@ -230,13 +248,20 @@ public class DrawCircleMaze : MonoBehaviour
         DrawCellFloor(cellObj);
 
         GameObject MainObj;
-        if (exit)
+        switch (type)
         {
-            MainObj = Instantiate(EndRoom);
-        }
-        else
-        {
-            MainObj = mazeSettings.GetMainSpawnable();
+            case -1:
+                MainObj = null;
+                break;
+            default:
+                MainObj = mazeSettings.GetMainSpawnable();
+                break;
+            case 1:
+                MainObj = Instantiate(EndPortal);
+                break;
+            case 2:
+                MainObj = Instantiate(StartPortal);
+                break;
         }
 
         if(MainObj != null)
@@ -244,7 +269,7 @@ public class DrawCircleMaze : MonoBehaviour
             MainObj.name = "MainObj " + cell.ToString();
             pos.y = 1;
             MainObj.transform.position = pos;
-            if (exit) MainObj.transform.LookAt(Vector3.zero);
+            if (type != 0) MainObj.transform.LookAt(Vector3.zero);
             MainObj.transform.parent = cellObj.transform;
         }
 

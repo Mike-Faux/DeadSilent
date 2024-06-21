@@ -57,7 +57,8 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: 0}
   surface: {fileID: 4134362265566558831}
   StartRoom: {fileID: 9071864808482703117, guid: d6908612d3a62be49a5bfcf3b973acda, type: 3}
-  EndRoom: {fileID: 8439621576064382135, guid: 95adb9c70bde440498d4afbf9919e6fc, type: 3}
+  EndPortal: {fileID: 8439621576064382135, guid: 95adb9c70bde440498d4afbf9919e6fc, type: 3}
+  StartPortal: {fileID: 8439621576064382135, guid: 20171b3d627d2bd4486524d542644256, type: 3}
 --- !u!114 &2625353795366067244
 MonoBehaviour:
   m_ObjectHideFlags: 0
