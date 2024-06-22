@@ -336,6 +336,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5057421968377119573, guid: 163e9c64b8fef7f4eaeea53d32fc2fd6, type: 3}
+      propertyPath: EndPortal
+      value: 
+      objectReference: {fileID: 8439621576064382135, guid: 95adb9c70bde440498d4afbf9919e6fc, type: 3}
+    - target: {fileID: 5057421968377119573, guid: 163e9c64b8fef7f4eaeea53d32fc2fd6, type: 3}
+      propertyPath: StartPortal
+      value: 
+      objectReference: {fileID: 8439621576064382135, guid: 20171b3d627d2bd4486524d542644256, type: 3}
     - target: {fileID: 7713764034887766108, guid: 163e9c64b8fef7f4eaeea53d32fc2fd6, type: 3}
       propertyPath: m_Name
       value: Maze

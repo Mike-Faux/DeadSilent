@@ -19,11 +19,13 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField] GameObject settingsPanel;
     [SerializeField] GameObject mainMenuPanel;
+    [SerializeField] GameObject controlPanel;
 
     private void Start()
     {
         mainMenuPanel.SetActive(true);
         settingsPanel.SetActive(false);
+        controlPanel.SetActive(false);
     }
 
     public void LoadingScene(int sceneId)
@@ -49,6 +51,18 @@ public class MainMenu : MonoBehaviour
             yield return null;
         }
     }
+    public void showControls()
+    {
+        controlPanel.SetActive(true);
+        mainMenuPanel.SetActive(false);
+        settingsPanel.SetActive(false);
+    }
+    public void hideControls()
+    {
+        controlPanel.SetActive(false);
+        mainMenuPanel.SetActive(true);
+        settingsPanel.SetActive(false);
+    }
     public void ShowSettings()
     {
         settingsPanel.SetActive(true); // Show the settings canvas
@@ -69,31 +83,15 @@ public class MainMenu : MonoBehaviour
 #endif
     }
 
-    public void UpdateSensitivity(float newSensitivity)
-    {
-        sensitivity = newSensitivity;
-        Debug.Log(sensitivity);
-    }
+  
 
-    public void UpdateQuality(float newQuality)
-    {
-        quality = newQuality;
-        Debug.Log(quality);
-    }
+  
 
-    public void UpdateResolution(float newResolution)
-    {
-        resolution = newResolution;
-        Debug.Log(resolution);
-    }
+  
 
 
 
 
-    public void UpdateVolume(float newVolume)
-    {
-        volume = newVolume;
-        Debug.Log(volume);
-    }
+  
 
 }

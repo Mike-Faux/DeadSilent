@@ -25,18 +25,27 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
+        // Mouse input
         float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
         float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
 
+        // Joystick input (add these lines)
+        float joystickY = Input.GetAxis("RightStickVertical") * sensitivity * Time.deltaTime;
+        float joystickX = Input.GetAxis("RightStickHorizontal") * sensitivity * Time.deltaTime;
+
+        // Combine mouse and joystick input
+        float combinedY = mouseY + joystickY;
+        float combinedX = mouseX + joystickX;
+
         if (InvertY)
-            RotX += mouseY;
+            RotX += combinedY;
         else
-            RotX -= mouseY;
+            RotX -= combinedY;
 
         RotX = Mathf.Clamp(RotX, LockVertMin, LockVertMax);
 
         transform.localRotation = Quaternion.Euler(RotX, 0, 0);
 
-        transform.parent.Rotate(Vector3.up * mouseX);
+        transform.parent.Rotate(Vector3.up * combinedX);
     }
 }
