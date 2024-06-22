@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -509,9 +509,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1563642747572834671, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
+      propertyPath: audJumpVol
+      value: 0.061
+      objectReference: {fileID: 0}
     - target: {fileID: 3188795972260206017, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4634011931167252919, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
+      propertyPath: InfiniteAmmo
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5516204166268024518, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
       propertyPath: m_LocalPosition.x
