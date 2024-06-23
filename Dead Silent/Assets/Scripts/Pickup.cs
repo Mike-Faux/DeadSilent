@@ -2,12 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pickupable : MonoBehaviour
+public class Pickup : MonoBehaviour
 {
     [SerializeField]
     ItemStack items;
 
+    public void SetItems(ItemStack items)
+    {
+        this.items = items;
+        GenerateModel();
+    }
 
+    private void Start()
+    {
+        if(items != null)
+            GenerateModel();
+    }
+
+    public void GenerateModel()
+    {
+        if(transform.childCount > 0) Destroy(transform.GetChild(0).gameObject);
+        Instantiate(items.item.Prefab, transform);
+    }
 
     // Called when another collider enters the trigger collider
     private void OnTriggerEnter(Collider other)

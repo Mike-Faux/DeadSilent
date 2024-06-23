@@ -49,7 +49,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Player = GameObject.FindWithTag("Player");
-        playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
         Instance = this;
 
         GameObject gsgo = GameObject.FindGameObjectWithTag("GameStats");
@@ -76,6 +75,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
 
     }
 

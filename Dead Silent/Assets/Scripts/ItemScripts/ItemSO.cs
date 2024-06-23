@@ -10,6 +10,7 @@ public class ItemSO : ScriptableObject
     public string Name;
     public string Description;
     public int StackSize;
+    public GameObject Prefab;
 
     public bool UseItem()
     {

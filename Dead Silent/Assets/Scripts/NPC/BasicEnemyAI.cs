@@ -114,10 +114,6 @@ public class BasicEnemyAI : MonoBehaviour, IDamageable
         targetPos.y = transform.position.y;
 
     }
-    public bool HasKey(KeySO key)
-    {
-        return false;
-    }
 
     public enum Status
     {
