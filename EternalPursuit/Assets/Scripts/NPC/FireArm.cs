@@ -10,63 +10,41 @@ public class FireArm : MonoBehaviour, IWeapon
     public ParticleSystem hitEffect;
     [SerializeField] Transform FirePos;
     [SerializeField] GameObject Bullet;
-   
-    [SerializeField] bool InfiniteAmmo = false;
     public int Ammo;
     public LayerMask Enemy;
     bool isShooting;
     bool isReloading;
-   
-
-
 
     private void Start()
     {
-      
-        GameManager.Instance.UpdateAmmoCount(Ammo, Stats.Ammo_Capacity);
+        
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Debug.Log("Reloading");
-            Reload();
-        }
-    }
     public void Attack()
     {
-        
-        if (isReloading) return;
-
-        if (Ammo <= 0 && !InfiniteAmmo) return;
-   
+        if (Ammo <= 0) return;
+        if(isReloading) return;
+       
         if (!isShooting)
         {
             //Debug.Log("shooting");
             StartCoroutine(Shoot(Stats.FireRate));
         }
-       
     }
 
-    public void Reload()
+    public void Reload(bool useAmmo = false)
     {
-        if(!isReloading)
+        if (isReloading) return;
+
+        if(useAmmo)
+        {
+            if (GameManager.Instance.playerScript.inventory.GetItemCount(Stats.Ammo_Type) <= 0) return;
+            StartCoroutine(Reload(Stats.ReloadTime, true));
+        }
+        else
         {
             StartCoroutine(Reload(Stats.ReloadTime));
         }
-
-    }
-
-    public void ChangeAmmo(int amount)
-    {
-        Ammo += amount;
-
-        if (Ammo > Stats.Ammo_Capacity)
-        {
-            Ammo = Stats.Ammo_Capacity;
-        }
-        GameManager.Instance.UpdateAmmoCount(Ammo, Stats.Ammo_Capacity);
     }
 
     IEnumerator Shoot(float time)
@@ -96,15 +74,21 @@ public class FireArm : MonoBehaviour, IWeapon
         bullet.hitEffect = hitEffect;
         yield return new WaitForSeconds(time);
         isShooting = false;
-       
     }
-    IEnumerator Reload(float time)
+
+    IEnumerator Reload(float time, bool useAmmo = false)
     {
         isReloading = true;
+        int remainingAmmo = Ammo;
         Ammo = 0;
         yield return new WaitForSeconds(time);
         Ammo = Stats.Ammo_Capacity;
-        GameManager.Instance.UpdateAmmoCount(Ammo, Stats.Ammo_Capacity);
+
+        if (useAmmo)
+        {
+            Ammo = GameManager.Instance.playerScript.inventory.RemoveItems(Stats.Ammo_Type, Stats.Ammo_Capacity - remainingAmmo) + remainingAmmo;
+        }
+
         isReloading = false;
     }
 }

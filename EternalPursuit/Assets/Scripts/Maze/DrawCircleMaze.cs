@@ -31,10 +31,6 @@ public class DrawCircleMaze : MonoBehaviour
     //Still to impliment
     public Vector3 offset = Vector3.zero;
 
-    //NavMesh vars
-    NavMeshBuildSettings settings;
-    List<NavMeshBuildSource> buildSources;
-
     [SerializeField] NavMeshSurface surface;
     [SerializeField] GameObject EndPortal;
     [SerializeField] GameObject StartPortal;
@@ -60,6 +56,22 @@ public class DrawCircleMaze : MonoBehaviour
         GameObject cells = new GameObject("Cells");
         cells.transform.parent = this.transform;
 
+        DrawEntranceAndExit();
+
+        for (int x = 0; x < maze.GetWidth(); x++)
+        {
+            for (int y = 0; y < maze.GetHeight(); y++)
+            {
+                GameObject cell = DrawCell(maze.GetCell(x, y));
+                cell.transform.parent = cells.transform;
+            }
+        }
+
+        BuildNavMesh();
+    }
+
+    private void DrawEntranceAndExit()
+    {
         Maze.Cell entrance = new Maze.Cell(maze.ExitCell.x, maze.ExitCell.y - 1, false);
         entrance.walls.Add(Maze.Direction.South);
         Maze.Cell entranceL = new Maze.Cell(maze.ExitCell.x - 1, maze.ExitCell.y - 1);
@@ -82,18 +94,6 @@ public class DrawCircleMaze : MonoBehaviour
 
         DrawMazePost(exit.x, exit.y);
         DrawMazePost(exit.x + 1, exit.y);
-
-
-        for (int x = 0; x < maze.GetWidth(); x++)
-        {
-            for (int y = 0; y < maze.GetHeight(); y++)
-            {
-                GameObject cell = DrawCell(maze.GetCell(x, y));
-                cell.transform.parent = cells.transform;
-            }
-        }
-
-        BuildNavMesh();
     }
 
     private void BuildNavMesh()

@@ -211,6 +211,7 @@ MonoBehaviour:
     m_Bits: 128
   intIcon: {fileID: 0}
   weaponSlot: {fileID: 551771364105821746}
+  StartingAmmoMags: 3
   aud: {fileID: 0}
   hurtAud: []
   audJump: []
@@ -384,7 +385,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2707049336052945676, guid: 8fa31771c875a9849b20d6de8235aa65, type: 3}
       propertyPath: InfiniteAmmo
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2707049336052945676, guid: 8fa31771c875a9849b20d6de8235aa65, type: 3}
       propertyPath: playerCamera

@@ -38,7 +38,7 @@ public class buttonBehaviour : MonoBehaviour
 
     public void Respawn()
     {
-        GameManager.Instance.playerScript.SpawnPlayer();
+        GameManager.Instance.playerScript.SpawnPlayer(        GameManager.Instance.playerScript.GetTransform());
         GameManager.Instance.resumeState();
     }
 

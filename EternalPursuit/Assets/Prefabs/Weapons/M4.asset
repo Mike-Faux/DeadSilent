@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: M4
   Damage: 1
-  BulletSpeed: 110
+  BulletSpeed: 180
   Ammo_Capacity: 30
-  FireRate: 0.18
+  Ammo_Type: {fileID: 11400000, guid: 4501ee89584b7e54093319594af4acd9, type: 2}
+  FireRate: 0.12
   shootDist: 5108
   MaxRange: 5555.4
-  ReloadTime: 0.79
+  ReloadTime: 3
   Silenced: 0
   SoundRadius: 0.18

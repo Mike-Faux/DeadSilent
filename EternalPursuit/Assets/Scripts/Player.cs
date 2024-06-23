@@ -32,6 +32,7 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] GameObject intIcon;
     [SerializeField] GameObject weaponSlot;
     [SerializeField] IWeapon Weapon;
+    [SerializeField] int StartingAmmoMags;
     
     public AudioSource aud;
     [SerializeField] AudioClip[] hurtAud;
@@ -54,11 +55,21 @@ public class Player : MonoBehaviour, IDamageable
     // Start is called before the first frame update
     void Start()
     {
-      
         MaxHealth = Health;
-        SpawnPlayer();
+        SpawnPlayer(GetTransform());
         aud = gameObject.AddComponent<AudioSource>();
         Weapon = weaponSlot.GetComponentInChildren<IWeapon>();
+        inventory = new Inventory();
+
+        if (Weapon.GetType() == typeof(FireArm))
+        {
+            FireArm fireArm = (FireArm)Weapon; 
+            for (int i = 0; i < StartingAmmoMags; i++)
+            {
+                inventory.AddItems(new ItemStack(fireArm.Stats.Ammo_Type, fireArm.Stats.Ammo_Capacity));
+            }
+        }
+        
         UpdateWeaponInfo();
     }
 
@@ -67,7 +78,8 @@ public class Player : MonoBehaviour, IDamageable
     {
         if (transform.position.y < -350) TakeDamage(1);
 
-        if (!GameManager.Instance.pause && !GameManager.Instance.inventory)
+        if (!GameManager.Instance.pause && 
+            !GameManager.Instance.inventory)
         {
             Movement();
             
@@ -87,13 +99,23 @@ public class Player : MonoBehaviour, IDamageable
         }
     }
 
+    public void Reload()
+    {
+        if (Weapon.GetType() == typeof(FireArm))
+        {
+            FireArm fireArm = (FireArm)Weapon;
+            fireArm.Reload();
+            GameManager.Instance.UpdateAmmoCount(fireArm.Ammo, inventory.GetItemCount(fireArm.Stats.Ammo_Type));
+        }
+    }
+
     public void UpdateWeaponInfo()
     {
         if (Weapon.GetType() == typeof(FireArm))
         {
             FireArm fireArm = (FireArm)Weapon;
             GameManager.Instance.UpdateWeaponName(fireArm.Stats.name);
-            GameManager.Instance.UpdateAmmoCount(fireArm.Ammo, fireArm.Stats.Ammo_Capacity);
+            GameManager.Instance.UpdateAmmoCount(fireArm.Ammo, inventory.GetItemCount(fireArm.Stats.Ammo_Type));
         }
         else if (Weapon.GetType() == typeof(MeleeWeapon))
         {
@@ -235,7 +257,12 @@ public class Player : MonoBehaviour, IDamageable
 
     }
 
-    public void SpawnPlayer()
+    public Transform GetTransform()
+    {
+        return transform;
+    }
+
+    public void SpawnPlayer(Transform transform)
     {
         Health = MaxHealth;
         UpdatePlayerUI();
@@ -243,8 +270,21 @@ public class Player : MonoBehaviour, IDamageable
         if (GameManager.Instance.playerSpawnPos != null)
         {
             Controller.enabled = false;
-            transform.position = GameManager.Instance.playerSpawnPos.transform.position;
+            transform.SetPositionAndRotation(GameManager.Instance.playerSpawnPos.transform.position, GameManager.Instance.playerSpawnPos.transform.rotation);
             Controller.enabled = true;
+        }
+        else
+        {
+            GameObject pos = GameObject.FindWithTag("Player Spawn Pos");
+            if(pos != null)
+            {
+                GameManager.Instance.playerSpawnPos = pos;
+
+                Controller.enabled = false;
+                transform.position = GameManager.Instance.playerSpawnPos.transform.position;
+                transform.rotation = GameManager.Instance.playerSpawnPos.transform.rotation;
+                Controller.enabled = true;
+            }
         }
     }
 
@@ -268,11 +308,5 @@ public class Player : MonoBehaviour, IDamageable
     public bool HasItem(ItemStack item)
     {
         return false;
-    }
-
-    public bool HasKey(KeySO key)
-    {
-        return false;
-
     }
 }

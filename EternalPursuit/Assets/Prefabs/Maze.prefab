@@ -56,7 +56,6 @@ MonoBehaviour:
   curvedWallPoints: 20
   offset: {x: 0, y: 0, z: 0}
   surface: {fileID: 4134362265566558831}
-  StartRoom: {fileID: 9071864808482703117, guid: d6908612d3a62be49a5bfcf3b973acda, type: 3}
   EndPortal: {fileID: 8439621576064382135, guid: 95adb9c70bde440498d4afbf9919e6fc, type: 3}
   StartPortal: {fileID: 8439621576064382135, guid: 20171b3d627d2bd4486524d542644256, type: 3}
 --- !u!114 &2625353795366067244
@@ -90,11 +89,15 @@ MonoBehaviour:
   wallMat: {fileID: 2100000, guid: 46be5f15e363aac4381cc9eb6efc673f, type: 2}
   floorMat: {fileID: 2100000, guid: 0c26b4c84ab19ad458dc8f02ac1747a7, type: 2}
   postMat: {fileID: 2100000, guid: d9118644cf18d114abae307878884709, type: 2}
+  Pickup_Prefab: {fileID: 1428956989732758441, guid: d9f94536f6b02674e887b11e1232312f, type: 3}
+  ItemSpawnables:
+  - {fileID: 11400000, guid: 4501ee89584b7e54093319594af4acd9, type: 2}
   OtherSpawnables: []
   Prefab_EnemySpawner: {fileID: 7819170124412325851, guid: d9b38146dbfa4a74f98c4387a063243f, type: 3}
-  EnemyWeight: 2
-  OtherWeight: 1
-  EmptyWeight: 12
+  EnemyWeight: 3
+  OtherWeight: 0
+  ItemWeight: 1
+  EmptyWeight: 14
 --- !u!114 &4134362265566558831
 MonoBehaviour:
   m_ObjectHideFlags: 0
