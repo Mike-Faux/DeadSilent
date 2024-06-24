@@ -12,6 +12,7 @@ public class AnimationStateController : MonoBehaviour
     int isRunningBackHash;
     int isWalkingBackHash;
     int isShootingHash;
+    int isReloadingHash;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,7 @@ public class AnimationStateController : MonoBehaviour
         isRunningBackHash = Animator.StringToHash("isRunningBack");
         isWalkingBackHash = Animator.StringToHash("isWalkingBack");
         isShootingHash = Animator.StringToHash("isShooting");
+        isReloadingHash = Animator.StringToHash("isReloading");
     }
 
     // Update is called once per frame
@@ -39,7 +41,21 @@ public class AnimationStateController : MonoBehaviour
         bool leftPressed = Input.GetKey("a");
         bool rightPressed = Input.GetKey("d");
         bool backPressed = Input.GetKey("s");
+        bool isReloading = animator.GetBool(isReloadingHash);
         bool isshooting = Input.GetMouseButton(0);
+
+        if (!isReloading && Input.GetKeyDown("r"))
+        {
+            animator.SetBool(isReloadingHash, true);
+            StartCoroutine(ResetIsReloading());
+        }
+
+        IEnumerator ResetIsReloading()
+        {
+            // Assuming the reload animation is 2 seconds long
+            yield return new WaitForSeconds(2);
+            animator.SetBool(isReloadingHash, false);
+        }
 
         if (!isShooting && isshooting)
         {
