@@ -256,7 +256,7 @@ Animator:
   m_GameObject: {fileID: 3188795972260206017}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 161e5eda158c7ac44bc017c539edc231, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7e8b0494ae8672a4a9b6d2f0aeadf88d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -446,7 +446,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5311881382460011149, guid: 8fa31771c875a9849b20d6de8235aa65, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.403
+      value: 0.398
       objectReference: {fileID: 0}
     - target: {fileID: 5311881382460011149, guid: 8fa31771c875a9849b20d6de8235aa65, type: 3}
       propertyPath: m_LocalRotation.w
