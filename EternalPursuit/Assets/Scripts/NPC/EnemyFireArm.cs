@@ -37,14 +37,15 @@ public class EnemyFirearm : MonoBehaviour, IWeapon
     IEnumerator Shoot(float time)
     {
         isShooting = true;
+        Ammo--; // Decrement ammo count on shot
+
         float randomChance = Random.Range(0f, 100f); // Generate a random number between 0 and 100
 
-        // Check if hitChance is lower or equal to 30%, ensuring the shot will miss
-        if (hitChance <= 80f || randomChance > hitChance)
+        // Check if the shot will miss based on hitChance
+        if (randomChance > hitChance)
         {
             // The shot will miss
-            Debug.Log("Shot missed due to low hit chance or randomness.");
-            // Optionally, handle the miss case here (e.g., instantiate a bullet that visually misses, play a miss sound or animation)
+            Debug.Log("Shot missed due to randomness.");
             HandleMissedShot();
         }
         else
@@ -56,14 +57,15 @@ public class EnemyFirearm : MonoBehaviour, IWeapon
                 GameObject player = GameObject.FindGameObjectWithTag("Player");
                 if (player != null)
                 {
-                    Vector3 direction = (player.transform.position - firePoint.position).normalized;
+                    Vector3 targetPosition = player.transform.position; // Capture the player's position at the time of firing
+                    Vector3 direction = (targetPosition - firePoint.position).normalized; // Calculate direction based on the captured position
                     EnemyBullet enemyBulletScript = bullet.GetComponent<EnemyBullet>();
                     if (enemyBulletScript != null)
                     {
                         enemyBulletScript.speed = Stats.BulletSpeed;
                         enemyBulletScript.damage = Stats.Damage;
                         enemyBulletScript.maxRange = Stats.MaxRange;
-                        enemyBulletScript.SetDirection(direction);
+                        enemyBulletScript.SetDirection(direction); // Set the direction once, based on the initial calculation
                     }
                 }
             }

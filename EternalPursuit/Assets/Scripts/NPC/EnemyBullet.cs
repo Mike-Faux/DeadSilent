@@ -17,7 +17,8 @@ public class EnemyBullet : MonoBehaviour
     public AudioSource impactSound;
     private Rigidbody rb;
 
-    private Transform playerTransform; 
+    private Transform playerTransform;
+    private Vector3 direction;
 
     void Awake()
     {
@@ -44,36 +45,23 @@ public class EnemyBullet : MonoBehaviour
             Debug.LogWarning("Player not found. Enemy bullets need a player to target.");
         }
     }
-    public void SetDirection(Vector3 direction)
+    public void SetDirection(Vector3 dir)
     {
-        if (rb != null)
-        {
-            rb.velocity = direction.normalized * speed;
-        }
-        else
-        {
-            Debug.LogError("Rigidbody is null when trying to set direction", this);
-        }
+        direction = dir.normalized; // Set the direction only once
     }
-    private void Update()
+    void Update()
     {
-        if (playerTransform != null)
-        {
-            
-            Vector3 direction = (playerTransform.position - transform.position).normalized;
-            
-            transform.position += direction * speed * Time.deltaTime;
-        }
+        // Move the bullet in the set direction
+        transform.position += direction * speed * Time.deltaTime;
 
-        
-        travelDistance = Vector3.Distance(startPosition, transform.position);
-        if (travelDistance >= maxRange)
+        // Check for max range
+        if (Vector3.Distance(startPosition, transform.position) >= maxRange)
         {
-            Destroy(gameObject);
+            Destroy(gameObject); // Destroy the bullet if it exceeds the max range
         }
     }
 
-   
+
 
     private void OnCollisionEnter(Collision collision)
     {
