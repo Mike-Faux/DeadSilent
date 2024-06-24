@@ -16,6 +16,7 @@ public class FireArm : MonoBehaviour, IWeapon
     public int Ammo;
     public int ammoMax;
     public LayerMask Enemy;
+    [SerializeField] private AudioClip reloadSound;
     bool isShooting;
     public bool isReloading;
     private bool fireEnemyBullet = false;
@@ -164,6 +165,9 @@ public class FireArm : MonoBehaviour, IWeapon
     private IEnumerator Reload(float reloadTime, bool useAmmo = false)
     {
         isReloading = true;
+
+        audioSource.PlayOneShot(reloadSound);
+
         yield return new WaitForSeconds(reloadTime); // Simulate reload delay
 
         if (useAmmo)

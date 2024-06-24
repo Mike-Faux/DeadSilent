@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -646,6 +646,10 @@ PrefabInstance:
       propertyPath: sounds.Array.data[1].volume
       value: 0.397
       objectReference: {fileID: 0}
+    - target: {fileID: 7720741640422632788, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
+      propertyPath: m_Volume
+      value: 0.172
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -776,7 +780,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1559363939}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5454144820415641390, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+    - {fileID: 612601331015937326, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+    - {fileID: 8962541090161311947, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
