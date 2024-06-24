@@ -22,11 +22,12 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] float SprintMod;
     [SerializeField] float CrouchMod;
 
+
     [SerializeField] float CrouchHeightMod;
     [SerializeField] int JumpMax;
     [SerializeField] int JumpSpeed;
     [SerializeField] int Gravity;
-    
+    public FireArm firearm;
     [SerializeField] LayerMask InteractionMask;
 
     [SerializeField] GameObject intIcon;
@@ -55,6 +56,8 @@ public class Player : MonoBehaviour, IDamageable
     // Start is called before the first frame update
     void Start()
     {
+        firearm = GetComponentInChildren<FireArm>();
+
         MaxHealth = Health;
         SpawnPlayer(GetTransform());
         aud = gameObject.AddComponent<AudioSource>();
@@ -78,17 +81,22 @@ public class Player : MonoBehaviour, IDamageable
     {
         if (transform.position.y < -350) TakeDamage(1);
 
-        if (!GameManager.Instance.pause && 
-            !GameManager.Instance.inventory)
+        if (!GameManager.Instance.pause && !GameManager.Instance.inventory)
         {
             Movement();
-            
+
             if (Input.GetButton("Fire1") && Weapon != null)
             {
-                Weapon.Attack();
-                UpdateWeaponInfo();
-                //Debug.Log("Fire1");
                 
+                if (Weapon.GetType() == typeof(FireArm))
+                {
+                    Weapon.Attack(); 
+                }
+                else
+                {
+                    Weapon.Attack(); 
+                }
+                UpdateWeaponInfo();
             }
 
             CheckInteraction();
@@ -230,7 +238,7 @@ public class Player : MonoBehaviour, IDamageable
     {
        
         Health -= amount;
-        //aud.PlayOneShot(hurtAud[Random.Range(0, hurtAud.Length)], hurtAudVol);
+        
         UpdatePlayerUI();
         StartCoroutine(FlashDamage());
         
@@ -242,7 +250,7 @@ public class Player : MonoBehaviour, IDamageable
 
         if (Health <= 0)
         {
-            // trigger loss
+            
             GameManager.Instance.gameStats.Deaths++;
             GameManager.Instance.lostState();
         }
@@ -257,7 +265,7 @@ public class Player : MonoBehaviour, IDamageable
 
     void UpdatePlayerUI()
     {
-        // update health bar
+        
         GameManager.Instance.PlayerHPBar.fillAmount = (float)Health / MaxHealth;
 
     }
@@ -309,7 +317,8 @@ public class Player : MonoBehaviour, IDamageable
         }
 
     }
-  
+    
+
     public bool HasItem(ItemStack item)
     {
         return false;

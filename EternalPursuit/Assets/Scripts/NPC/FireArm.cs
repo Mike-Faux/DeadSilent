@@ -10,15 +10,31 @@ public class FireArm : MonoBehaviour, IWeapon
     public ParticleSystem hitEffect;
     [SerializeField] Transform FirePos;
     [SerializeField] GameObject Bullet;
+    [SerializeField] GameObject EnemyBullet;
     public int Ammo;
     public int ammoMax;
     public LayerMask Enemy;
     bool isShooting;
     bool isReloading;
+    private bool fireEnemyBullet = false;
+
+    private BulletType currentBulletType = BulletType.PlayerBullet;
+
+
+    public void SetBulletType(BulletType bulletType)
+    {
+        currentBulletType = bulletType;
+    }
 
     private void Start()
     {
         
+    }
+
+    public void TriggerAttack()
+    {
+       fireEnemyBullet = true; 
+        StartCoroutine(Shoot(Stats.FireRate));
     }
 
     public void Attack()
@@ -28,11 +44,15 @@ public class FireArm : MonoBehaviour, IWeapon
        
         if (!isShooting)
         {
-            //Debug.Log("shooting");
+            
             StartCoroutine(Shoot(Stats.FireRate));
         }
     }
-
+    public enum BulletType
+    {
+        PlayerBullet,
+        EnemyBullet
+    }
     public void Reload(bool useAmmo = false)
     {
         if (isReloading || Ammo == Stats.Ammo_Capacity) return; // Also check if ammo is already full
@@ -42,7 +62,7 @@ public class FireArm : MonoBehaviour, IWeapon
             int ammoInInventory = GameManager.Instance.playerScript.inventory.GetItemCount(Stats.Ammo_Type);
             if (ammoInInventory <= 0)
             {
-                // Provide feedback to the player about lack of ammo
+                
                 Debug.Log("Not enough ammo in inventory to reload.");
                 return;
             }
@@ -57,46 +77,96 @@ public class FireArm : MonoBehaviour, IWeapon
     IEnumerator Shoot(float time)
     {
         isShooting = true;
-       
-      
-        
-       Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
-        Vector3 targetPoint;
 
-        if(Physics.Raycast(ray, out RaycastHit hit))
+        Vector3 targetPoint = Vector3.zero;
+        Vector3 direction;
+
+        if (!fireEnemyBullet) 
         {
-            targetPoint = hit.point;
-        }else
-        {
-            targetPoint = ray.GetPoint(1000);
+            Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                targetPoint = hit.point;
+            }
+            else
+            {
+                targetPoint = ray.GetPoint(1000); 
+            }
         }
-        
-        Vector3 direction = (targetPoint - FirePos.position).normalized;
+        else 
+        {
+            
+            GameObject player = GameObject.FindGameObjectWithTag("Player"); 
+            if (player != null)
+            {
+                targetPoint = player.transform.position;
+               
+            }
+            else
+            {
+                Debug.LogError("Player not found for enemy aiming.");
+                yield break;
+            }
+        }
+
+        direction = (targetPoint - FirePos.position).normalized;
         Ammo--;
-      
-        Bullet bullet = Instantiate(Bullet, FirePos.position, Quaternion.identity).GetComponent<Bullet>();
-      
-        bullet.damage = Stats.Damage;
-        bullet.maxRange = Stats.MaxRange;
-        bullet.hitEffect = hitEffect;
-        bullet.SetDirection(direction);
+
+        // Choose the bullet type based on the flag
+        GameObject bulletPrefab = fireEnemyBullet ? EnemyBullet : Bullet;
+        GameObject bulletObject = Instantiate(bulletPrefab, FirePos.position, Quaternion.LookRotation(direction));
+
+        // Reset the flag if necessary
+        fireEnemyBullet = false; // Reset after use if you're toggling this per shot
+
+        // Set bullet properties based on type
+        if (bulletPrefab == Bullet)
+        {
+            Bullet bullet = bulletObject.GetComponent<Bullet>();
+            if (bullet != null)
+            {
+                bullet.damage = Stats.Damage;
+                bullet.maxRange = Stats.MaxRange;
+                bullet.hitEffect = hitEffect;
+                bullet.SetDirection(direction);
+            }
+            else
+            {
+                Debug.LogError("Bullet component not found on the instantiated object.");
+            }
+        }
+        else // Assuming the enemy bullet has similar properties/methods to set
+        {
+            EnemyBullet enemyBullet = bulletObject.GetComponent<EnemyBullet>();
+            if (enemyBullet != null)
+            {
+                enemyBullet.damage = Stats.Damage;
+                enemyBullet.maxRange = Stats.MaxRange;
+                enemyBullet.hitEffect = hitEffect;
+                enemyBullet.SetDirection(direction);
+               
+            }
+        }
+
         yield return new WaitForSeconds(time);
         isShooting = false;
     }
-
+    public void ShootAtTarget(Vector3 targetPosition)
+    {
+        Bullet bullet = Instantiate(Bullet, FirePos.position, Quaternion.identity).GetComponent<Bullet>();
+        bullet.InitializeWithTarget(targetPosition);
+    }
     private IEnumerator Reload(float reloadTime, bool useAmmo = false)
     {
         isReloading = true;
         yield return new WaitForSeconds(reloadTime); // Simulate reload delay
 
-        // Assuming you have a method in your inventory system to get the count of a specific item type
         int reserveAmmo = GameManager.Instance.playerScript.inventory.GetItemCount(Stats.Ammo_Type);
         int ammoNeeded = Stats.Ammo_Capacity - Ammo;
         int ammoToReload = Mathf.Min(ammoNeeded, reserveAmmo);
 
         Ammo += ammoToReload; // Update the current ammo
 
-        // Assuming you have a method in your inventory system to remove items
         GameManager.Instance.playerScript.inventory.RemoveItems(Stats.Ammo_Type, ammoToReload);
 
         isReloading = false;

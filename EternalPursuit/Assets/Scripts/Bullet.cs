@@ -17,17 +17,23 @@ public class Bullet : MonoBehaviour
 
     public AudioSource impactSound;
 
-    // Start is called before the first frame update
+    
     void Start()
     {
         startPosition = transform.position;
-       // rb.velocity = transform.forward * speed;
+       
         Destroy(gameObject, time);
     }
     public void SetDirection(Vector3 direction)
     {
         rb.velocity = direction.normalized * speed;
     }
+    public void InitializeWithTarget(Vector3 targetPosition)
+    {
+        Vector3 direction = (targetPosition - transform.position).normalized;
+        rb.velocity = direction * speed; 
+    }
+
 
     private void Update()
     {

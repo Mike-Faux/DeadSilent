@@ -206,6 +206,7 @@ MonoBehaviour:
   JumpMax: 1
   JumpSpeed: 8
   Gravity: 25
+  firearm: {fileID: 0}
   InteractionMask:
     serializedVersion: 2
     m_Bits: 128
@@ -383,6 +384,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1749424924192424357}
     m_Modifications:
+    - target: {fileID: 2707049336052945676, guid: 8fa31771c875a9849b20d6de8235aa65, type: 3}
+      propertyPath: EnemyBullet
+      value: 
+      objectReference: {fileID: 4971964780661652405, guid: 051bfdae3edea144b86f82ac4a3f17ca, type: 3}
     - target: {fileID: 2707049336052945676, guid: 8fa31771c875a9849b20d6de8235aa65, type: 3}
       propertyPath: InfiniteAmmo
       value: 0

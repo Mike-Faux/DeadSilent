@@ -67,7 +67,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
 
         BaseSpeed = agent.speed;
 
-        weapon = weaponSlot.GetComponentInChildren<IWeapon>();
+        
     }
 
     // Update is called once per frame
@@ -195,17 +195,17 @@ public class EnemyAI : MonoBehaviour, IDamageable
         }
 
         //If no target, Return
-        if(target == null)
+        if (target == null)
         {
             Debug.Log("TargetNull");
             return;
         }
 
-        float disToTarget = Vector3.Distance(target.transform.position, 
-            transform.position);
+        float disToTarget = Vector3.Distance(target.transform.position, transform.position);
         Vector3 dirToTarget = target.transform.position - transform.position;
         dirToTarget.Normalize();
 
+        bool canShootPlayer = !Physics.Raycast(transform.position + transform.forward, dirToTarget, disToTarget, blockingFiring, QueryTriggerInteraction.Ignore);
 
         //Debug.Log($"{name} Engaging target {disToTarget} away");
 
@@ -213,23 +213,16 @@ public class EnemyAI : MonoBehaviour, IDamageable
         if (disToTarget > EngageDistance || target == null)
         {
             agent.isStopped = false;
-
             SetStatus(Status.Tracking);
         }
-        else if (!Physics.Raycast(transform.position + transform.forward, dirToTarget, disToTarget, blockingFiring, QueryTriggerInteraction.Ignore))
+        else if (canShootPlayer)
         {
             SetStatus(Status.Engaging);
-           // agent.isStopped = true;
+            // agent.isStopped = true;
             if (weapon != null)
             {
-                if (weapon.GetType() == typeof(FireArm))
-                {
-                    FireArm gun = (FireArm)weapon;
-                    if (gun.Ammo < 1) gun.Reload();
-                }
-
                 Aim();
-                weapon.Attack();
+                weapon.Attack(); // Ensure this method handles bullet firing correctly
             }
         }
         else
@@ -240,11 +233,32 @@ public class EnemyAI : MonoBehaviour, IDamageable
         }
     }
 
+    public void FireBullet(GameObject bulletPrefab, Vector3 firePosition, Vector3 targetPosition)
+    {
+        // Instantiate the bullet at the specified fire position and with a default rotation.
+        GameObject bulletObject = Instantiate(bulletPrefab, firePosition, Quaternion.identity);
+
+        // If the bullet has an EnemyBullet component, configure it as needed.
+        EnemyBullet bulletScript = bulletObject.GetComponent<EnemyBullet>();
+        if (bulletScript != null)
+        {
+           
+
+            // Aim the bullet towards the target position.
+            Vector3 direction = (targetPosition - firePosition).normalized;
+            bulletObject.transform.forward = direction;
+        }
+        else
+        {
+            Debug.LogError("The bullet prefab does not have an EnemyBullet component attached.");
+        }
+    }
+
     public void Aim()
     {
         Vector3 pos = target.transform.position;
         pos.y = transform.position.y;
-        transform.LookAt(pos - (transform.right / 2), Vector3.up);
+        transform.LookAt(pos, Vector3.up);
     }
 
     public void Track()

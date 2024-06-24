@@ -2559,6 +2559,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7920738876733156858}
     m_Modifications:
+    - target: {fileID: 1662545299622288658, guid: 8fa31771c875a9849b20d6de8235aa65, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662545299622288658, guid: 8fa31771c875a9849b20d6de8235aa65, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.242
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662545299622288658, guid: 8fa31771c875a9849b20d6de8235aa65, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.665
+      objectReference: {fileID: 0}
+    - target: {fileID: 2707049336052945676, guid: 8fa31771c875a9849b20d6de8235aa65, type: 3}
+      propertyPath: Bullet
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2707049336052945676, guid: 8fa31771c875a9849b20d6de8235aa65, type: 3}
+      propertyPath: EnemyBullet
+      value: 
+      objectReference: {fileID: 4971964780661652405, guid: 051bfdae3edea144b86f82ac4a3f17ca, type: 3}
     - target: {fileID: 5311881382460011149, guid: 8fa31771c875a9849b20d6de8235aa65, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.56690013
@@ -2615,13 +2635,49 @@ PrefabInstance:
       propertyPath: m_Name
       value: M4 Assault Rifle
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2707049336052945676, guid: 8fa31771c875a9849b20d6de8235aa65, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5905673158820204129, guid: 8fa31771c875a9849b20d6de8235aa65, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6707626362596224961}
   m_SourcePrefab: {fileID: 100100000, guid: 8fa31771c875a9849b20d6de8235aa65, type: 3}
+--- !u!4 &3811072378882252004 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1662545299622288658, guid: 8fa31771c875a9849b20d6de8235aa65, type: 3}
+  m_PrefabInstance: {fileID: 2589897469369188854}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7658017121466921851 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5311881382460011149, guid: 8fa31771c875a9849b20d6de8235aa65, type: 3}
   m_PrefabInstance: {fileID: 2589897469369188854}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8215692118671658903 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5905673158820204129, guid: 8fa31771c875a9849b20d6de8235aa65, type: 3}
+  m_PrefabInstance: {fileID: 2589897469369188854}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6707626362596224961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8215692118671658903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e026a61e4f43bd242a7c824965cf7f3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 4971964780661652405, guid: 051bfdae3edea144b86f82ac4a3f17ca, type: 3}
+  firePoint: {fileID: 3811072378882252004}
+  fireRate: 12
+  Stats: {fileID: 11400000, guid: 6bf1222600768aa4c8ebbb57872fad99, type: 2}
+  hitEffect: {fileID: 1305779495009741383, guid: 8017517939ec00445981b86a98b40d29, type: 3}
+  Ammo: 30
+  ammoMax: 0
+  Enemy:
+    serializedVersion: 2
+    m_Bits: 0
