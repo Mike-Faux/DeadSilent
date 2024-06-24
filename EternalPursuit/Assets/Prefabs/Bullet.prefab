@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1761645220195460508}
   - component: {fileID: 7984452777401142991}
   - component: {fileID: 1201544715478469968}
-  - component: {fileID: 8124332289814680887}
+  - component: {fileID: 9180608967532015174}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -50,9 +50,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1201544715478469968}
-  speed: 10
+  speed: 200
   damage: 1
-  maxRange: 2.9
+  maxRange: 4
   hitEffect: {fileID: 1305779495009741383, guid: 8017517939ec00445981b86a98b40d29, type: 3}
   time: 1.42
   impactSound: {fileID: 7615121272799216015, guid: b3d2675cc9035a3439d59b7df7bc89df, type: 3}
@@ -225,7 +225,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!82 &8124332289814680887
+--- !u!82 &9180608967532015174
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -235,20 +235,20 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ab19a654573134642bcfa6ebe4c3e9cc, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.056
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 11
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0

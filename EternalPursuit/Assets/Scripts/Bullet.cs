@@ -16,12 +16,13 @@ public class Bullet : MonoBehaviour
     [SerializeField] float time = 3;
 
     public AudioSource impactSound;
+    
 
     
     void Start()
     {
         startPosition = transform.position;
-       
+        
         Destroy(gameObject, time);
     }
     public void SetDirection(Vector3 direction)

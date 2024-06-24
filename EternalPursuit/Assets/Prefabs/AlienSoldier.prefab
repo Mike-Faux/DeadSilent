@@ -2673,11 +2673,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 4971964780661652405, guid: 051bfdae3edea144b86f82ac4a3f17ca, type: 3}
   firePoint: {fileID: 3811072378882252004}
-  fireRate: 12
+  fireRate: 6.04
   Stats: {fileID: 11400000, guid: 6bf1222600768aa4c8ebbb57872fad99, type: 2}
   hitEffect: {fileID: 1305779495009741383, guid: 8017517939ec00445981b86a98b40d29, type: 3}
+  hitChance: 118.2
   Ammo: 30
   ammoMax: 0
   Enemy:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
+  missedShotEffect: {fileID: 4971964780661652405, guid: 051bfdae3edea144b86f82ac4a3f17ca, type: 3}

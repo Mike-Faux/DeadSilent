@@ -13,6 +13,7 @@ public class AnimationStateController : MonoBehaviour
     int isWalkingBackHash;
     int isShootingHash;
     int isReloadingHash;
+    int RecoilHash;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,7 @@ public class AnimationStateController : MonoBehaviour
         isWalkingBackHash = Animator.StringToHash("isWalkingBack");
         isShootingHash = Animator.StringToHash("isShooting");
         isReloadingHash = Animator.StringToHash("isReloading");
+        RecoilHash = Animator.StringToHash("Recoil");
     }
 
     // Update is called once per frame
@@ -41,6 +43,7 @@ public class AnimationStateController : MonoBehaviour
         bool leftPressed = Input.GetKey("a");
         bool rightPressed = Input.GetKey("d");
         bool backPressed = Input.GetKey("s");
+       
         bool isReloading = animator.GetBool(isReloadingHash);
         bool isshooting = Input.GetMouseButton(0);
 
@@ -48,6 +51,7 @@ public class AnimationStateController : MonoBehaviour
         {
             animator.SetBool(isReloadingHash, true);
             StartCoroutine(ResetIsReloading());
+            
         }
 
         IEnumerator ResetIsReloading()
@@ -60,6 +64,7 @@ public class AnimationStateController : MonoBehaviour
         if (!isShooting && isshooting)
         {
             animator.SetBool(isShootingHash, true);
+            animator.SetBool(RecoilHash, true);
         }
         if (isShooting && !isshooting)
         {

@@ -13,6 +13,7 @@ public class WeaponStats : ScriptableObject
     public ItemSO Ammo_Type;
     public float FireRate;
     public int shootDist;
+    public float hitChance;
     public float MaxRange = 1000f;
     public float ReloadTime;
     public bool Silenced;

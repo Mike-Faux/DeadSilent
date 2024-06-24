@@ -572,11 +572,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1563642747572834671, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
       propertyPath: Health
-      value: 50
+      value: 100000
       objectReference: {fileID: 0}
     - target: {fileID: 1563642747572834671, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
       propertyPath: audJumpVol
       value: 0.061
+      objectReference: {fileID: 0}
+    - target: {fileID: 2702804359316674297, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
+      propertyPath: poolSize
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3188795972260206017, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
       propertyPath: m_Name

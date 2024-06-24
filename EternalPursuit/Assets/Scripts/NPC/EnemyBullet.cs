@@ -8,6 +8,7 @@ public class EnemyBullet : MonoBehaviour
     public int damage = 1;
     public float maxRange = 1000f;
     public ParticleSystem hitEffect;
+    
 
     private Vector3 startPosition;
     private float travelDistance;
@@ -71,6 +72,8 @@ public class EnemyBullet : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+   
 
     private void OnCollisionEnter(Collision collision)
     {
