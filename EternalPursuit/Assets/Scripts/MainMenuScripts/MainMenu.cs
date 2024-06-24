@@ -20,6 +20,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject settingsPanel;
     [SerializeField] GameObject mainMenuPanel;
     [SerializeField] GameObject controlPanel;
+    [SerializeField] GameObject creditsPanel;
 
     private void Start()
     {
@@ -65,15 +66,28 @@ public class MainMenu : MonoBehaviour
     }
     public void ShowSettings()
     {
-        settingsPanel.SetActive(true); // Show the settings canvas
+        settingsPanel.SetActive(true);  // Show the settings canvas
         mainMenuPanel.SetActive(false);
     }
 
     public void HideSettings()
     {
         settingsPanel.SetActive(false); // Hide the settings canvas
-        mainMenuPanel.SetActive(true); // Show the main menu canvas
+        mainMenuPanel.SetActive(true);  // Show the main menu canvas
     }
+
+    public void showCredits()
+    {
+        creditsPanel.SetActive(true);   // Show credits
+        mainMenuPanel.SetActive(false); // Hide menu
+    }
+    
+    public void hideCredits()
+    {
+        creditsPanel.SetActive(false);  // Hide credits
+        mainMenuPanel.SetActive(true);  // Show main menu
+    }
+
     public void Quit()
         {
 #if UNITY_EDITOR
