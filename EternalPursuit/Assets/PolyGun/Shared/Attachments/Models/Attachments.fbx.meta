@@ -1,0 +1,333 @@
+fileFormatVersion: 2
+guid: 963e6b30ba3ab9f48bb7726cbf4b515b
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Attachment_Acog Scope
+  - first:
+      1: 100002
+    second: Attachment_Angular Grip
+  - first:
+      1: 100004
+    second: Attachment_Flashlight
+  - first:
+      1: 100006
+    second: Attachment_Laser Sight
+  - first:
+      1: 100008
+    second: Attachment_Red dot Sight
+  - first:
+      1: 100010
+    second: Attachment_Red dot Sight.001
+  - first:
+      1: 100012
+    second: Attachment_Vertical Grip
+  - first:
+      1: 100014
+    second: Attachment_VerticalGrip +Flashlight.001
+  - first:
+      1: 100016
+    second: Attachment_VerticalGrip +Laser
+  - first:
+      1: 100018
+    second: //RootNode
+  - first:
+      4: 400000
+    second: Attachment_Acog Scope
+  - first:
+      4: 400002
+    second: Attachment_Angular Grip
+  - first:
+      4: 400004
+    second: Attachment_Flashlight
+  - first:
+      4: 400006
+    second: Attachment_Laser Sight
+  - first:
+      4: 400008
+    second: Attachment_Red dot Sight
+  - first:
+      4: 400010
+    second: Attachment_Red dot Sight.001
+  - first:
+      4: 400012
+    second: Attachment_Vertical Grip
+  - first:
+      4: 400014
+    second: Attachment_VerticalGrip +Flashlight.001
+  - first:
+      4: 400016
+    second: Attachment_VerticalGrip +Laser
+  - first:
+      4: 400018
+    second: //RootNode
+  - first:
+      21: 2100000
+    second: Material.002
+  - first:
+      21: 2100002
+    second: Material.004
+  - first:
+      21: 2100004
+    second: Material.003
+  - first:
+      21: 2100006
+    second: No Name
+  - first:
+      21: 2100008
+    second: Material
+  - first:
+      21: 2100010
+    second: Material.001
+  - first:
+      21: 2100012
+    second: Material.005
+  - first:
+      21: 2100014
+    second: Material.006
+  - first:
+      21: 2100016
+    second: Material.007
+  - first:
+      21: 2100018
+    second: Material.008
+  - first:
+      23: 2300000
+    second: Attachment_Acog Scope
+  - first:
+      23: 2300002
+    second: Attachment_Angular Grip
+  - first:
+      23: 2300004
+    second: Attachment_Flashlight
+  - first:
+      23: 2300006
+    second: Attachment_Laser Sight
+  - first:
+      23: 2300008
+    second: Attachment_Red dot Sight
+  - first:
+      23: 2300010
+    second: Attachment_Red dot Sight.001
+  - first:
+      23: 2300012
+    second: Attachment_Vertical Grip
+  - first:
+      23: 2300014
+    second: Attachment_VerticalGrip +Flashlight.001
+  - first:
+      23: 2300016
+    second: Attachment_VerticalGrip +Laser
+  - first:
+      33: 3300000
+    second: Attachment_Acog Scope
+  - first:
+      33: 3300002
+    second: Attachment_Angular Grip
+  - first:
+      33: 3300004
+    second: Attachment_Flashlight
+  - first:
+      33: 3300006
+    second: Attachment_Laser Sight
+  - first:
+      33: 3300008
+    second: Attachment_Red dot Sight
+  - first:
+      33: 3300010
+    second: Attachment_Red dot Sight.001
+  - first:
+      33: 3300012
+    second: Attachment_Vertical Grip
+  - first:
+      33: 3300014
+    second: Attachment_VerticalGrip +Flashlight.001
+  - first:
+      33: 3300016
+    second: Attachment_VerticalGrip +Laser
+  - first:
+      43: 4300000
+    second: Attachment_Acog Scope
+  - first:
+      43: 4300002
+    second: Attachment_Angular Grip
+  - first:
+      43: 4300004
+    second: Attachment_Flashlight
+  - first:
+      43: 4300006
+    second: Attachment_Laser Sight
+  - first:
+      43: 4300008
+    second: Attachment_Red dot Sight
+  - first:
+      43: 4300010
+    second: Attachment_Red dot Sight.001
+  - first:
+      43: 4300012
+    second: Attachment_Vertical Grip
+  - first:
+      43: 4300014
+    second: Attachment_VerticalGrip +Flashlight.001
+  - first:
+      43: 4300016
+    second: Attachment_VerticalGrip +Laser
+  - first:
+      41386430: 2186277476908879412
+    second: ImportLogs
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: 85bde780caae4d04781af2272e554281, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: 7f8585fb983b89a42acc734c43b69e6e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: e0e1908ca81b423448a9b7c1d8c0a9da, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.003
+    second: {fileID: 2100000, guid: a1d3fd1b3711b0b4b834fbf4f87c03d2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.004
+    second: {fileID: 2100000, guid: 7b32cb3cd18d83643aa1bf1b76bdb3a4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.005
+    second: {fileID: 2100000, guid: 2fd9e91f3c40948438e8ac147a622a3c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.006
+    second: {fileID: 2100000, guid: 0a963b5f5bee08d47b9439494189d832, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.007
+    second: {fileID: 2100000, guid: 379da8c022a15be47b98f941cb443ebb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.008
+    second: {fileID: 2100000, guid: f12d90a124f5bcb488d2139f6ca25323, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: 1ef9d692a644e2a4c87c5be1f77c0b6a, type: 2}
+  materials:
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 0
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

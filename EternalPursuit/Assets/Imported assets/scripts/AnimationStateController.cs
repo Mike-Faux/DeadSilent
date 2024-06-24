@@ -14,6 +14,7 @@ public class AnimationStateController : MonoBehaviour
     int isShootingHash;
     int isReloadingHash;
     int RecoilHash;
+    int AimingHash;
 
     void Start()
     {
@@ -27,6 +28,7 @@ public class AnimationStateController : MonoBehaviour
         isShootingHash = Animator.StringToHash("isShooting");
         isReloadingHash = Animator.StringToHash("isReloading");
         RecoilHash = Animator.StringToHash("Recoil");
+        AimingHash = Animator.StringToHash("isAiming");
     }
 
     void Update()
@@ -36,6 +38,7 @@ public class AnimationStateController : MonoBehaviour
         bool leftPressed = Input.GetKey("a");
         bool rightPressed = Input.GetKey("d");
         bool backPressed = Input.GetKey("s");
+        bool isAiming = Input.GetButton("Fire2");
 
         bool isReloading = animator.GetBool(isReloadingHash);
         bool isshooting = Input.GetButton("Fire1");
@@ -46,6 +49,12 @@ public class AnimationStateController : MonoBehaviour
             animator.SetBool(isReloadingHash, true);
             StartCoroutine(ResetIsReloading());
         }
+
+        // Aiming logic
+
+        animator.SetBool(AimingHash, isAiming);
+
+
 
         // Shooting logic, allowing shooting during movement but not during reloading
         if (!isReloading && isshooting)
