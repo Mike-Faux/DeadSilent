@@ -32,113 +32,6 @@ Transform:
   - {fileID: 3798598063431671480}
   m_Father: {fileID: 6604383216083234264}
   m_LocalEulerAnglesHint: {x: 1.34, y: 120.83, z: -116.563}
---- !u!1 &4741065435003236878
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2360835655032589196}
-  - component: {fileID: 230573104495373102}
-  - component: {fileID: 7976412990690019371}
-  - component: {fileID: 3567606656988483487}
-  m_Layer: 6
-  m_Name: StatusIndicator (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2360835655032589196
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4741065435003236878}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.057, z: 0}
-  m_LocalScale: {x: 0.07426894, y: 0.1414814, z: 0.101241075}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5014879389404886523}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &230573104495373102
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4741065435003236878}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &7976412990690019371
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4741065435003236878}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &3567606656988483487
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4741065435003236878}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.0000013338026, y: 0, z: 0.0000001461458}
 --- !u!1 &5356522939026320453
 GameObject:
   m_ObjectHideFlags: 0
@@ -744,9 +637,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0e1f73187acc49c49a6d7e3dc2014e4e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5340532290943000345}
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0e1f73187acc49c49a6d7e3dc2014e4e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2360835655032589196}
     - targetCorrespondingSourceObject: {fileID: 1852576806548013000, guid: 0e1f73187acc49c49a6d7e3dc2014e4e, type: 3}
       insertIndex: 0
       addedObject: {fileID: 6614128524259926589}
@@ -1024,8 +914,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   currentStatus: 0
-  weaponSlot: {fileID: 0}
-  StatusIndicator: {fileID: 0}
+  weaponSlot: {fileID: 2199006958261165395}
+  StatusIndicator: {fileID: 5356522939026320453}
   AlwaysAware: 1
 --- !u!4 &6604383216083234264 stripped
 Transform:
