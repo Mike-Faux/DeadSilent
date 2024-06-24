@@ -21,8 +21,12 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         startPosition = transform.position;
-        rb.velocity = transform.forward * speed;
+       // rb.velocity = transform.forward * speed;
         Destroy(gameObject, time);
+    }
+    public void SetDirection(Vector3 direction)
+    {
+        rb.velocity = direction.normalized * speed;
     }
 
     private void Update()

@@ -74,11 +74,12 @@ public class FireArm : MonoBehaviour, IWeapon
         Vector3 direction = (targetPoint - FirePos.position).normalized;
         Ammo--;
       
-        Bullet bullet = Instantiate( Bullet, FirePos.transform.position, transform.rotation).GetComponent<Bullet>();
+        Bullet bullet = Instantiate(Bullet, FirePos.position, Quaternion.identity).GetComponent<Bullet>();
       
         bullet.damage = Stats.Damage;
         bullet.maxRange = Stats.MaxRange;
         bullet.hitEffect = hitEffect;
+        bullet.SetDirection(direction);
         yield return new WaitForSeconds(time);
         isShooting = false;
     }

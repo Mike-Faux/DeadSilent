@@ -20,6 +20,6 @@ MonoBehaviour:
   FireRate: 0.12
   shootDist: 5108
   MaxRange: 5555.4
-  ReloadTime: 3
+  ReloadTime: 2
   Silenced: 0
   SoundRadius: 0.18
