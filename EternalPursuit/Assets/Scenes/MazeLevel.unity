@@ -572,7 +572,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1563642747572834671, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
       propertyPath: Health
-      value: 100000
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 1563642747572834671, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
       propertyPath: audJumpVol
@@ -594,6 +594,10 @@ PrefabInstance:
       propertyPath: InfiniteAmmo
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4634011931167252919, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
+      propertyPath: ShootSoundClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3061c7b9b32d894478e4126ccce25ca3, type: 3}
     - target: {fileID: 5516204166268024518, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -633,6 +637,14 @@ PrefabInstance:
     - target: {fileID: 5516204166268024518, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7196861996737699791, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
+      propertyPath: sounds.Array.data[0].volume
+      value: 0.349
+      objectReference: {fileID: 0}
+    - target: {fileID: 7196861996737699791, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
+      propertyPath: sounds.Array.data[1].volume
+      value: 0.397
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
