@@ -11,6 +11,7 @@ public class FireArm : MonoBehaviour, IWeapon
     [SerializeField] Transform FirePos;
     [SerializeField] GameObject Bullet;
     public int Ammo;
+    public int ammoMax;
     public LayerMask Enemy;
     bool isShooting;
     bool isReloading;
@@ -34,11 +35,17 @@ public class FireArm : MonoBehaviour, IWeapon
 
     public void Reload(bool useAmmo = false)
     {
-        if (isReloading) return;
+        if (isReloading || Ammo == Stats.Ammo_Capacity) return; // Also check if ammo is already full
 
-        if(useAmmo)
+        if (useAmmo)
         {
-            if (GameManager.Instance.playerScript.inventory.GetItemCount(Stats.Ammo_Type) <= 0) return;
+            int ammoInInventory = GameManager.Instance.playerScript.inventory.GetItemCount(Stats.Ammo_Type);
+            if (ammoInInventory <= 0)
+            {
+                // Provide feedback to the player about lack of ammo
+                Debug.Log("Not enough ammo in inventory to reload.");
+                return;
+            }
             StartCoroutine(Reload(Stats.ReloadTime, true));
         }
         else
@@ -76,19 +83,24 @@ public class FireArm : MonoBehaviour, IWeapon
         isShooting = false;
     }
 
-    IEnumerator Reload(float time, bool useAmmo = false)
+    private IEnumerator Reload(float reloadTime, bool useAmmo = false)
     {
         isReloading = true;
-        int remainingAmmo = Ammo;
-        Ammo = 0;
-        yield return new WaitForSeconds(time);
-        Ammo = Stats.Ammo_Capacity;
+        yield return new WaitForSeconds(reloadTime); // Simulate reload delay
 
-        if (useAmmo)
-        {
-            Ammo = GameManager.Instance.playerScript.inventory.RemoveItems(Stats.Ammo_Type, Stats.Ammo_Capacity - remainingAmmo) + remainingAmmo;
-        }
+        // Assuming you have a method in your inventory system to get the count of a specific item type
+        int reserveAmmo = GameManager.Instance.playerScript.inventory.GetItemCount(Stats.Ammo_Type);
+        int ammoNeeded = Stats.Ammo_Capacity - Ammo;
+        int ammoToReload = Mathf.Min(ammoNeeded, reserveAmmo);
+
+        Ammo += ammoToReload; // Update the current ammo
+
+        // Assuming you have a method in your inventory system to remove items
+        GameManager.Instance.playerScript.inventory.RemoveItems(Stats.Ammo_Type, ammoToReload);
 
         isReloading = false;
+
+        // Update the UI with the new ammo counts, fetching the updated reserve ammo count again
+        GameManager.Instance.UpdateAmmoCount(Ammo, GameManager.Instance.playerScript.inventory.GetItemCount(Stats.Ammo_Type));
     }
 }

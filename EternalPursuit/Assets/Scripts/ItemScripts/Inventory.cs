@@ -67,26 +67,25 @@ public class Inventory
     public int RemoveItems(ItemSO item, int count)
     {
         int removed = 0;
-        foreach (ItemStack i in items)
+        for (int j = items.Count - 1; j >= 0; j--)
         {
+            ItemStack i = items[j];
             if (i.item == item)
             {
-                count -= i.count;
-                removed += i.count;
-
-                if(count < 0)
+                if (i.count > count)
                 {
-                    i.count = -count;
-                    removed -= i.count;
+                    i.count -= count;
+                    removed += count;
                     return removed;
                 }
                 else
                 {
-                    items.Remove(i);
+                    count -= i.count;
+                    removed += i.count;
+                    items.RemoveAt(j);
                 }
             }
         }
-
         return removed;
     }
 }

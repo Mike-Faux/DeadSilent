@@ -96,6 +96,11 @@ public class Player : MonoBehaviour, IDamageable
             {
                 interact.Interact(this);
             }
+
+            if (Input.GetButtonDown("Reload"))
+            {
+                Reload();
+            }
         }
     }
 
