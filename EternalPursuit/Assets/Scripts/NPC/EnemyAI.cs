@@ -94,6 +94,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
         {
             // If the agent's speed is above the threshold, set "isRunning" to true
             animator.SetBool(isRunningHash, true);
+            agent.speed = BaseSpeed * 1.5f;
         }
         else
         {
@@ -105,6 +106,12 @@ public class EnemyAI : MonoBehaviour, IDamageable
         if (target != null && Vector3.Distance(transform.position, target.transform.position) <= EngageDistance)
         {
             Engage();
+            animator.SetBool(isRunningHash, true);
+        }
+        if (target != null && Vector3.Distance(transform.position, target.transform.position) >= EngageDistance)
+        {
+            Engage();
+            animator.SetBool(isRunningHash, false);
         }
 
 
@@ -212,7 +219,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
         else if (!Physics.Raycast(transform.position + transform.forward, dirToTarget, disToTarget, blockingFiring, QueryTriggerInteraction.Ignore))
         {
             SetStatus(Status.Engaging);
-            agent.isStopped = true;
+           // agent.isStopped = true;
             if (weapon != null)
             {
                 if (weapon.GetType() == typeof(FireArm))
