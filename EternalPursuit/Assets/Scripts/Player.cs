@@ -92,7 +92,11 @@ public class Player : MonoBehaviour, IDamageable
                 
                 
             }
-            
+            if (Input.GetButtonDown("Fire2") && firearm != null) // Assuming Fire2 is the aim button
+            {
+                firearm.DetermineAim();
+            }
+
 
             UpdateWeaponInfo();
 

@@ -13,6 +13,8 @@ public class FireArm : MonoBehaviour, IWeapon
     [SerializeField] GameObject EnemyBullet;
     [SerializeField] public float FireRate;
     [SerializeField] public AudioClip reloadClip;
+
+
     private AudioSource audioSource;
     public int Ammo;
     public int ammoMax;
@@ -21,9 +23,57 @@ public class FireArm : MonoBehaviour, IWeapon
     public bool isReloading;
     private bool fireEnemyBullet = false;
 
+
+    //aiming
+    public Vector3 normalLocalPosition;
+    public Vector3 aimLocalPosition;
+
+    public float swayAmount = 0.02f;
+    public float maxSwayAmount = 0.06f;
+    public float swaySmoothness = 4f;
+
+    public float aimSmoothing = 10f;
+
+
+    
+    //recoil
+    public bool randomizeRecoil;
+    public Vector2 randomRecoilConstraints;
+    //if we do not want random recoil, we can use a fixed recoil pattern
+    public Vector2 recoilPattern;
+
+
+
     private BulletType currentBulletType = BulletType.PlayerBullet;
 
 
+
+    private void Update()
+    {
+        DetermineAim();
+        ApplySway(); 
+    }
+    private void ApplySway()
+    {
+        bool isAiming = Input.GetButton("Fire2"); // Assuming "Fire2" is your aiming input
+        float swayFactor = isAiming ? 0.5f : 1f; // Reduce sway by half when aiming
+
+        float mouseX = Input.GetAxis("Mouse X") * swayAmount * swayFactor;
+        float mouseY = Input.GetAxis("Mouse Y") * swayAmount * swayFactor;
+
+        mouseX = Mathf.Clamp(mouseX, -maxSwayAmount, maxSwayAmount);
+        mouseY = Mathf.Clamp(mouseY, -maxSwayAmount, maxSwayAmount);
+
+        Vector3 swayOffset = new Vector3(mouseX, mouseY, 0);
+        transform.localPosition += swayOffset * Time.deltaTime * swaySmoothness;
+    }
+
+    public void DetermineAim()
+    {
+        Vector3 target = Input.GetButton("Fire2") ? aimLocalPosition : normalLocalPosition;
+        Vector3 desiredPosition = Vector3.Lerp(transform.localPosition, target, Time.deltaTime * aimSmoothing);
+        transform.localPosition = desiredPosition;
+    }
     public void SetBulletType(BulletType bulletType)
     {
         currentBulletType = bulletType;
@@ -48,9 +98,28 @@ public class FireArm : MonoBehaviour, IWeapon
         if (!isShooting)
         {
             audioSource.Play();
+            DetermineRecoil();
             StartCoroutine(Shoot(Stats.FireRate));
         }
         
+    }
+
+    public void DetermineRecoil()
+    {
+        transform.localPosition -= Vector3.forward * 0.1f;
+
+        if(randomizeRecoil)
+        {
+            float xRecoil = Random.Range(-randomRecoilConstraints.x, randomRecoilConstraints.x);
+            float yRecoil = Random.Range(-randomRecoilConstraints.y, randomRecoilConstraints.y);
+
+            Vector2 recoil = new Vector2(xRecoil, yRecoil);
+
+            transform.localPosition += Vector3.forward * recoil.x;
+            transform.localPosition += Vector3.up * recoil.y;
+
+
+        }
     }
     public enum BulletType
     {
