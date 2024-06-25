@@ -44,8 +44,11 @@ public class MazeGenerator : MonoBehaviour
         else
         {
             Level = 1;
-            width *= Level;
         }
+
+
+        width += Level * 2;
+        height += Level;
 
         if (transform.childCount > 0)
         {

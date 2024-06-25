@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject loseMenu;
     [SerializeField] TMP_Text enemycountText;
     [SerializeField] TMP_Text itemcountText;
-
+    [SerializeField] TMP_Text floorCountText;
     [SerializeField] TMP_Text WeaponNameText;
     [SerializeField] TMP_Text ammocountText;
 
@@ -33,9 +33,11 @@ public class GameManager : MonoBehaviour
     public Image PlayerHPBar;
     public GameObject playerDFlash;
 
+    public TimeLimit timeLimit;
 
     public ItemSlot[] items;
     public ItemSO[] itemSOs;
+
     
     
     public bool pause;
@@ -49,7 +51,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Player = GameObject.FindWithTag("Player");
-        playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
         Instance = this;
 
         GameObject gsgo = GameObject.FindGameObjectWithTag("GameStats");
@@ -66,6 +67,7 @@ public class GameManager : MonoBehaviour
         else
         {
             gameStats = gsgo.GetComponent<GameStats>();
+            timeLimit.AddTime(gameStats.TimeRemaining);
         }
 
         playerScript = Player.GetComponent<Player>();
@@ -76,6 +78,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
 
     }
 
@@ -202,6 +205,8 @@ public class GameManager : MonoBehaviour
             activeMenu.SetActive(pause);
             activeMenu = null;
         }
+
+        floorCountText.text = " " + gameStats.Level.ToString("");
     }
 
     public void lostState()

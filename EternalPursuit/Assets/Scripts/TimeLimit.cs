@@ -33,6 +33,14 @@ public class TimeLimit : MonoBehaviour
 
         countdownText.text = string.Format(" {0:0}:{1:00}", minutes, seconds);
     }
-   
-   
+
+    public void AddTime(float amount)
+    {
+        currentTime += amount;
+    }
+
+    public float GetTime()
+    {
+        return currentTime;
+    }
 }

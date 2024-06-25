@@ -36,6 +36,16 @@ public class buttonBehaviour : MonoBehaviour
 
     }
 
+    public void GoToNextLevel()
+    {
+        StartCoroutine(wait());
+        GameManager.Instance.gameStats.Level++;
+        GameManager.Instance.gameStats.TimeRemaining = GameManager.Instance.timeLimit.GetTime();
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        GameManager.Instance.resumeState();
+    }
+
     public void Respawn()
     {
         GameManager.Instance.playerScript.SpawnPlayer(        GameManager.Instance.playerScript.GetTransform());

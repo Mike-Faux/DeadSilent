@@ -10,6 +10,7 @@ public class GameStats : MonoBehaviour
 
     public int Level = 1;
 
+    public float TimeRemaining;
 
     // Start is called before the first frame update
     void Start()
