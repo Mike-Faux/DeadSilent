@@ -6,6 +6,9 @@ public class Pickup : MonoBehaviour
 {
     [SerializeField]
     ItemStack items;
+    [SerializeField] private AudioClip pickupSound;
+
+    private AudioSource audioSource;
 
     public void SetItems(ItemStack items)
     {
@@ -32,15 +35,24 @@ public class Pickup : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // Trigger the pickup action
+            
            int leftOverItems = other.GetComponent<Player>().inventory.AddItems(items);
            if(leftOverItems <= 0)
             {
+                PlayPickupSound();
                 Destroy(gameObject);
             }
             else
             {
                 items.count = leftOverItems;
             }
+        }
+    }
+    private void PlayPickupSound()
+    {
+        if (pickupSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(pickupSound);
         }
     }
 }

@@ -566,6 +566,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 178600332576339301, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
+      propertyPath: sensitivity
+      value: 100.1
+      objectReference: {fileID: 0}
     - target: {fileID: 406699147335444334, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -576,8 +580,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1563642747572834671, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
       propertyPath: audJumpVol
-      value: 0.061
+      value: 0.126
       objectReference: {fileID: 0}
+    - target: {fileID: 1563642747572834671, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
+      propertyPath: audJump.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1563642747572834671, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
+      propertyPath: audJump.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: a8a3de9ce725dfc4baccc8cb34738343, type: 3}
+    - target: {fileID: 1563642747572834671, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
+      propertyPath: audJump.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 38fcd3d3921601b4682b0c87143abc1d, type: 3}
+    - target: {fileID: 1563642747572834671, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
+      propertyPath: audJump.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: a0f2e7827d822ad498a4873f77b6ef5c, type: 3}
     - target: {fileID: 2702804359316674297, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
       propertyPath: poolSize
       value: 1
@@ -590,6 +610,10 @@ PrefabInstance:
       propertyPath: gunClick
       value: 
       objectReference: {fileID: 8597863802401764121, guid: 91ea257a0d9d87f42a42131454d194bd, type: 3}
+    - target: {fileID: 4634011931167252919, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
+      propertyPath: reloadSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 396c5966e9b3a5746817f30081203c68, type: 3}
     - target: {fileID: 4634011931167252919, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
       propertyPath: InfiniteAmmo
       value: 0
