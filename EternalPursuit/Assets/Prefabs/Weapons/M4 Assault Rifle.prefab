@@ -586,7 +586,7 @@ MonoBehaviour:
   Bullet: {fileID: 4971964780661652405, guid: 95f272568e3a6f14092a9f611968e812, type: 3}
   EnemyBullet: {fileID: 0}
   FireRate: 0
-  ShootSound: {fileID: 0}
+  reloadClip: {fileID: 8300000, guid: 396c5966e9b3a5746817f30081203c68, type: 3}
   Ammo: 30
   ammoMax: 0
   Enemy:

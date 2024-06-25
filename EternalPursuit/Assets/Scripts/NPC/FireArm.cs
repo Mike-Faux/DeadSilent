@@ -12,6 +12,7 @@ public class FireArm : MonoBehaviour, IWeapon
     [SerializeField] GameObject Bullet;
     [SerializeField] GameObject EnemyBullet;
     [SerializeField] public float FireRate;
+    [SerializeField] public AudioClip reloadClip;
     private AudioSource audioSource;
     public int Ammo;
     public int ammoMax;
@@ -59,7 +60,7 @@ public class FireArm : MonoBehaviour, IWeapon
     public void Reload(bool useAmmo = false)
     {
         if (isReloading || Ammo == Stats.Ammo_Capacity) return; // Also check if ammo is already full
-
+        audioSource.PlayOneShot(reloadClip);
         if (useAmmo)
         {
             int ammoInInventory = GameManager.Instance.playerScript.inventory.GetItemCount(Stats.Ammo_Type);
