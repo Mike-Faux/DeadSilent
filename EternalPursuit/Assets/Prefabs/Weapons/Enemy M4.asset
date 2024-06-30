@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ff3fa2676bd5d2469577f98b1df1fc9, type: 3}
+  m_Name: Enemy M4
+  m_EditorClassIdentifier: 
+  Name: M4
+  Damage: 1
+  BulletSpeed: 10
+  Ammo_Capacity: 30
+  Ammo_Type: {fileID: 11400000, guid: 4501ee89584b7e54093319594af4acd9, type: 2}
+  FireRate: 0.45
+  shootDist: 5108
+  hitChance: 0
+  MaxRange: 5555.4
+  ReloadTime: 0.01
+  Silenced: 0
+  SoundRadius: 0.18

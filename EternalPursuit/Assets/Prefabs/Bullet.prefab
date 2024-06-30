@@ -50,11 +50,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1201544715478469968}
-  speed: 200
+  speed: 160.3
   damage: 1
-  maxRange: 4
+  maxRange: 20.4
   hitEffect: {fileID: 1305779495009741383, guid: 8017517939ec00445981b86a98b40d29, type: 3}
-  time: 1.42
+  time: 6.71
   impactSound: {fileID: 7615121272799216015, guid: b3d2675cc9035a3439d59b7df7bc89df, type: 3}
 --- !u!33 &2506777719818260593
 MeshFilter:
@@ -77,7 +77,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -145,8 +145,8 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.09015064
-        value: 0
+        time: 0.22028905
+        value: 0.03175354
         inSlope: 0
         outSlope: 0
         tangentMode: 0

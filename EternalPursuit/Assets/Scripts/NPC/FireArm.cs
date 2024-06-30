@@ -155,7 +155,7 @@ public class FireArm : MonoBehaviour, IWeapon
 
         if (!fireEnemyBullet) 
         {
-            Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+            Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 5));
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 targetPoint = hit.point;
@@ -188,7 +188,7 @@ public class FireArm : MonoBehaviour, IWeapon
 
         // Choose the bullet type based on the flag
         GameObject bulletPrefab = fireEnemyBullet ? EnemyBullet : Bullet;
-        GameObject bulletObject = Instantiate(bulletPrefab, FirePos.position, Quaternion.LookRotation(direction));
+        GameObject bulletObject = Instantiate(bulletPrefab, FirePos.position + direction * 1f, Quaternion.LookRotation(direction));
 
         // Reset the flag if necessary
         fireEnemyBullet = false; // Reset after use 

@@ -15,7 +15,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] Screen screen;
     public GameObject LoadScreen;
     public Image LoadingBar;
-    public float delayBeforeLoading = 3f;
+    [SerializeField] public  float delayBeforeLoading = 1f;
+    public Slider slider;
 
     [SerializeField] GameObject settingsPanel;
     [SerializeField] GameObject mainMenuPanel;
@@ -44,13 +45,14 @@ public class MainMenu : MonoBehaviour
         yield return new WaitForSeconds(delayBeforeLoading);
 
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneId);
-
         while (!operation.isDone)
         {
-
+            float progress = Mathf.Clamp01(operation.progress / 0.9f);
+            slider.value = progress;
 
             yield return null;
         }
+
     }
     public void showControls()
     {

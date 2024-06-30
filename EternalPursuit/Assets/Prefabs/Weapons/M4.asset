@@ -17,7 +17,7 @@ MonoBehaviour:
   BulletSpeed: 7
   Ammo_Capacity: 30
   Ammo_Type: {fileID: 11400000, guid: 4501ee89584b7e54093319594af4acd9, type: 2}
-  FireRate: 0.1
+  FireRate: 0.08
   shootDist: 5108
   hitChance: 0
   MaxRange: 5555.4

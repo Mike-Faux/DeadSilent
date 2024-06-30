@@ -49,11 +49,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d432966cc768c4f49ab62e6c51f28010, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 3.23
   damage: 1
   maxRange: 1000
   hitEffect: {fileID: 1305779495009741383, guid: 8017517939ec00445981b86a98b40d29, type: 3}
-  time: 3
+  time: 5.17
   impactSound: {fileID: 7615121272799216015, guid: b3d2675cc9035a3439d59b7df7bc89df, type: 3}
 --- !u!33 &2506777719818260593
 MeshFilter:
@@ -82,7 +82,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.05
+  m_Radius: 0.03
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!96 &7984452777401142991
 TrailRenderer:
