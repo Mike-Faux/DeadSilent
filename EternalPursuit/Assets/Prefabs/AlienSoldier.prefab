@@ -257,8 +257,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 514efdf15f8c16a4c858943e0472608b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ViewRadius: 28.58
-  ViewAngle: 80
+  ViewRadius: 37.17
+  ViewAngle: 144
   tarketMask:
     serializedVersion: 2
     m_Bits: 8
@@ -347,7 +347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 2068750793667465925}
   Health: 5
-  EngageDistance: 30
+  EngageDistance: 40
   type: 0
   alertDistance: 40
   chaseDistance: 0

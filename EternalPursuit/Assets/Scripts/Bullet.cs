@@ -46,21 +46,24 @@ public class Bullet : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        ParticleSystem p = Instantiate(hitEffect, collision.contacts[0].point, Quaternion.identity);
-        Destroy(p.gameObject, p.main.duration + p.main.startLifetime.constant);
-
-        AudioSource audioSource = Instantiate(impactSound, collision.contacts[0].point, Quaternion.identity);
-        audioSource.Play();
-        Destroy(audioSource.gameObject, audioSource.clip.length);
-        
-        
-        if (collision.gameObject.TryGetComponent(out IDamageable dmg))
-
-        
+        if (collision.gameObject.tag != "Player")
         {
-            dmg.TakeDamage(damage);
-        }
+            ParticleSystem p = Instantiate(hitEffect, collision.contacts[0].point, Quaternion.identity);
+            Destroy(p.gameObject, p.main.duration + p.main.startLifetime.constant);
 
-        Destroy(gameObject);
+            AudioSource audioSource = Instantiate(impactSound, collision.contacts[0].point, Quaternion.identity);
+            audioSource.Play();
+            Destroy(audioSource.gameObject, audioSource.clip.length);
+
+
+            if (collision.gameObject.TryGetComponent(out IDamageable dmg))
+
+
+            {
+                dmg.TakeDamage(damage);
+            }
+
+            Destroy(gameObject);
+        }
     }
 }
