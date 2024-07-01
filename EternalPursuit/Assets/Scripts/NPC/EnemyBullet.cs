@@ -33,8 +33,8 @@ public class EnemyBullet : MonoBehaviour
     {
         startPosition = transform.position;
         Destroy(gameObject, time);
-        
-        
+
+       rb.isKinematic = true; 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
@@ -47,17 +47,17 @@ public class EnemyBullet : MonoBehaviour
     }
     public void SetDirection(Vector3 dir)
     {
-        direction = dir.normalized; // Set the direction only once
+        direction = dir.normalized; 
     }
     void Update()
     {
-        // Move the bullet in the set direction
+        
         transform.position += direction * speed * Time.deltaTime;
 
-        // Check for max range
+        
         if (Vector3.Distance(startPosition, transform.position) >= maxRange)
         {
-            Destroy(gameObject); // Destroy the bullet if it exceeds the max range
+            Destroy(gameObject); 
         }
     }
 
@@ -81,6 +81,29 @@ public class EnemyBullet : MonoBehaviour
         }
 
         Destroy(gameObject); 
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        // Check if the object collided with has the Player tag
+        
+        if (other.CompareTag("Player"))
+        {
+            
+            ParticleSystem p = Instantiate(hitEffect, transform.position, Quaternion.identity);
+            Destroy(p.gameObject, p.main.duration + p.main.startLifetime.constant);
+
+            AudioSource audioSource = Instantiate(impactSound, transform.position, Quaternion.identity);
+            audioSource.Play();
+            Destroy(audioSource.gameObject, audioSource.clip.length);
+
+           
+            if (other.gameObject.TryGetComponent(out IDamageable dmg))
+            {
+                dmg.TakeDamage(damage);
+            }
+
+            Destroy(gameObject); 
+        }
     }
 }
 

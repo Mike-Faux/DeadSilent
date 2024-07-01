@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 7984452777401142991}
   - component: {fileID: 1201544715478469968}
   - component: {fileID: 8124332289814680887}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EnemyBullet
-  m_TagString: Untagged
+  m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -78,7 +78,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

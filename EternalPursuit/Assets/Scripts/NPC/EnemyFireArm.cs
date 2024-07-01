@@ -34,6 +34,21 @@ public class EnemyFirearm : MonoBehaviour, IWeapon
         
     }
 
+    public IEnumerator Reload()
+    {
+        if (isReloading) yield break; // Prevent multiple reloads at the same time
+
+        isReloading = true;
+        
+
+        // Simulate reload time
+        yield return new WaitForSeconds(3); // Adjust the reload time as needed
+
+        Ammo = ammoMax;
+        isReloading = false;
+        
+    }
+
     IEnumerator Shoot(float time)
     {
         isShooting = true;

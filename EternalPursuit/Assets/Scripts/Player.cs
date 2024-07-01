@@ -85,14 +85,14 @@ public class Player : MonoBehaviour, IDamageable
         {
             Movement();
 
-            // Check if the weapon is a firearm, the fire button is pressed, and not reloading
+            
             if (Input.GetButton("Fire1") && Weapon != null && Weapon.GetType() == typeof(FireArm))
             {
                 Weapon.Attack();
                 
                 
             }
-            if (Input.GetButtonDown("Fire2") && firearm != null) // Assuming Fire2 is the aim button
+            if (Input.GetButtonDown("Fire2") && firearm != null) 
             {
                 firearm.DetermineAim();
             }
