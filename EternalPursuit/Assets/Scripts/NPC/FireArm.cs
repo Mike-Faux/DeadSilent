@@ -51,7 +51,12 @@ public class FireArm : MonoBehaviour, IWeapon
     private void Update()
     {
         DetermineAim();
-        ApplySway(); 
+        ApplySway();
+        CorrectScale(); // Debugging scale
+    }
+    private void CorrectScale()
+    {
+        transform.localScale = Vector3.one; // Reset scale to 1,1,1 after transformations
     }
     private void ApplySway()
     {

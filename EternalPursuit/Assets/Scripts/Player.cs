@@ -211,16 +211,18 @@ public class Player : MonoBehaviour, IDamageable
     {
         IsCrouch = true;
         Speed *= CrouchMod;
-        Controller.transform.localScale =
-            new Vector3(transform.localScale.x, transform.localScale.y * CrouchHeightMod, transform.localScale.z);
+        Controller.height *= CrouchHeightMod; 
+        Controller.center = new Vector3(Controller.center.x, Controller.center.y * CrouchHeightMod, Controller.center.z); 
+        firearm.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f); 
     }
 
     void UnCrouch()
     {
         IsCrouch = false;
         Speed /= CrouchMod;
-        Controller.transform.localScale =
-            new Vector3(transform.localScale.x, transform.localScale.y / CrouchHeightMod, transform.localScale.z);
+        Controller.height /= CrouchHeightMod; 
+        Controller.center = new Vector3(Controller.center.x, Controller.center.y / CrouchHeightMod, Controller.center.z); 
+        firearm.transform.localScale = Vector3.one; 
     }
 
     void DoSprint()
