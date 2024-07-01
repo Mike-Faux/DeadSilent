@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Spawning: {fileID: 419189107767769158, guid: 679a6da08305fc945bfc6a01738455aa, type: 3}
   spawnCount: 1
-  spawnDelay: 5
+  spawnDelay: 10
   UsePatrolPoints: 0
   PatrolPath:
   - {fileID: 5383653123984041986}

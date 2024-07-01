@@ -355,21 +355,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3188795972260206017, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
   m_PrefabInstance: {fileID: 3200488700008509712}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &739001669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 739001660}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bbdfdbb15f22fa4c89d0b61001e2a3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkSpeed: 5
-  sprintSpeed: 10
-  crouchHeight: 0.5
 --- !u!1001 &843434370
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -493,7 +478,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 596, y: 515}
+  m_AnchoredPosition: {x: -112, y: 515}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1033081859
@@ -537,7 +522,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Objective: Escape The Maze'
+  m_text: 'Objective: Find the Exit and Escape The Maze'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1982,7 +1967,8 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.161
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
     m_RemovedGameObjects:
     - {fileID: 5034677470793486504, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
     - {fileID: 8199867592395092509, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
@@ -1993,10 +1979,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 406699147335444328, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1103436245}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3188795972260206017, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
-      insertIndex: 2
-      addedObject: {fileID: 739001669}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67e45eaec93ade04890cfe64c6e3ee5f, type: 3}
 --- !u!1001 &5744431966396013887
 PrefabInstance:
@@ -2122,6 +2105,10 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1559363939}
+    - target: {fileID: 7714775195507600620, guid: b20425810b0c0e845a47dbae4c5302ef, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 739001660}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

@@ -7,7 +7,7 @@ public class EnemySpawner : MonoBehaviour
     public GameObject Spawning;
 
     public int spawnCount;
-    public int spawnDelay =5;
+    public int spawnDelay;
 
     public bool UsePatrolPoints;
     public List<PatrolWaypoint> PatrolPath;
