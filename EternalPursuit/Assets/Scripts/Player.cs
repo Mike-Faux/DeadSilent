@@ -157,9 +157,12 @@ public class Player : MonoBehaviour, IDamageable
 
         MoveDir = (Input.GetAxis("Horizontal") * transform.right) + (Input.GetAxis("Vertical") * transform.forward);
         Controller.Move(MoveDir * Speed * Time.deltaTime);
-        
+
+        if (!IsSprint) 
+        {
+            Crouch();
+        }
         Sprint();
-        Crouch();
 
         if (Input.GetButtonDown("Jump") && JumpCount < JumpMax)
         {
@@ -186,23 +189,19 @@ public class Player : MonoBehaviour, IDamageable
             }
             DoSprint();
         }
-        else if (Input.GetButtonUp("Sprint") && !IsCrouch)
+        else if (Input.GetButtonUp("Sprint"))
         {
             UnSprint();
         }
     }
-   
+
     void Crouch()
     {
-        if (Input.GetButtonDown("Crouch"))
+        if (Input.GetButtonDown("Crouch") && !IsSprint) 
         {
-            if (IsSprint)
-            {
-                UnSprint();
-            }
             DoCrouch();
         }
-        else if (Input.GetButtonUp("Crouch") && !IsSprint)
+        else if (Input.GetButtonUp("Crouch") && IsCrouch) 
         {
             UnCrouch();
         }
